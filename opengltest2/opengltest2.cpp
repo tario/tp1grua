@@ -6,6 +6,7 @@
 #include "GL/wglew.h"
 #include "GL/freeglut.h"
 #include <iostream>
+#include <fstream>
 
 #define wglewGetContext() (&_wglewctx)
 
@@ -34,8 +35,20 @@ void glut_reshape(int w, int h) {
 
 void glut_display() {
   // do display
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glFlush();
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    glBindVertexArray( vaoHandle );
+    glDrawArrays( GL_TRIANGLES, 0, 3);
+
+    //gluLookAt(0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    //glutWireTeapot(1.0);
+//    glutSwapBuffers();
+    glFlush();
+
+  //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  //glFlush();
 }
 
 void init_buffers() {
@@ -69,12 +82,11 @@ void init_buffers() {
 
 
 }
-/*
+
 void init_shaders() {
 	// ********************************************
     // Compiling the shader programms
     //*********************************************
-
 	// Do your GLEW experiments here:
     if (GLEW_ARB_shading_language_100) 
     { 
@@ -210,14 +222,14 @@ void init_shaders() {
         }
     }
 }
-*/
+
 void init() {
   glClearColor(0.3f, 0.3f, 0.4f, 0.0f);
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
 
   init_buffers();
- // init_shaders();
+  init_shaders();
 
 }
 HWND wnd = NULL;
