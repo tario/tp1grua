@@ -5,6 +5,7 @@
 #include "GL/glew.h"
 #include "GL/wglew.h"
 #include "GL/freeglut.h"
+#include <iostream>
 
 #define wglewGetContext() (&_wglewctx)
 
