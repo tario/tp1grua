@@ -29,6 +29,13 @@ GLuint colorBufferHandle;
 // Handle to the vertex array object
 GLuint vaoHandle;
 
+void glut_process_keys(unsigned char key, int x, int y) {    
+    if (key == 27) 
+    {
+        exit(0);
+    }
+}
+
 void glut_reshape(int w, int h) {
   // do nothing
 }
@@ -44,8 +51,8 @@ void glut_display() {
 
     //gluLookAt(0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     //glutWireTeapot(1.0);
-//    glutSwapBuffers();
-    glFlush();
+    glutSwapBuffers();
+   // glFlush();
 
   //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   //glFlush();
@@ -231,28 +238,36 @@ void init() {
   init_buffers();
   init_shaders();
 
-}
+}
+
 HWND wnd = NULL;
 HDC dc = NULL;
-HGLRC rc = NULL;
+HGLRC rc = NULL;
+
 GLboolean glewCreateContext (int* pixelformat)
 {
   WNDCLASS wc;
   PIXELFORMATDESCRIPTOR pfd;
-  /* register window class */
+  /* register window class */
+
   ZeroMemory(&wc, sizeof(WNDCLASS));
   wc.hInstance = GetModuleHandle(NULL);
   wc.lpfnWndProc = DefWindowProc;
-  wc.lpszClassName = "GLEW";
+  wc.lpszClassName = "GLEW";
+
   if (0 == RegisterClass(&wc)) return GL_TRUE;
   /* create window */
   wnd = CreateWindow("GLEW", "GLEW", 0, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, 
-                     CW_USEDEFAULT, NULL, NULL, GetModuleHandle(NULL), NULL);
+                     CW_USEDEFAULT, NULL, NULL, GetModuleHandle(NULL), NULL);
+
   if (NULL == wnd) return GL_TRUE;
   /* get the device context */
-  dc = GetDC(wnd);
-  if (NULL == dc) return GL_TRUE;
-  /* find pixel format */
+  dc = GetDC(wnd);
+
+  if (NULL == dc) return GL_TRUE;
+
+  /* find pixel format */
+
   ZeroMemory(&pfd, sizeof(PIXELFORMATDESCRIPTOR));
   if (*pixelformat == -1) /* find default */
   {
@@ -261,15 +276,19 @@ GLboolean glewCreateContext (int* pixelformat)
     pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL;
     *pixelformat = ChoosePixelFormat(dc, &pfd);
     if (*pixelformat == 0) return GL_TRUE;
-  }
-  /* set the pixel format for the dc */
+  }
+
+  /* set the pixel format for the dc */
+
   if (FALSE == SetPixelFormat(dc, *pixelformat, &pfd)) return GL_TRUE;
-  /* create rendering context */
+  /* create rendering context */
+
   rc = wglCreateContext(dc);
   if (NULL == rc) return GL_TRUE;
   if (FALSE == wglMakeCurrent(dc, rc)) return GL_TRUE;
   return GL_FALSE;
-}
+}
+
 void glewDestroyContext ()
 {
   if (NULL != rc) wglMakeCurrent(NULL, NULL);
@@ -277,7 +296,8 @@ void glewDestroyContext ()
   if (NULL != wnd && NULL != dc) ReleaseDC(wnd, dc);
   if (NULL != wnd) DestroyWindow(wnd);
   UnregisterClass("GLEW", GetModuleHandle(NULL));
-}
+}
+
 
 
 int _tmain(int argc, char* argv[])
@@ -307,6 +327,7 @@ int _tmain(int argc, char* argv[])
 
   glutDisplayFunc(glut_display);
   glutReshapeFunc(glut_reshape);
+  glutKeyboardFunc(glut_process_keys);
 
   init();
 
