@@ -16,6 +16,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
+    <None Include="BasicFShader.frag" />
+    <None Include="PassThroughVShader.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
