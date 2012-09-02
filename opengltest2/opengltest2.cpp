@@ -7,6 +7,9 @@
 #include "GL/freeglut.h"
 #include <iostream>
 #include <fstream>
+#include "math.h"
+
+int transform_matrix_index;
 
 #define wglewGetContext() (&_wglewctx)
 
@@ -40,6 +43,39 @@ void glut_reshape(int w, int h) {
   // do nothing
 }
 
+float angle = 0;
+
+void glut_animate() {
+	angle = angle + 0.1;
+	if (angle > 6.28) angle = 0;
+
+	glutPostRedisplay();
+	Sleep(25);
+}
+
+void rotateMatrix(float* array, float angle) {
+	array[0] = cos(angle);
+	array[1] = 0.0;
+	array[2] = sin(angle);
+	array[3] = 0.0;
+
+	array[4] = 0.0;
+	array[5] = 1.0;
+	array[6] = 0.0;
+	array[7] = 0.0;
+
+	array[8] = -sin(angle);
+	array[9] = 0.0;
+	array[10] = cos(angle);
+	array[11] = 0.0;
+
+	array[12] = 0.0;
+	array[13] = 0.0;
+	array[14] = 0.0;
+	array[15] = 1.0;
+
+}
+
 void glut_display() {
   // do display
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -47,6 +83,11 @@ void glut_display() {
     glLoadIdentity();
 
     glBindVertexArray( vaoHandle );
+
+	float identity_matrix[16];
+	rotateMatrix(identity_matrix, angle);
+
+	glUniformMatrix4fv(transform_matrix_index, 1, 0, identity_matrix);
     glDrawArrays( GL_TRIANGLES, 0, 3);
 
     //gluLookAt(0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
@@ -225,6 +266,7 @@ void init_shaders() {
             else
             {
                 glUseProgram( programHandle );
+				transform_matrix_index = glGetUniformLocation(programHandle, "TransformMatrix");
             }
         }
     }
@@ -328,10 +370,10 @@ int _tmain(int argc, char* argv[])
   glutDisplayFunc(glut_display);
   glutReshapeFunc(glut_reshape);
   glutKeyboardFunc(glut_process_keys);
+  glutIdleFunc(glut_animate);
 
   init();
 
   glutMainLoop();
-	return 0;
 }
 
