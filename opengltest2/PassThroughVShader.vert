@@ -1,14 +1,14 @@
 #version 330
 
 in vec3 VertexPosition;
-in vec3 VertexColor;
+in vec2 VertexTexCoord;
 
 uniform mat4 TransformMatrix;
 
-out vec3 Color;
+out vec2 TexCoord;
 
 void main()
 {
-        Color = VertexColor;
+        TexCoord = VertexTexCoord;
         gl_Position = TransformMatrix * vec4( VertexPosition, 1.0);
 }
