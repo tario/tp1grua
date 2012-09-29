@@ -213,10 +213,10 @@ void loadAndInitTexture(const char* filename, GLuint programHandle)
 	unsigned char* texture_data = (unsigned char*)malloc(bm.bmHeight * bm.bmWidth * 4);
 
 	GetDIBits(dcBitmap, hBitmap, 0, bm.bmHeight, bitmap_data, &bmpInfo, DIB_RGB_COLORS );
-	int line_width = 2;
+	int padding = ((bm.bmWidth * 3 / 4) + 1) * 4 - bm.bmWidth * 3;
 	for (int i=0; i<bm.bmWidth; i++) {
 		for (int j=0; j<bm.bmHeight; j++) {
-			unsigned char* bitmapPixelData = (unsigned char*)bitmap_data + (j*bm.bmWidth + i) * 3 + j*2;
+			unsigned char* bitmapPixelData = (unsigned char*)bitmap_data + (j*bm.bmWidth + i) * 3 + j*padding;
 			unsigned char* texturePixelData = (unsigned char*)texture_data + (j*bm.bmWidth + i) * 4;
 			texturePixelData[0] = bitmapPixelData[2];
 			texturePixelData[1] = bitmapPixelData[1];
