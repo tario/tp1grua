@@ -274,7 +274,7 @@ void init_shaders() {
             std::cout << "Error creating vertex shader" << std::endl;
         }
 
-        std::ifstream v_shader_file("PassThroughVShader.vert", std::ifstream::in);
+        std::ifstream v_shader_file("TextureVShader.vert", std::ifstream::in);
         std::string v_str((std::istreambuf_iterator<char>(v_shader_file)), std::istreambuf_iterator<char>());
         const char* vs_code_array[] = {v_str.c_str()};
         
@@ -309,7 +309,7 @@ void init_shaders() {
             std::cout << "Error creating fragment shader" << std::endl;
         }
 
-        std::ifstream f_shader_file("BasicFShader.frag", std::ifstream::in);
+        std::ifstream f_shader_file("TextureFShader.frag", std::ifstream::in);
         std::string f_str((std::istreambuf_iterator<char>(f_shader_file)), std::istreambuf_iterator<char>());
         const char* fs_code_array[] = {f_str.c_str()};
         

@@ -81,6 +81,8 @@
     <None Include="BasicFShader.frag" />
     <None Include="PassThroughVShader.vert" />
     <None Include="ReadMe.txt" />
+    <None Include="TextureFShader.frag" />
+    <None Include="TextureVShader.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="prisma.h" />
