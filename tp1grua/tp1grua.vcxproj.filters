@@ -6,12 +6,18 @@
     <ClCompile Include="prisma.cpp">
       <Filter>primitivas</Filter>
     </ClCompile>
+    <ClCompile Include="shader.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="prisma.h">
       <Filter>primitivas</Filter>
+    </ClInclude>
+    <ClInclude Include="shader.h">
+      <Filter>utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -35,6 +41,9 @@
     </Filter>
     <Filter Include="shaders">
       <UniqueIdentifier>{f3bf97ab-ee85-4026-905c-8204925cb6a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils">
+      <UniqueIdentifier>{6d18e2b0-469c-4f01-b0e0-58d9139bae11}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
