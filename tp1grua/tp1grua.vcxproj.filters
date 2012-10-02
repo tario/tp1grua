@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="tp1grua.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="prisma.cpp">
+      <Filter>primitivas</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="prisma.h">
+      <Filter>primitivas</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+    <None Include="BasicFShader.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="PassThroughVShader.vert">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="TextureFShader.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="TextureVShader.vert">
+      <Filter>shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="primitivas">
+      <UniqueIdentifier>{10fffed0-5d4a-425c-b93c-1dca552ad678}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{f3bf97ab-ee85-4026-905c-8204925cb6a0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
