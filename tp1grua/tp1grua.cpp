@@ -15,7 +15,9 @@
 
 #include "prisma.h"
 #include "windows.h"
+#include "shader.h"
 
+Shader* textureShader;
 int transform_matrix_index;
 
 #define wglewGetContext() (&_wglewctx)
@@ -90,6 +92,8 @@ void glut_display() {
 
 	//rotate_matrix = glm::lookAt(glm::vec3(0.0,200.0,2.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(200.0, 200.0, 200.0)) * rotate_matrix;
 	glUniformMatrix4fv(transform_matrix_index, 1, 0, glm::value_ptr(Projection * View * Model));
+
+	textureShader->use();
     glDrawArrays( GL_TRIANGLES, 0, 36);
 
     //gluLookAt(0.0, 200.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
@@ -184,7 +188,7 @@ void init_buffers() {
 
 GLuint textureid;
 
-void loadAndInitTexture(const char* filename, GLuint programHandle)
+void loadAndInitTexture(const char* filename)
 {
 
    HBITMAP hBitmap = (HBITMAP)::LoadImage(NULL, "e:\\imagen.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE|LR_CREATEDIBSECTION);
@@ -233,9 +237,19 @@ void loadAndInitTexture(const char* filename, GLuint programHandle)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, bm.bmWidth, bm.bmHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture_data);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    
+
+}
+
+void init_shaders() {
+	textureShader = new Shader("TextureFShader.frag", "TextureVShader.vert");
+	textureShader->bindAttribLocation(0, "VertexPosition" );
+    textureShader->bindAttribLocation(1, "VertexColor" );
+	textureShader->link();
+	transform_matrix_index = textureShader->getUniformLocation("TransformMatrix");
+	loadAndInitTexture("test");
+	    
     // Set the Tex1 sampler uniform to refer to texture unit 0
-    int loc = glGetUniformLocation(programHandle, "texture1");
+    int loc = textureShader->getUniformLocation("texture1");
     
     if( loc >= 0 )
     {
@@ -247,7 +261,7 @@ void loadAndInitTexture(const char* filename, GLuint programHandle)
     }
 }
 
-void init_shaders() {
+void init_shaders_() {
 	// ********************************************
     // Compiling the shader programms
     //*********************************************
@@ -387,7 +401,7 @@ void init_shaders() {
 				transform_matrix_index = glGetUniformLocation(programHandle, "TransformMatrix");
             }
         }
-				loadAndInitTexture("qweqwe", programHandle);
+				loadAndInitTexture("test");
 
     }
 

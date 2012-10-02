@@ -107,7 +107,12 @@ Shader::Shader(std::string fragmentShader, std::string vertexShader) {
             glAttachShader( this->programHandle, vertShader );
             glAttachShader( this->programHandle, fragShader );
 
-            glLinkProgram( this->programHandle );
+        }
+	}
+}
+void Shader::link() {
+
+			glLinkProgram( this->programHandle );
 
             GLint status;
             glGetProgramiv( this->programHandle, GL_LINK_STATUS, &status );
@@ -125,13 +130,6 @@ Shader::Shader(std::string fragmentShader, std::string vertexShader) {
                     free(log);
                 }
             }
-            else
-            {
-                glUseProgram( this->programHandle );
-            }
-        }
-    }
-
 }
 
 void Shader::bindAttribLocation(GLuint location, std::string attrib) {
