@@ -17,6 +17,7 @@
 #include "windows.h"
 #include "shader.h"
 #include "cubo_texturado.h"
+#include "cubo_color.h"
 
 Dibujable* cubo;
 
@@ -105,9 +106,9 @@ void init() {
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
 
-	Texture* texture = new Texture("e:\\imagen.bmp");
-	cubo = new CuboTexturado(texture);
-
+	//Texture* texture = new Texture("e:\\imagen.bmp");
+	//cubo = new CuboTexturado(texture);
+	cubo = new CuboColor(glm::vec3(1.0,0.0,0.0));
 }
 
 HWND wnd = NULL;

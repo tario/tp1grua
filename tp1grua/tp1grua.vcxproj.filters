@@ -21,6 +21,12 @@
     <ClCompile Include="texture_shader.cpp">
       <Filter>shaderscode</Filter>
     </ClCompile>
+    <ClCompile Include="cubo_color.cpp">
+      <Filter>primitivas</Filter>
+    </ClCompile>
+    <ClCompile Include="color_shader.cpp">
+      <Filter>shaderscode</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -44,6 +50,12 @@
       <Filter>primitivas</Filter>
     </ClInclude>
     <ClInclude Include="texture_shader.h">
+      <Filter>shaderscode</Filter>
+    </ClInclude>
+    <ClInclude Include="cubo_color.h">
+      <Filter>primitivas</Filter>
+    </ClInclude>
+    <ClInclude Include="color_shader.h">
       <Filter>shaderscode</Filter>
     </ClInclude>
   </ItemGroup>
