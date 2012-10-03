@@ -14,8 +14,8 @@ class Cubo {
 
 	protected:
 		GLuint getVaoHandle() { return vaoHandle;};
+		GLuint vaoHandle;
 
 	private:
-		GLuint vaoHandle;
 };
 

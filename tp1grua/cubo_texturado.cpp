@@ -1,8 +1,37 @@
 #include "stdafx.h"
 #include "cubo_texturado.h"
 
-CuboTexturado::CuboTexturado(Texture& tex) : Cubo(), texture(tex) {
+static float textureCoordData[] = 
+{
+     1.0f,  0.0f,
+     0.0f,  1.0f,
+     0.0f,  0.0f,
+     0.0f,  0.0f
+};
+
+CuboTexturado::CuboTexturado(Texture* tex) : Cubo(), texture(tex) {
 	this->extra_data = new float[36*2];
+	int i;
+
+	for (i=0; i<6; i++) {
+		extra_data[i*12] = 0.0;
+		extra_data[i*12+1] = 0.0;
+
+		extra_data[i*12+2] = 1.0;
+		extra_data[i*12+3] = 0.0;
+
+		extra_data[i*12+4] = 0.0;
+		extra_data[i*12+5] = 1.0;
+
+		extra_data[i*12+6] = 1.0;
+		extra_data[i*12+7] = 0.0;
+
+		extra_data[i*12+8] = 0.0;
+		extra_data[i*12+9] = 1.0;
+
+		extra_data[i*12+10] = 1.0;
+		extra_data[i*12+11] = 1.0;
+	}
 
 	textureShader = new Shader("TextureFShader.frag", "TextureVShader.vert");
 	textureShader->bindAttribLocation(0, "VertexPosition" );
@@ -13,7 +42,7 @@ CuboTexturado::CuboTexturado(Texture& tex) : Cubo(), texture(tex) {
 }
 
 void CuboTexturado::dibujar(const glm::mat4& m) {
-	texture.load(0);
+	texture->load(0);
 	glUniform1i(this->texture_location, 0);
 	glUniformMatrix4fv(this->transform_matrix_index, 1, 0, glm::value_ptr(m));
 

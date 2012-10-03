@@ -41,4 +41,8 @@ Cubo::Cubo() {
 
     // Enable the vertex attributes array
     glEnableVertexAttribArray(0);
+
+    // Map index 0 to the position buffer
+    glBindBuffer( GL_ARRAY_BUFFER, positionBufferHandle);
+    glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 }

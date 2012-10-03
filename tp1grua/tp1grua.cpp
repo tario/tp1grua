@@ -18,8 +18,7 @@
 #include "shader.h"
 #include "cubo_texturado.h"
 
-Shader* textureShader;
-int transform_matrix_index;
+CuboTexturado* cuboTexturado;
 
 #define wglewGetContext() (&_wglewctx)
 
@@ -40,10 +39,6 @@ float textureCoordData[] =
      0.0f,  0.0f,
      0.0f,  0.0f
 };
-GLuint textureCoordBufferHandle;
-
-// Handle to the vertex array object
-GLuint vaoHandle;
 
 float profundidad = 0.0;
 
@@ -77,8 +72,6 @@ void glut_display() {
 //    glMatrixMode(GL_MODELVIEW);
 //    glLoadIdentity();
 
-    glBindVertexArray( vaoHandle );
-
 	glm::mat4 rotate_matrix = glm::scale(glm::vec3(1.25,1.25,1.25)); //glm::mat4(1.0); //glm::rotate(glm::mat4(1.0), angle, glm::vec3(0.4, 1.0, 0.3));
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
 	glm::mat4 Projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
@@ -92,11 +85,11 @@ void glut_display() {
 	glm::mat4 Model      = glm::rotate(glm::mat4(1.0), angle, glm::vec3(0.4, 1.0, 0.3));;
 
 	//rotate_matrix = glm::lookAt(glm::vec3(0.0,200.0,2.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(200.0, 200.0, 200.0)) * rotate_matrix;
-	glUniformMatrix4fv(transform_matrix_index, 1, 0, glm::value_ptr(Projection * View * Model));
-
-	textureShader->use();
-    glUniform1i(loc, 1);
-	glDrawArrays( GL_TRIANGLES, 0, 36);
+	//glUniformMatrix4fv(transform_matrix_index, 1, 0, glm::value_ptr(Projection * View * Model));
+	cuboTexturado->dibujar(Projection * View * Model);
+	//textureShader->use();
+  //  glUniform1i(loc, 1);
+//	glDrawArrays( GL_TRIANGLES, 0, 36);
 
     //gluLookAt(0.0, 200.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     //glutWireTeapot(1.0);
@@ -107,117 +100,14 @@ void glut_display() {
   //glFlush();
 }
 
-void assignvec3(float* data, glm::vec4 vect) {
-	data[0] = glm::vec3(vect)[0];
-	data[1] = glm::vec3(vect)[1];
-	data[2] = glm::vec3(vect)[2];
-}
-
-void square(float* data, glm::mat4 matrix) {
-	assignvec3(data, matrix * glm::vec4(-1.0f, -1.0f, 1.0f, 1.0f));
-	assignvec3(data+3, matrix * glm::vec4(-1.0f, 1.0f, 1.0f, 1.0f));
-	assignvec3(data+6, matrix * glm::vec4(1.0f, -1.0f, 1.0f, 1.0f));
-	assignvec3(data+9, matrix * glm::vec4(-1.0f, 1.0f, 1.0f, 1.0f));
-	assignvec3(data+12, matrix * glm::vec4(1.0f, -1.0f, 1.0f, 1.0f));
-	assignvec3(data+15, matrix * glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-}
-
-void init_buffers() {
-	GLuint vboHandles[20];
-    glGenBuffers(2, vboHandles);
-    positionBufferHandle = vboHandles[0];
-    textureCoordBufferHandle = vboHandles[1];
-
-	float vertexdata[36*3];
-	float colordata[36*2];
-	int i;
-
-	for (i=0; i<6; i++) {
-		colordata[i*12] = 0.0;
-		colordata[i*12+1] = 0.0;
-
-		colordata[i*12+2] = 1.0;
-		colordata[i*12+3] = 0.0;
-
-		colordata[i*12+4] = 0.0;
-		colordata[i*12+5] = 1.0;
-
-		colordata[i*12+6] = 1.0;
-		colordata[i*12+7] = 0.0;
-
-		colordata[i*12+8] = 0.0;
-		colordata[i*12+9] = 1.0;
-
-		colordata[i*12+10] = 1.0;
-		colordata[i*12+11] = 1.0;
-	}
-
-	glm::mat4 reflection = glm::scale(glm::vec3(1.0,1.0,-1.0));
-	glm::mat4 xrotation = glm::rotate(glm::mat4(1.0),90.0f, glm::vec3(1.0f,0.0f,0.0f));
-	glm::mat4 yrotation = glm::rotate(glm::mat4(1.0),90.0f, glm::vec3(0.0f,1.0f,0.0f));
-	square(vertexdata, glm::mat4(1.0));
-	square(vertexdata+6*3, reflection);
-	square(vertexdata+12*3, xrotation  * reflection);
-	square(vertexdata+18*3, xrotation);
-	square(vertexdata+24*3, yrotation  * reflection);
-	square(vertexdata+30*3, yrotation);
-
-    glBindBuffer( GL_ARRAY_BUFFER, positionBufferHandle );
-    glBufferData( GL_ARRAY_BUFFER, 36*3 * sizeof (float), vertexdata, GL_STATIC_DRAW );
-
-    // Create and set-up the vertex array objet
-    glGenVertexArrays( 1, &vaoHandle );
-    glBindVertexArray( vaoHandle );
-
-    // Enable the vertex attributes array
-    glEnableVertexAttribArray(0);
-
-
-    // Map index 0 to the position buffer
-    glBindBuffer( GL_ARRAY_BUFFER, positionBufferHandle);
-    glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
-
-	
-    glEnableVertexAttribArray(1);
-	
-	glBindBuffer( GL_ARRAY_BUFFER, textureCoordBufferHandle );
-    glBufferData( GL_ARRAY_BUFFER, 36*2 * sizeof (float), colordata, GL_STATIC_DRAW );
-
-    // Map index 1 to the texture coord buffer
-    glBindBuffer( GL_ARRAY_BUFFER, textureCoordBufferHandle);
-    glVertexAttribPointer( 1, 2, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
-
-
-}
-
-GLuint textureid;
-
-void init_shaders() {
-	textureShader = new Shader("TextureFShader.frag", "TextureVShader.vert");
-	textureShader->bindAttribLocation(0, "VertexPosition" );
-    textureShader->bindAttribLocation(1, "VertexColor" );
-	textureShader->link();
-	transform_matrix_index = textureShader->getUniformLocation("TransformMatrix");
-	//loadAndInitTexture("test");
-
-	Texture* texture1 = new Texture("e:\\imagen.bmp");
-	texture1->load(1);
-  
-    // Set the Tex1 sampler uniform to refer to texture unit 0
-    loc = textureShader->getUniformLocation("texture1");
-    if( loc == 0 )
-    {
-        fprintf(stderr, "Uniform variable Tex1 not found!\n");
-    }
-}
-
 void init() {
   glClearColor(0.3f, 0.3f, 0.4f, 0.0f);
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
 
-  init_buffers();
-  init_shaders();
+	Texture* texture = new Texture("e:\\imagen.bmp");
+	cuboTexturado = new CuboTexturado(texture);
+	cuboTexturado->extraVertexInfo();
 
 }
 

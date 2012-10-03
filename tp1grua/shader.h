@@ -1,3 +1,6 @@
+#ifndef _SHADER_H
+#define _SHADER_H
+
 #include "GL/glew.h"
 #include "GL/wglew.h"
 #include "GL/freeglut.h"
@@ -19,3 +22,5 @@ private:
 	GLuint programHandle;
 
 };
+
+#endif
