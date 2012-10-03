@@ -11,6 +11,10 @@ class Cubo {
 	public:
 
 		Cubo();
+
+	protected:
+		GLuint getVaoHandle() { return vaoHandle;};
+
 	private:
 		GLuint vaoHandle;
 };

@@ -1,12 +1,26 @@
 #include "stdafx.h"
 #include "cubo_texturado.h"
 
-CuboTexturado::CuboTexturado(Texture& texture) : Cubo() {
+CuboTexturado::CuboTexturado(Texture& tex) : Cubo(), texture(tex) {
 	this->extra_data = new float[36*2];
+
+	textureShader = new Shader("TextureFShader.frag", "TextureVShader.vert");
+	textureShader->bindAttribLocation(0, "VertexPosition" );
+    textureShader->bindAttribLocation(1, "VertexColor" );
+	textureShader->link();
+	this->texture_location = textureShader->getUniformLocation("texture1");
+	this->transform_matrix_index = textureShader->getUniformLocation("TransformMatrix");
 }
 
-void CuboTexturado::dibujar() {
+void CuboTexturado::dibujar(const glm::mat4& m) {
+	texture.load(0);
+	glUniform1i(this->texture_location, 0);
+	glUniformMatrix4fv(this->transform_matrix_index, 1, 0, glm::value_ptr(m));
 
+	glBindVertexArray( this->getVaoHandle() );
+
+	this->textureShader->use();
+	glDrawArrays( GL_TRIANGLES, 0, 36);
 }
 
 GLuint CuboTexturado::extraVertexInfo() {
