@@ -45,18 +45,13 @@ CuboTexturado::CuboTexturado(Texture* tex) : Cubo(), texture(tex) {
     glBindBuffer( GL_ARRAY_BUFFER, textureCoordBufferHandle);
     glVertexAttribPointer( 1, 2, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
-	textureShader = new Shader("TextureFShader.frag", "TextureVShader.vert");
-	textureShader->bindAttribLocation(0, "VertexPosition" );
-    textureShader->bindAttribLocation(1, "VertexColor" );
-	textureShader->link();
-	this->texture_location = textureShader->getUniformLocation("texture1");
-	this->transform_matrix_index = textureShader->getUniformLocation("TransformMatrix");
+	textureShader = TextureShader::instance();
 }
 
 void CuboTexturado::dibujar(const glm::mat4& m) {
 	texture->load(0);
-	glUniform1i(this->texture_location, 0);
-	glUniformMatrix4fv(this->transform_matrix_index, 1, 0, glm::value_ptr(m));
+	textureShader->setTextureUnit(0);
+	textureShader->setTransformMatrix(m);
 
 	glBindVertexArray( this->getVaoHandle() );
 

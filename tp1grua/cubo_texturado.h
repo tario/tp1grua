@@ -1,6 +1,6 @@
 #include "cubo.h" 
 #include "texture.h"
-#include "shader.h"
+#include "texture_shader.h"
 
 class CuboTexturado : public Cubo {
 public:
@@ -10,7 +10,5 @@ public:
 private:
 	float* extra_data;
 	Texture* texture;
-	Shader* textureShader;
-	int transform_matrix_index;
-	int texture_location;
+	TextureShader* textureShader;
 };
