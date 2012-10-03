@@ -201,18 +201,11 @@ void init_shaders() {
 	//loadAndInitTexture("test");
 
 	Texture* texture1 = new Texture("e:\\imagen.bmp");
-	Texture* texture2 = new Texture("e:\\imagen2.bmp");
 	texture1->load(1);
-	texture2->load(2);
   
     // Set the Tex1 sampler uniform to refer to texture unit 0
     loc = textureShader->getUniformLocation("texture1");
-    
-    if( loc >= 0 )
-    {
-
-    }
-    else
+    if( loc == 0 )
     {
         fprintf(stderr, "Uniform variable Tex1 not found!\n");
     }
