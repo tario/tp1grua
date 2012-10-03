@@ -87,6 +87,7 @@
   <ItemGroup>
     <ClInclude Include="cubo.h" />
     <ClInclude Include="cubo_texturado.h" />
+    <ClInclude Include="dibujable.h" />
     <ClInclude Include="prisma.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="stdafx.h" />

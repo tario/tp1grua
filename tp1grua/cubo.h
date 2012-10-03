@@ -6,8 +6,9 @@
 #include "GL/glew.h"
 #include "GL/wglew.h"
 #include "GL/freeglut.h"
+#include "dibujable.h"
 
-class Cubo {
+class Cubo : public Dibujable {
 	public:
 
 		Cubo();

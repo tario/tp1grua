@@ -15,8 +15,9 @@
 #include "GL/glew.h"
 #include "GL/wglew.h"
 #include "GL/freeglut.h"
+#include "dibujable.h"
 
-class Prisma {
+class Prisma : public Dibujable {
 public:
 	Prisma(int n, glm::vec3 color);
 

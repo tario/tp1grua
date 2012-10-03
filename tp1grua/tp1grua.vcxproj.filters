@@ -37,6 +37,9 @@
     <ClInclude Include="texture.h">
       <Filter>utils</Filter>
     </ClInclude>
+    <ClInclude Include="dibujable.h">
+      <Filter>primitivas</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />

@@ -18,7 +18,7 @@
 #include "shader.h"
 #include "cubo_texturado.h"
 
-CuboTexturado* cuboTexturado;
+Dibujable* cubo;
 
 #define wglewGetContext() (&_wglewctx)
 
@@ -86,7 +86,7 @@ void glut_display() {
 
 	//rotate_matrix = glm::lookAt(glm::vec3(0.0,200.0,2.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(200.0, 200.0, 200.0)) * rotate_matrix;
 	//glUniformMatrix4fv(transform_matrix_index, 1, 0, glm::value_ptr(Projection * View * Model));
-	cuboTexturado->dibujar(Projection * View * Model);
+	cubo->dibujar(Projection * View * Model);
 	//textureShader->use();
   //  glUniform1i(loc, 1);
 //	glDrawArrays( GL_TRIANGLES, 0, 36);
@@ -106,7 +106,7 @@ void init() {
 	glEnable(GL_DEPTH_TEST);
 
 	Texture* texture = new Texture("e:\\imagen.bmp");
-	cuboTexturado = new CuboTexturado(texture);
+	cubo = new CuboTexturado(texture);
 
 }
 
