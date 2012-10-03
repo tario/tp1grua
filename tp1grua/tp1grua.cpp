@@ -107,7 +107,6 @@ void init() {
 
 	Texture* texture = new Texture("e:\\imagen.bmp");
 	cuboTexturado = new CuboTexturado(texture);
-	cuboTexturado->extraVertexInfo();
 
 }
 

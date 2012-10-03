@@ -6,8 +6,6 @@ class CuboTexturado : public Cubo {
 public:
 
 	CuboTexturado(Texture* texture);
-	GLuint extraVertexInfo();
-
 	void dibujar(const glm::mat4& m);
 private:
 	float* extra_data;

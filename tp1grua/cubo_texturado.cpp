@@ -33,6 +33,18 @@ CuboTexturado::CuboTexturado(Texture* tex) : Cubo(), texture(tex) {
 		extra_data[i*12+11] = 1.0;
 	}
 
+	GLuint textureCoordBufferHandle;
+	glGenBuffers(1, &textureCoordBufferHandle);
+	
+    glEnableVertexAttribArray(1);
+	
+	glBindBuffer( GL_ARRAY_BUFFER, textureCoordBufferHandle );
+	glBufferData( GL_ARRAY_BUFFER, 36*2 * sizeof (float), this->extra_data, GL_STATIC_DRAW );
+
+    // Map index 1 to the texture coord buffer
+    glBindBuffer( GL_ARRAY_BUFFER, textureCoordBufferHandle);
+    glVertexAttribPointer( 1, 2, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+
 	textureShader = new Shader("TextureFShader.frag", "TextureVShader.vert");
 	textureShader->bindAttribLocation(0, "VertexPosition" );
     textureShader->bindAttribLocation(1, "VertexColor" );
@@ -50,20 +62,4 @@ void CuboTexturado::dibujar(const glm::mat4& m) {
 
 	this->textureShader->use();
 	glDrawArrays( GL_TRIANGLES, 0, 36);
-}
-
-GLuint CuboTexturado::extraVertexInfo() {
-	GLuint textureCoordBufferHandle;
-	glGenBuffers(1, &textureCoordBufferHandle);
-	
-    glEnableVertexAttribArray(1);
-	
-	glBindBuffer( GL_ARRAY_BUFFER, textureCoordBufferHandle );
-	glBufferData( GL_ARRAY_BUFFER, 36*2 * sizeof (float), this->extra_data, GL_STATIC_DRAW );
-
-    // Map index 1 to the texture coord buffer
-    glBindBuffer( GL_ARRAY_BUFFER, textureCoordBufferHandle);
-    glVertexAttribPointer( 1, 2, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
-
-	return textureCoordBufferHandle;
 }
