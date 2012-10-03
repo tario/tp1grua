@@ -8,12 +8,13 @@ static void assignvec3(float* data, glm::vec4 vect) {
 }
 
 static void square(float* data, glm::mat4 matrix) {
-	assignvec3(data, matrix * glm::vec4(-1.0f, -1.0f, 1.0f, 1.0f));
-	assignvec3(data+3, matrix * glm::vec4(-1.0f, 1.0f, 1.0f, 1.0f));
-	assignvec3(data+6, matrix * glm::vec4(1.0f, -1.0f, 1.0f, 1.0f));
-	assignvec3(data+9, matrix * glm::vec4(-1.0f, 1.0f, 1.0f, 1.0f));
-	assignvec3(data+12, matrix * glm::vec4(1.0f, -1.0f, 1.0f, 1.0f));
-	assignvec3(data+15, matrix * glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	float l = 0.5;
+	assignvec3(data, matrix * glm::vec4(-l, -l, l, 1.0f));
+	assignvec3(data+3, matrix * glm::vec4(-l, l, l, 1.0f));
+	assignvec3(data+6, matrix * glm::vec4(l, -l, l, 1.0f));
+	assignvec3(data+9, matrix * glm::vec4(-l, l, l, 1.0f));
+	assignvec3(data+12, matrix * glm::vec4(l, -l, l, 1.0f));
+	assignvec3(data+15, matrix * glm::vec4(l, l, l, 1.0f));
 }
 
 Cubo::Cubo() {
