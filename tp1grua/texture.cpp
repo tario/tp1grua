@@ -44,17 +44,15 @@ Texture::Texture(const std::string& path) {
 	width = bm.bmWidth;
 	height = bm.bmHeight;
 
+	glGenTextures(1, &textureid);
+    glBindTexture(GL_TEXTURE_2D, textureid);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, this->texture_data);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 }
 
 void Texture::load(int slot) {
 	glActiveTexture(GL_TEXTURE0+slot);
-
-	GLuint textureid;
-
-	glGenTextures(1, &textureid);
     glBindTexture(GL_TEXTURE_2D, textureid);
-
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture_data);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 }
