@@ -11,4 +11,11 @@ class Texture {
 	public:
 
 		Texture(const std::string& path);
+
+		void load(int slot);
+
+	private:
+		int height;
+		int width;
+		unsigned char* texture_data;
 };

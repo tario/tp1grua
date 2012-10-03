@@ -70,7 +70,7 @@ void glut_animate() {
 	glutPostRedisplay();
 	Sleep(25);
 }
-
+int loc;
 void glut_display() {
   // do display
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -95,7 +95,8 @@ void glut_display() {
 	glUniformMatrix4fv(transform_matrix_index, 1, 0, glm::value_ptr(Projection * View * Model));
 
 	textureShader->use();
-    glDrawArrays( GL_TRIANGLES, 0, 36);
+    glUniform1i(loc, 1);
+	glDrawArrays( GL_TRIANGLES, 0, 36);
 
     //gluLookAt(0.0, 200.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     //glutWireTeapot(1.0);
@@ -199,14 +200,17 @@ void init_shaders() {
 	transform_matrix_index = textureShader->getUniformLocation("TransformMatrix");
 	//loadAndInitTexture("test");
 
-	Texture* texture = new Texture("e:\\imagen.bmp");
+	Texture* texture1 = new Texture("e:\\imagen.bmp");
+	Texture* texture2 = new Texture("e:\\imagen2.bmp");
+	texture1->load(1);
+	texture2->load(2);
   
     // Set the Tex1 sampler uniform to refer to texture unit 0
-    int loc = textureShader->getUniformLocation("texture1");
+    loc = textureShader->getUniformLocation("texture1");
     
     if( loc >= 0 )
     {
-        glUniform1i(loc, 0);
+
     }
     else
     {

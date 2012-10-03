@@ -3,7 +3,6 @@
 #include "windows.h"
 
 Texture::Texture(const std::string& path) {
-
 	HBITMAP hBitmap = (HBITMAP)::LoadImage(NULL, path.c_str(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE|LR_CREATEDIBSECTION);
    if(NULL == hBitmap)
    {
@@ -28,7 +27,7 @@ Texture::Texture(const std::string& path) {
 
 	//COLORREF* pixel = new COLORREF [ bm.bmWidth * bm.bmHeight ];
 	unsigned char* bitmap_data = (unsigned char*)malloc(bm.bmHeight * bm.bmWidth * 3);
-	unsigned char* texture_data = (unsigned char*)malloc(bm.bmHeight * bm.bmWidth * 4);
+	this->texture_data = (unsigned char*)malloc(bm.bmHeight * bm.bmWidth * 4);
 
 	GetDIBits(dcBitmap, hBitmap, 0, bm.bmHeight, bitmap_data, &bmpInfo, DIB_RGB_COLORS );
 	int padding = ((bm.bmWidth * 3 / 4) + 1) * 4 - bm.bmWidth * 3;
@@ -42,14 +41,20 @@ Texture::Texture(const std::string& path) {
 		}
 	}
 
-    // Copy file to OpenGL
-    glActiveTexture(GL_TEXTURE0);
+	width = bm.bmWidth;
+	height = bm.bmHeight;
+
+}
+
+void Texture::load(int slot) {
+	glActiveTexture(GL_TEXTURE0+slot);
 
 	GLuint textureid;
-    glGenTextures(1, &textureid);
+
+	glGenTextures(1, &textureid);
     glBindTexture(GL_TEXTURE_2D, textureid);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, bm.bmWidth, bm.bmHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture_data);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture_data);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 }
