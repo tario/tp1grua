@@ -9,6 +9,15 @@
     <ClCompile Include="shader.cpp">
       <Filter>utils</Filter>
     </ClCompile>
+    <ClCompile Include="cubo.cpp">
+      <Filter>primitivas</Filter>
+    </ClCompile>
+    <ClCompile Include="cubo_texturado.cpp">
+      <Filter>primitivas</Filter>
+    </ClCompile>
+    <ClCompile Include="texture.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -17,6 +26,15 @@
       <Filter>primitivas</Filter>
     </ClInclude>
     <ClInclude Include="shader.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="cubo.h">
+      <Filter>primitivas</Filter>
+    </ClInclude>
+    <ClInclude Include="cubo_texturado.h">
+      <Filter>primitivas</Filter>
+    </ClInclude>
+    <ClInclude Include="texture.h">
       <Filter>utils</Filter>
     </ClInclude>
   </ItemGroup>
