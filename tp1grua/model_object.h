@@ -16,6 +16,8 @@ public:
 	float xdown, float xup, float ydown, float yup, float zdown, float zup
 	);
 
+	static glm::mat4 line(const glm::vec3& p0, const glm::vec3& p1, float anchox, float anchoy);
+
 private:
 	glm::mat4 model_matrix;
 	Dibujable* primitiva;

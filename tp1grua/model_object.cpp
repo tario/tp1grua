@@ -24,3 +24,16 @@ glm::mat4 ModelObject::cell_matrix(float xdown, float xup, float ydown, float yu
 	model = glm::scale(model, glm::vec3(xup - xdown, yup - ydown, zup - zdown));
 	return model;
 }
+
+glm::mat4 ModelObject::line(const glm::vec3& p0, const glm::vec3& p1, float anchox, float anchoy) {
+	float distance = glm::distance(p0,p1);
+	glm::vec3 p2(p0[0], p0[1], p0[2]+distance);
+	glm::mat4 m = glm::translate(glm::mat4(1.0), glm::vec3(p0[0], p0[1], p0[2]));
+	float angle = glm::angle(p2-p0, p1-p0);
+	glm::vec3 normal = glm::normalize(glm::cross(p2-p0, p1-p0));
+	m = glm::rotate(m, angle, normal);
+	m = glm::translate(m, glm::vec3(0,0,distance/2));
+	m = glm::scale(m, glm::vec3(anchox, anchoy,distance));
+
+	return m;
+}

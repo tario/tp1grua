@@ -3,6 +3,7 @@
 
 #include "dibujable.h"
 #include "cubo_color.h"
+#include "brazo.h" 
 
 class Cabina : public Dibujable {
 	public:
@@ -13,8 +14,10 @@ class Cabina : public Dibujable {
 
 		CuboColor cubo;
 		CuboColor contra_peso;
+		Brazo brazo;
 
 		glm::mat4 m_contra_peso;
+		glm::mat4 m_brazo;
 };
 
 #endif
