@@ -12,6 +12,9 @@ class Cabina : public Dibujable {
 	private:
 
 		CuboColor cubo;
+		CuboColor contra_peso;
+
+		glm::mat4 m_contra_peso;
 };
 
 #endif
