@@ -45,6 +45,9 @@
     <ClCompile Include="torre.cpp">
       <Filter>escena</Filter>
     </ClCompile>
+    <ClCompile Include="brazo.cpp">
+      <Filter>escena</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -92,6 +95,9 @@
       <Filter>escena</Filter>
     </ClInclude>
     <ClInclude Include="torre.h">
+      <Filter>escena</Filter>
+    </ClInclude>
+    <ClInclude Include="brazo.h">
       <Filter>escena</Filter>
     </ClInclude>
   </ItemGroup>

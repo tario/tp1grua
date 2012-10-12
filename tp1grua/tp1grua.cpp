@@ -74,14 +74,6 @@ void glut_reshape(int w, int h) {
 
 float angle = 0;
 
-glm::mat4 cell_matrix(
-	float xdown, float xup, float ydown, float yup, float zdown, float zup
-	) {
-
-	glm::mat4 model = glm::translate(glm::vec3( (xup+xdown)/2 ,(yup+ydown)/2, (zup+zdown)/2));
-	model = glm::scale(model, glm::vec3(xup - xdown, yup - ydown, zup - zdown));
-	return model;
-}
 
 void init() {
   glClearColor(0.3f, 0.3f, 0.4f, 0.0f);
@@ -96,9 +88,9 @@ void init() {
 	grua = new Grua();
 	model_object_grua = new ModelObject(grua);
 
-	agua->set_model_matrix(cell_matrix(0.0, 3.0, -2.0, 2.0, -0.5, 0.0));
-	piso->set_model_matrix(cell_matrix(-3.0, 0.0, -2.0, 2.0, -0.5, 0.4));
-	model_object_grua->set_model_matrix(cell_matrix(-1.0, -0.5, 1.0, 1.5, 0.5, 3.0));
+	agua->set_model_matrix(ModelObject::cell_matrix(0.0, 3.0, -2.0, 2.0, -0.5, 0.0));
+	piso->set_model_matrix(ModelObject::cell_matrix(-3.0, 0.0, -2.0, 2.0, -0.5, 0.4));
+	model_object_grua->set_model_matrix(ModelObject::cell_matrix(-1.0, -0.5, 1.0, 1.5, 0.5, 3.0));
 
 	objects.push_front(agua);
 	objects.push_front(piso);
