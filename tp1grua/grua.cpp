@@ -4,6 +4,8 @@
 #include "glm/gtx/transform.hpp"
 #include <glm/gtc/type_ptr.hpp>
 #include "cubo_color.h"
+#include "cabina.h"
+#include "torre.h"
 
 static glm::mat4 cell_matrix(
 	float xdown, float xup, float ydown, float yup, float zdown, float zup
@@ -17,8 +19,8 @@ static glm::mat4 cell_matrix(
 static const glm::vec3 ocre = glm::vec3(0.6, 0.7, 0.0);
 
 Grua::Grua() : 
-	torre(new CuboColor(ocre), cell_matrix(-0.35,0.35,-0.35,0.35,-0.5, 0.2) ), 
-	cabina(new CuboColor(ocre), cell_matrix(-0.5,0.5,-0.5,0.5,0.2, 0.5)),
+	torre(new Torre(), cell_matrix(-0.35,0.35,-0.35,0.35,-0.5, 0.2) ), 
+	cabina(new Cabina(), cell_matrix(-0.5,0.5,-0.5,0.5,0.2, 0.5)),
 	angulo_cabina(0.0) {
 }
 

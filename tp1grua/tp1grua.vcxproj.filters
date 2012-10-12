@@ -39,6 +39,12 @@
     <ClCompile Include="grua.cpp">
       <Filter>escena</Filter>
     </ClCompile>
+    <ClCompile Include="cabina.cpp">
+      <Filter>escena</Filter>
+    </ClCompile>
+    <ClCompile Include="torre.cpp">
+      <Filter>escena</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -80,6 +86,12 @@
       <Filter>utils</Filter>
     </ClInclude>
     <ClInclude Include="grua.h">
+      <Filter>escena</Filter>
+    </ClInclude>
+    <ClInclude Include="cabina.h">
+      <Filter>escena</Filter>
+    </ClInclude>
+    <ClInclude Include="torre.h">
       <Filter>escena</Filter>
     </ClInclude>
   </ItemGroup>
