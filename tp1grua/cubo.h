@@ -2,10 +2,6 @@
 #ifndef __CUBO_H
 #define __CUBO_H
 
-#include "glm/glm.hpp"
-#include "glm/ext.hpp"
-#include "glm/gtx/transform.hpp"
-#include <glm/gtc/type_ptr.hpp>
 #include "GL/glew.h"
 #include "GL/wglew.h"
 #include "GL/freeglut.h"

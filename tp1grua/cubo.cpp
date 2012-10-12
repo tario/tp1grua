@@ -1,5 +1,8 @@
 #include "stdafx.h"
 #include "cubo.h"
+#include "glm/ext.hpp"
+#include "glm/gtx/transform.hpp"
+#include <glm/gtc/type_ptr.hpp>
 
 static void assignvec3(float* data, glm::vec4 vect) {
 	data[0] = glm::vec3(vect)[0];

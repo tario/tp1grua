@@ -49,12 +49,12 @@ CuboTexturado::CuboTexturado(Texture* tex) : Cubo(), texture(tex) {
 }
 
 void CuboTexturado::dibujar(const glm::mat4& m) {
+	this->textureShader->use();
+
 	texture->load(0);
 	textureShader->setTextureUnit(0);
 	textureShader->setTransformMatrix(m);
 
 	glBindVertexArray( this->getVaoHandle() );
-
-	this->textureShader->use();
 	glDrawArrays( GL_TRIANGLES, 0, 36);
 }

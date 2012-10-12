@@ -1,3 +1,6 @@
+#ifndef __CUBO_COLOR_H
+#define __CUBO_COLOR_H
+
 #include "cubo.h"
 #include "color_shader.h"
 
@@ -27,3 +30,4 @@ private:
 		);
 };
 
+#endif

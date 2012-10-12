@@ -27,6 +27,12 @@
     <ClCompile Include="color_shader.cpp">
       <Filter>shaderscode</Filter>
     </ClCompile>
+    <ClCompile Include="piso.cpp">
+      <Filter>escena</Filter>
+    </ClCompile>
+    <ClCompile Include="agua.cpp">
+      <Filter>escena</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -58,6 +64,12 @@
     <ClInclude Include="color_shader.h">
       <Filter>shaderscode</Filter>
     </ClInclude>
+    <ClInclude Include="piso.h">
+      <Filter>escena</Filter>
+    </ClInclude>
+    <ClInclude Include="agua.h">
+      <Filter>escena</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -86,6 +98,9 @@
     </Filter>
     <Filter Include="shadersglsl">
       <UniqueIdentifier>{f3bf97ab-ee85-4026-905c-8204925cb6a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="escena">
+      <UniqueIdentifier>{25dd6178-cd37-4efe-89ac-c35cfe8407b9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
