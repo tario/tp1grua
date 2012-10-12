@@ -21,21 +21,41 @@
 // elementos necesarios para la escena
 #include "agua.h"
 #include "piso.h"
+#include "grua.h"
 #include "model_object.h"
+
+#define M_PI       3.14159265358979323846
 
 
 std::list<Dibujable*> objects;
 
 ModelObject* agua;
 ModelObject* piso;
+ModelObject* grua;
 
 #define wglewGetContext() (&_wglewctx)
+
+float camara_dist = 10;
+float angle_camera = 0;
+glm::vec3 posicion_camara = glm::vec3(camara_dist*cos(angle_camera),camara_dist*sin(angle_camera),3);
 
 void glut_process_keys(unsigned char key, int x, int y) {    
     if (key == 27) 
     {
         exit(0);
     }
+
+	if (key == 'a') {
+		angle_camera = angle_camera - 0.1;
+	}
+	if (key == 'd') {
+		angle_camera = angle_camera + 0.1;
+	}
+
+	if (angle_camera < 0.0) angle_camera += M_PI*2;
+	if (angle_camera > M_PI*2) angle_camera -= M_PI*2;
+
+	posicion_camara = glm::vec3(camara_dist*cos(angle_camera),camara_dist*sin(angle_camera),3);
 }
 
 void glut_reshape(int w, int h) {
@@ -63,12 +83,15 @@ void init() {
 	//cubo = new CuboColor(glm::vec3(1.0,0.0,0.0));
 	agua = new ModelObject(new Agua());
 	piso = new ModelObject(new Piso());
+	grua = new ModelObject(new Grua());
 
 	agua->set_model_matrix(cell_matrix(0.0, 3.0, -2.0, 2.0, -0.5, 0.0));
 	piso->set_model_matrix(cell_matrix(-3.0, 0.0, -2.0, 2.0, -0.5, 0.4));
+	grua->set_model_matrix(cell_matrix(-1.0, -0.5, 1.0, 1.5, 0.5, 3.0));
 
 	objects.push_front(agua);
 	objects.push_front(piso);
+	objects.push_front(grua);
 }
 
 void glut_animate() {
@@ -89,7 +112,7 @@ void glut_display() {
 	glm::mat4 Projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
 	// Camera matrix
 	glm::mat4 View       = glm::lookAt(
-		glm::vec3(8,6,3), // Camera is at (4,3,3), in World Space
+		posicion_camara, // Camera is at (4,3,3), in World Space
 		glm::vec3(0,0,0), // and looks at the origin
 		glm::vec3(0,0,1)  // Head is up (set to 0,-1,0 to look upside-down)
 	);
