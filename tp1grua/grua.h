@@ -9,11 +9,12 @@ public:
 	Grua();
 
 	void dibujar(const glm::mat4& m);
-
+	void girar_cabina(float angulo);
 private:
 
 	ModelObject torre;
 	ModelObject cabina;
+	float angulo_cabina;
 };
 
 #endif

@@ -31,7 +31,8 @@ std::list<Dibujable*> objects;
 
 ModelObject* agua;
 ModelObject* piso;
-ModelObject* grua;
+ModelObject* model_object_grua;
+Grua* grua;
 
 #define wglewGetContext() (&_wglewctx)
 
@@ -44,6 +45,15 @@ void glut_process_keys(unsigned char key, int x, int y) {
     {
         exit(0);
     }
+
+	if (key == 'y') {
+		// girar cabina de la grua
+		grua->girar_cabina(-10.0);
+	}
+	if (key == 'h') {
+		// girar cabina de la grua
+		grua->girar_cabina(10.0);
+	}
 
 	if (key == 'a') {
 		angle_camera = angle_camera - 0.1;
@@ -83,15 +93,16 @@ void init() {
 	//cubo = new CuboColor(glm::vec3(1.0,0.0,0.0));
 	agua = new ModelObject(new Agua());
 	piso = new ModelObject(new Piso());
-	grua = new ModelObject(new Grua());
+	grua = new Grua();
+	model_object_grua = new ModelObject(grua);
 
 	agua->set_model_matrix(cell_matrix(0.0, 3.0, -2.0, 2.0, -0.5, 0.0));
 	piso->set_model_matrix(cell_matrix(-3.0, 0.0, -2.0, 2.0, -0.5, 0.4));
-	grua->set_model_matrix(cell_matrix(-1.0, -0.5, 1.0, 1.5, 0.5, 3.0));
+	model_object_grua->set_model_matrix(cell_matrix(-1.0, -0.5, 1.0, 1.5, 0.5, 3.0));
 
 	objects.push_front(agua);
 	objects.push_front(piso);
-	objects.push_front(grua);
+	objects.push_front(model_object_grua);
 }
 
 void glut_animate() {

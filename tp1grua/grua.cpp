@@ -18,7 +18,17 @@ static const glm::vec3 ocre = glm::vec3(0.6, 0.7, 0.0);
 
 Grua::Grua() : 
 	torre(new CuboColor(ocre), cell_matrix(-0.35,0.35,-0.35,0.35,-0.5, 0.2) ), 
-	cabina(new CuboColor(ocre), cell_matrix(-0.5,0.5,-0.5,0.5,0.2, 0.5)) {
+	cabina(new CuboColor(ocre), cell_matrix(-0.5,0.5,-0.5,0.5,0.2, 0.5)),
+	angulo_cabina(0.0) {
+}
+
+void Grua::girar_cabina(float angulo) {
+	this->angulo_cabina += angulo;
+	if (this->angulo_cabina < 0.0) angulo_cabina += 360.0;
+	if (this->angulo_cabina > 360.0) angulo_cabina -= 360.0;
+
+	// actualizar la matriz de modelo de la cabina
+	cabina.set_model_matrix(glm::rotate(glm::mat4(1.0), this->angulo_cabina, glm::vec3(0.0,0.0,1.0)) * cell_matrix(-0.5,0.5,-0.5,0.5,0.2, 0.5));
 }
 
 void Grua::dibujar(const glm::mat4& m) {
