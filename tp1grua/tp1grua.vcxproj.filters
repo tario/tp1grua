@@ -33,6 +33,9 @@
     <ClCompile Include="agua.cpp">
       <Filter>escena</Filter>
     </ClCompile>
+    <ClCompile Include="model_object.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -69,6 +72,9 @@
     </ClInclude>
     <ClInclude Include="agua.h">
       <Filter>escena</Filter>
+    </ClInclude>
+    <ClInclude Include="model_object.h">
+      <Filter>utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

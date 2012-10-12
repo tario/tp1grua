@@ -91,6 +91,7 @@
     <ClInclude Include="cubo_color.h" />
     <ClInclude Include="cubo_texturado.h" />
     <ClInclude Include="dibujable.h" />
+    <ClInclude Include="model_object.h" />
     <ClInclude Include="piso.h" />
     <ClInclude Include="prisma.h" />
     <ClInclude Include="shader.h" />
@@ -105,6 +106,7 @@
     <ClCompile Include="cubo.cpp" />
     <ClCompile Include="cubo_color.cpp" />
     <ClCompile Include="cubo_texturado.cpp" />
+    <ClCompile Include="model_object.cpp" />
     <ClCompile Include="piso.cpp" />
     <ClCompile Include="prisma.cpp" />
     <ClCompile Include="shader.cpp" />
