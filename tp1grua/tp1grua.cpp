@@ -7,6 +7,7 @@
 #include "GL/freeglut.h"
 #include <iostream>
 #include <fstream>
+#include <list>
 #include "math.h"
 #include "glm/glm.hpp"
 #include "glm/ext.hpp"
@@ -16,41 +17,25 @@
 #include "prisma.h"
 #include "windows.h"
 #include "shader.h"
-#include "cubo_texturado.h"
-#include "cubo_color.h"
 
-Dibujable* cubo;
+// elementos necesarios para la escena
+#include "agua.h"
+#include "piso.h"
+#include "model_object.h"
+
+
+std::list<Dibujable*> objects;
+
+ModelObject* agua;
+ModelObject* piso;
 
 #define wglewGetContext() (&_wglewctx)
-
-float positionData[] = 
-{
-     -0.8f, -0.8f, 0.0f,
-    0.8f, -0.8f, 0.0f,
-     -0.8f,  0.8f, 0.0f,
-     0.8f,  0.8f, 0.0f
-
-};
-GLuint positionBufferHandle;
-
-float textureCoordData[] = 
-{
-     1.0f,  0.0f,
-     0.0f,  1.0f,
-     0.0f,  0.0f,
-     0.0f,  0.0f
-};
-
-float profundidad = 0.0;
 
 void glut_process_keys(unsigned char key, int x, int y) {    
     if (key == 27) 
     {
         exit(0);
     }
-
-	if (key == 'a') profundidad = profundidad + 0.1;
-	if (key == 'w') profundidad = profundidad - 0.1;
 }
 
 void glut_reshape(int w, int h) {
@@ -58,6 +43,33 @@ void glut_reshape(int w, int h) {
 }
 
 float angle = 0;
+
+glm::mat4 cell_matrix(
+	float xdown, float xup, float ydown, float yup, float zdown, float zup
+	) {
+
+	glm::mat4 model = glm::translate(glm::vec3( (xup+xdown)/2 ,(yup+ydown)/2, (zup+zdown)/2));
+	model = glm::scale(model, glm::vec3(xup - xdown, yup - ydown, zup - zdown));
+	return model;
+}
+
+void init() {
+  glClearColor(0.3f, 0.3f, 0.4f, 0.0f);
+	glShadeModel(GL_SMOOTH);
+	glEnable(GL_DEPTH_TEST);
+
+	//Texture* texture = new Texture("e:\\imagen.bmp");
+	//cubo2 = new CuboTexturado(texture);
+	//cubo = new CuboColor(glm::vec3(1.0,0.0,0.0));
+	agua = new ModelObject(new Agua());
+	piso = new ModelObject(new Piso());
+
+	agua->set_model_matrix(cell_matrix(0.0, 3.0, -2.0, 2.0, -0.5, 0.0));
+	piso->set_model_matrix(cell_matrix(-3.0, 0.0, -2.0, 2.0, -0.5, 0.4));
+
+	objects.push_front(agua);
+	objects.push_front(piso);
+}
 
 void glut_animate() {
 	angle = angle + 5.1;
@@ -68,26 +80,27 @@ void glut_animate() {
 }
 int loc;
 void glut_display() {
+
   // do display
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 //    glMatrixMode(GL_MODELVIEW);
 //    glLoadIdentity();
-
-	glm::mat4 rotate_matrix = glm::scale(glm::vec3(1.25,1.25,1.25)); //glm::mat4(1.0); //glm::rotate(glm::mat4(1.0), angle, glm::vec3(0.4, 1.0, 0.3));
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
 	glm::mat4 Projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
 	// Camera matrix
 	glm::mat4 View       = glm::lookAt(
-		glm::vec3(4,3,3), // Camera is at (4,3,3), in World Space
+		glm::vec3(8,6,3), // Camera is at (4,3,3), in World Space
 		glm::vec3(0,0,0), // and looks at the origin
-		glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
+		glm::vec3(0,0,1)  // Head is up (set to 0,-1,0 to look upside-down)
 	);
-	// Model matrix : an identity matrix (model will be at the origin)
-	glm::mat4 Model      = glm::rotate(glm::mat4(1.0), angle, glm::vec3(0.4, 1.0, 0.3));;
 
-	//rotate_matrix = glm::lookAt(glm::vec3(0.0,200.0,2.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(200.0, 200.0, 200.0)) * rotate_matrix;
-	//glUniformMatrix4fv(transform_matrix_index, 1, 0, glm::value_ptr(Projection * View * Model));
-	cubo->dibujar(Projection * View * Model);
+	Dibujable* dibujable;
+	for (std::list<Dibujable*>::iterator it = objects.begin(); it!=objects.end();it++) {
+		dibujable = (*it);
+		dibujable->dibujar(Projection * View);
+	}
+
+
 	//textureShader->use();
   //  glUniform1i(loc, 1);
 //	glDrawArrays( GL_TRIANGLES, 0, 36);
@@ -99,16 +112,7 @@ void glut_display() {
 
   //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   //glFlush();
-}
 
-void init() {
-  glClearColor(0.3f, 0.3f, 0.4f, 0.0f);
-	glShadeModel(GL_SMOOTH);
-	glEnable(GL_DEPTH_TEST);
-
-	//Texture* texture = new Texture("e:\\imagen.bmp");
-	//cubo = new CuboTexturado(texture);
-	cubo = new CuboColor(glm::vec3(1.0,0.0,0.0));
 }
 
 HWND wnd = NULL;
