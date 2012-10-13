@@ -12,13 +12,16 @@ class Cabina : public Dibujable {
 
 		void girar_brazo(float angulo);
 	private:
+		void actualizar_matrices_brazo();
 
 		CuboColor cubo;
 		CuboColor contra_peso;
+		CuboColor cable;
+		CuboColor gancho;
 		Brazo brazo;
 
 		glm::mat4 m_contra_peso;
-		glm::mat4 m_brazo;
+		glm::mat4 m_brazo, m_cable, m_gancho;
 
 		float angulo_brazo;
 };
