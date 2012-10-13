@@ -1,5 +1,5 @@
 #include "dibujable.h"
-#include "cubo_color.h"
+#include "cubo_texturado.h"
 
 class Piso : public Dibujable {
 public:
@@ -8,5 +8,5 @@ public:
 	void dibujar(const glm::mat4& m);
 
 private:
-	CuboColor cubo;
+	CuboTexturado cubo;
 };

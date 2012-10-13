@@ -9,28 +9,28 @@ static float textureCoordData[] =
      0.0f,  0.0f
 };
 
-CuboTexturado::CuboTexturado(Texture* tex) : Cubo(), texture(tex) {
+CuboTexturado::CuboTexturado(Texture* tex, Cara* caras) : Cubo(), texture(tex) {
 	this->extra_data = new float[36*2];
 	int i;
 
 	for (i=0; i<6; i++) {
-		extra_data[i*12] = 0.0;
-		extra_data[i*12+1] = 0.0;
+		extra_data[i*12] = caras[i].coords[0];
+		extra_data[i*12+1] = caras[i].coords[1];
 
-		extra_data[i*12+2] = 1.0;
-		extra_data[i*12+3] = 0.0;
+		extra_data[i*12+2] = caras[i].coords[2];
+		extra_data[i*12+3] = caras[i].coords[3];
 
-		extra_data[i*12+4] = 0.0;
-		extra_data[i*12+5] = 1.0;
+		extra_data[i*12+4] = caras[i].coords[6];
+		extra_data[i*12+5] = caras[i].coords[7];
 
-		extra_data[i*12+6] = 1.0;
-		extra_data[i*12+7] = 0.0;
+		extra_data[i*12+6] = caras[i].coords[2];
+		extra_data[i*12+7] = caras[i].coords[3];
 
-		extra_data[i*12+8] = 0.0;
-		extra_data[i*12+9] = 1.0;
+		extra_data[i*12+8] = caras[i].coords[6];
+		extra_data[i*12+9] = caras[i].coords[7];
 
-		extra_data[i*12+10] = 1.0;
-		extra_data[i*12+11] = 1.0;
+		extra_data[i*12+10] = caras[i].coords[4];
+		extra_data[i*12+11] = caras[i].coords[5];
 	}
 
 	GLuint textureCoordBufferHandle;

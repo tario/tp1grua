@@ -1,9 +1,19 @@
 #include "stdafx.h"
 #include "piso.h"
 
-static const glm::vec3 gris = glm::vec3(0.5,0.5,0.5);
+float cara1[] = {0.0, 0.0, 10.0, 0.0, 10.0, 10.0, 0.0, 10.0};
+static CuboTexturado::Cara caras[] = {
+	CuboTexturado::Cara(cara1),
+	CuboTexturado::Cara(cara1),
+	CuboTexturado::Cara(cara1),
+	CuboTexturado::Cara(cara1),
+	CuboTexturado::Cara(cara1),
+	CuboTexturado::Cara(cara1)
+};
 
-Piso::Piso() : cubo(gris) {
+Piso::Piso() : 
+	cubo(new Texture("ladrillos.bmp"),
+		caras) {
 }
 
 void Piso::dibujar(const glm::mat4& m) {
