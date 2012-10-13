@@ -44,3 +44,7 @@ void Grua::girar_brazo(float angulo) {
 	this->cabina.girar_brazo(angulo);
 }
 
+void Grua::longitud_cable(float delta) {
+	this->cabina.longitud_cable(delta);
+}
+

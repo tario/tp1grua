@@ -12,6 +12,7 @@ static const glm::vec3 negro = glm::vec3(0.0,0.0,0.0);
 
 Cabina::Cabina() : cubo(ocre), contra_peso(gris_oscuro), cable(negro), gancho(negro) {
 	angulo_brazo = 0.0;
+	_longitud_cable = 4.0;
 	m_contra_peso = glm::translate(glm::mat4(1.0), glm::vec3(-0.5,0.0,0.5));
 	m_contra_peso = glm::scale(m_contra_peso, glm::vec3(0.4, 1.2, 0.4));
 	actualizar_matrices_brazo();
@@ -26,7 +27,7 @@ void Cabina::dibujar(const glm::mat4& m) {
 }
 #define M_PI       3.14159265358979323846
 void Cabina::girar_brazo(float angulo) {
-	if ((angulo > 0 && this->angulo_brazo+angulo < 60.0) || (angulo < 0 && this->angulo_brazo-angulo > -60.0)) {
+	if ((angulo > 0 && this->angulo_brazo+angulo < 75.0) || (angulo < 0 && this->angulo_brazo-angulo > -75.0)) {
 		this->angulo_brazo += angulo;
 
 		actualizar_matrices_brazo();
@@ -43,7 +44,7 @@ void Cabina::actualizar_matrices_brazo() {
 		punto_final[0] + 0.02,
 		punto_final[1] - 0.02,
 		punto_final[1] + 0.02,
-		punto_final[2] - 4.0,
+		punto_final[2] - _longitud_cable,
 		punto_final[2]);
 
 
@@ -53,8 +54,14 @@ void Cabina::actualizar_matrices_brazo() {
 		punto_final[0] + 0.1,
 		punto_final[1] - 0.1,
 		punto_final[1] + 0.1,
-		punto_final[2] - 4.1,
-		punto_final[2] - 4.0);
+		punto_final[2] - _longitud_cable - 0.1,
+		punto_final[2] - _longitud_cable);
 }
 
+void Cabina::longitud_cable(float delta) {
+	if (delta < 0 && _longitud_cable < 0.2) return;
+	if (delta > 0 && _longitud_cable > 30.0) return;
 
+	_longitud_cable = _longitud_cable + delta;
+	actualizar_matrices_brazo();
+}

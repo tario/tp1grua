@@ -11,6 +11,7 @@ class Cabina : public Dibujable {
 		void dibujar(const glm::mat4& m);
 
 		void girar_brazo(float angulo);
+		void longitud_cable(float delta);
 	private:
 		void actualizar_matrices_brazo();
 
@@ -24,6 +25,7 @@ class Cabina : public Dibujable {
 		glm::mat4 m_brazo, m_cable, m_gancho;
 
 		float angulo_brazo;
+		float _longitud_cable;
 };
 
 #endif

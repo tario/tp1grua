@@ -63,7 +63,14 @@ void glut_process_keys(unsigned char key, int x, int y) {
 		// girar brazo de la grua
 		grua->girar_brazo(-2.0);
 	}
-
+	if (key == 'l') {
+		// aumentar la longitud del cable
+		grua->longitud_cable(0.1);
+	}
+	if (key == 'k') {
+		// disminuir la longitud del cable
+		grua->longitud_cable(-0.1);
+	}
 	if (key == 'a') {
 		angle_camera = angle_camera - 0.1;
 	}

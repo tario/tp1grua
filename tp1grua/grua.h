@@ -12,6 +12,7 @@ public:
 	void dibujar(const glm::mat4& m);
 	void girar_cabina(float angulo);
 	void girar_brazo(float angulo);
+	void longitud_cable(float delta);
 private:
 
 	ModelObject torre;
