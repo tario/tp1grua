@@ -55,6 +55,15 @@ void glut_process_keys(unsigned char key, int x, int y) {
 		grua->girar_cabina(10.0);
 	}
 
+	if (key == 'u') {
+		// girar brazo de la grua
+		grua->girar_brazo(2.0);
+	}
+	if (key == 'j') {
+		// girar brazo de la grua
+		grua->girar_brazo(-2.0);
+	}
+
 	if (key == 'a') {
 		angle_camera = angle_camera - 0.1;
 	}

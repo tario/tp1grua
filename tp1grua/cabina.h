@@ -10,6 +10,7 @@ class Cabina : public Dibujable {
 		Cabina();
 		void dibujar(const glm::mat4& m);
 
+		void girar_brazo(float angulo);
 	private:
 
 		CuboColor cubo;
@@ -18,6 +19,8 @@ class Cabina : public Dibujable {
 
 		glm::mat4 m_contra_peso;
 		glm::mat4 m_brazo;
+
+		float angulo_brazo;
 };
 
 #endif

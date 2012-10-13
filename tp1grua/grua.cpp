@@ -21,7 +21,7 @@ static const float proporcion_cabina = 0.15;
 
 Grua::Grua() : 
 	torre(new Torre(), cell_matrix(-0.35,0.35,-0.35,0.35,-0.5, 0.5 - proporcion_cabina)), 
-	cabina(new Cabina(), cell_matrix(-0.5,0.5,-0.5,0.5,0.5 - proporcion_cabina,0.5)),
+	mo_cabina(&cabina, cell_matrix(-0.5,0.5,-0.5,0.5,0.5 - proporcion_cabina,0.5)),
 	angulo_cabina(0.0) {
 }
 
@@ -31,11 +31,16 @@ void Grua::girar_cabina(float angulo) {
 	if (this->angulo_cabina > 360.0) angulo_cabina -= 360.0;
 
 	// actualizar la matriz de modelo de la cabina
-	cabina.set_model_matrix(glm::rotate(glm::mat4(1.0), this->angulo_cabina, glm::vec3(0.0,0.0,1.0)) * cell_matrix(-0.5,0.5,-0.5,0.5,0.5 - proporcion_cabina, 0.5));
+	mo_cabina.set_model_matrix(glm::rotate(glm::mat4(1.0), this->angulo_cabina, glm::vec3(0.0,0.0,1.0)) * cell_matrix(-0.5,0.5,-0.5,0.5,0.5 - proporcion_cabina, 0.5));
 }
 
 void Grua::dibujar(const glm::mat4& m) {
 	// dibujar la torre y la cabina
 	this->torre.dibujar(m);
-	this->cabina.dibujar(m);
+	this->mo_cabina.dibujar(m);
 }
+
+void Grua::girar_brazo(float angulo) {
+	this->cabina.girar_brazo(angulo);
+}
+

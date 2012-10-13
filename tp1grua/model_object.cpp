@@ -29,8 +29,10 @@ glm::mat4 ModelObject::line(const glm::vec3& p0, const glm::vec3& p1, float anch
 	float distance = glm::distance(p0,p1);
 	glm::vec3 p2(p0[0], p0[1], p0[2]+distance);
 	glm::mat4 m = glm::translate(glm::mat4(1.0), glm::vec3(p0[0], p0[1], p0[2]));
-	float angle = glm::angle(p2-p0, p1-p0);
-	glm::vec3 normal = glm::normalize(glm::cross(p2-p0, p1-p0));
+	glm::vec3 v1 = p2-p0;
+	glm::vec3 v2 = p1-p0;
+	float angle = glm::angle(glm::normalize(v1), glm::normalize(v2));
+	glm::vec3 normal = glm::normalize(glm::cross(v1, v2));
 	m = glm::rotate(m, angle, normal);
 	m = glm::translate(m, glm::vec3(0,0,distance/2));
 	m = glm::scale(m, glm::vec3(anchox, anchoy,distance));
