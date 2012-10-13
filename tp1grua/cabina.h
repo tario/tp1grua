@@ -4,6 +4,7 @@
 #include "dibujable.h"
 #include "cubo_color.h"
 #include "brazo.h" 
+#include "model_object.h"
 
 class Cabina : public Dibujable {
 	public:
@@ -15,14 +16,17 @@ class Cabina : public Dibujable {
 	private:
 		void actualizar_matrices_brazo();
 
+		ModelObject mo_cubo;
+		ModelObject mo_contra_peso;
+		ModelObject mo_cable;
+		ModelObject mo_gancho;
+		ModelObject mo_brazo;
+
 		CuboColor cubo;
 		CuboColor contra_peso;
 		CuboColor cable;
 		CuboColor gancho;
 		Brazo brazo;
-
-		glm::mat4 m_contra_peso;
-		glm::mat4 m_brazo, m_cable, m_gancho;
 
 		float angulo_brazo;
 		float _longitud_cable;
