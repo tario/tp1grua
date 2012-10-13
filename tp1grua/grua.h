@@ -15,7 +15,7 @@ public:
 	void longitud_cable(float delta);
 private:
 
-	ModelObject torre;
+	ModelObject mo_torre;
 	ModelObject mo_cabina;
 	Cabina cabina;
 	float angulo_cabina;
