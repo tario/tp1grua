@@ -37,8 +37,57 @@ Grua* grua;
 #define wglewGetContext() (&_wglewctx)
 
 float camara_dist = 10;
-float angle_camera = 0;
+float angle_camera = 1.0;
+float angle_camera2 = 0.1;
 glm::vec3 posicion_camara = glm::vec3(camara_dist*cos(angle_camera),camara_dist*sin(angle_camera),3);
+
+int camara_mode = 1;
+int mouse_last_x = 0;
+int mouse_last_y = 0;
+
+void glut_process_mouse(int button, int state, int x, int y) {
+	if (button == 3 || button == 4) {
+		if (state == GLUT_UP) {
+			if (button == 3) {
+				camara_dist -= 0.5;
+			} else {
+				camara_dist += 0.5;
+			}
+		}
+
+		if (camara_dist < 1.0) camara_dist = 1.0;
+
+		posicion_camara = glm::vec3(-0.75,1.25,3.0) + glm::vec3(
+			camara_dist*cos(angle_camera)*cos(angle_camera2),
+			camara_dist*sin(angle_camera)*cos(angle_camera2),
+			camara_dist*sin(angle_camera2));
+	}
+}
+
+void glut_process_mouse_motion(int x, int y) {
+	if (abs(mouse_last_x - x) > 100 || abs(mouse_last_y - y) > 100) {
+		mouse_last_x = x;
+		mouse_last_y = y;
+		return;
+	}
+
+	angle_camera = angle_camera + 0.01 * (mouse_last_x-x);
+	angle_camera2 = angle_camera2 + 0.01 * (mouse_last_y-y);
+
+	mouse_last_x = x;
+	mouse_last_y = y;
+
+	if (angle_camera2 > M_PI/3) angle_camera2 = M_PI/3;
+	if (angle_camera2 < -M_PI/3) angle_camera2 = -M_PI/3;
+
+	if (angle_camera < 0.0) angle_camera += M_PI*2;
+	if (angle_camera > M_PI*2) angle_camera -= M_PI*2;
+
+	posicion_camara = glm::vec3(-0.75,1.25,3.0) + glm::vec3(
+			camara_dist*cos(angle_camera)*cos(angle_camera2),
+			camara_dist*sin(angle_camera)*cos(angle_camera2),
+			camara_dist*sin(angle_camera2));
+}
 
 void glut_process_keys(unsigned char key, int x, int y) {    
     if (key == 27) 
@@ -71,17 +120,16 @@ void glut_process_keys(unsigned char key, int x, int y) {
 		// disminuir la longitud del cable
 		grua->longitud_cable(-0.1);
 	}
-	if (key == 'a') {
-		angle_camera = angle_camera - 0.1;
-	}
-	if (key == 'd') {
-		angle_camera = angle_camera + 0.1;
-	}
 
-	if (angle_camera < 0.0) angle_camera += M_PI*2;
-	if (angle_camera > M_PI*2) angle_camera -= M_PI*2;
+	if (camara_mode == 1) {
+		if (key == 'w') {
+			camara_dist -= 0.1;
+		}
+		if (key == 's') {
+			camara_dist += 1.0;
+		}
 
-	posicion_camara = glm::vec3(camara_dist*cos(angle_camera),camara_dist*sin(angle_camera),3);
+	}
 }
 
 void glut_reshape(int w, int h) {
@@ -105,7 +153,7 @@ void init() {
 	model_object_grua = new ModelObject(grua);
 
 	agua->set_model_matrix(ModelObject::cell_matrix(0.0, 3.0, -2.0, 2.0, -0.5, 0.0));
-	piso->set_model_matrix(ModelObject::cell_matrix(-3.0, 0.0, -2.0, 2.0, -0.5, 0.4));
+	piso->set_model_matrix(ModelObject::cell_matrix(-3.0, 0.0, -2.0, 2.0, -0.5, 0.5));
 	model_object_grua->set_model_matrix(ModelObject::cell_matrix(-1.0, -0.5, 1.0, 1.5, 0.5, 3.0));
 
 	objects.push_front(agua);
@@ -132,7 +180,7 @@ void glut_display() {
 	// Camera matrix
 	glm::mat4 View       = glm::lookAt(
 		posicion_camara, // Camera is at (4,3,3), in World Space
-		glm::vec3(0,0,0), // and looks at the origin
+		glm::vec3(-0.75,1.25,3.0), // and looks at the origin
 		glm::vec3(0,0,1)  // Head is up (set to 0,-1,0 to look upside-down)
 	);
 
@@ -246,6 +294,8 @@ int _tmain(int argc, char* argv[])
   glutReshapeFunc(glut_reshape);
   glutKeyboardFunc(glut_process_keys);
   glutIdleFunc(glut_animate);
+  glutMotionFunc(glut_process_mouse_motion);
+  glutMouseFunc(glut_process_mouse);
 
   init();
 
