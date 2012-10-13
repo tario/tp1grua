@@ -25,7 +25,7 @@
 #include "model_object.h"
 
 #define M_PI       3.14159265358979323846
-
+#define VELOCIDAD_PEATON 0.05
 
 std::list<Dibujable*> objects;
 
@@ -39,54 +39,110 @@ Grua* grua;
 float camara_dist = 10;
 float angle_camera = 1.0;
 float angle_camera2 = 0.1;
+
+// angulos para camara de vista en primera persona
+float fp_angle_camera = 1.0;
+float fp_angle_camera2 = 0.1;
+
 glm::vec3 posicion_camara = glm::vec3(camara_dist*cos(angle_camera),camara_dist*sin(angle_camera),3);
+glm::vec3 posicion_peaton_camara2 = glm::vec3(-1.5, 0.0, 0.65);
+glm::mat4 View;
 
 int camara_mode = 1;
 int mouse_last_x = 0;
 int mouse_last_y = 0;
 
-void glut_process_mouse(int button, int state, int x, int y) {
-	if (button == 3 || button == 4) {
-		if (state == GLUT_UP) {
-			if (button == 3) {
-				camara_dist -= 0.5;
-			} else {
-				camara_dist += 0.5;
-			}
-		}
+void update_view_matrix2() {
 
-		if (camara_dist < 1.0) camara_dist = 1.0;
-
-		posicion_camara = glm::vec3(-0.75,1.25,3.0) + glm::vec3(
-			camara_dist*cos(angle_camera)*cos(angle_camera2),
-			camara_dist*sin(angle_camera)*cos(angle_camera2),
-			camara_dist*sin(angle_camera2));
-	}
+	View       = glm::lookAt(
+		posicion_peaton_camara2, // Camera is at (4,3,3), in World Space
+		glm::vec3(
+			posicion_peaton_camara2[0]+cos(fp_angle_camera)*cos(fp_angle_camera2),
+			posicion_peaton_camara2[1]+sin(fp_angle_camera)*cos(fp_angle_camera2),
+			posicion_peaton_camara2[2]+sin(fp_angle_camera2)),
+		glm::vec3(0,0,1)  // Head is up (set to 0,-1,0 to look upside-down)
+	);
 }
 
-void glut_process_mouse_motion(int x, int y) {
-	if (abs(mouse_last_x - x) > 100 || abs(mouse_last_y - y) > 100) {
-		mouse_last_x = x;
-		mouse_last_y = y;
-		return;
-	}
-
-	angle_camera = angle_camera + 0.01 * (mouse_last_x-x);
-	angle_camera2 = angle_camera2 + 0.01 * (mouse_last_y-y);
-
-	mouse_last_x = x;
-	mouse_last_y = y;
-
-	if (angle_camera2 > M_PI/3) angle_camera2 = M_PI/3;
-	if (angle_camera2 < -M_PI/3) angle_camera2 = -M_PI/3;
-
-	if (angle_camera < 0.0) angle_camera += M_PI*2;
-	if (angle_camera > M_PI*2) angle_camera -= M_PI*2;
+void update_view_matrix() {
 
 	posicion_camara = glm::vec3(-0.75,1.25,3.0) + glm::vec3(
 			camara_dist*cos(angle_camera)*cos(angle_camera2),
 			camara_dist*sin(angle_camera)*cos(angle_camera2),
 			camara_dist*sin(angle_camera2));
+
+	View       = glm::lookAt(
+		posicion_camara, // Camera is at (4,3,3), in World Space
+		glm::vec3(-0.75,1.25,3.0), // and looks at the origin
+		glm::vec3(0,0,1)  // Head is up (set to 0,-1,0 to look upside-down)
+	);
+}
+
+void glut_process_mouse(int button, int state, int x, int y) {
+	if (camara_mode == 1) {
+		if (button == 3 || button == 4) {
+			if (state == GLUT_UP) {
+				if (button == 3) {
+					camara_dist -= 0.5;
+				} else {
+					camara_dist += 0.5;
+				}
+			}
+
+			if (camara_dist < 1.0) camara_dist = 1.0;
+
+			update_view_matrix();
+		}
+	}
+}
+
+void glut_process_passive_mouse_motion(int x, int y) {
+	if (camara_mode == 2) {
+		if (abs(mouse_last_x - x) > 100 || abs(mouse_last_y - y) > 100) {
+			mouse_last_x = x;
+			mouse_last_y = y;
+			return;
+		}
+
+		fp_angle_camera = fp_angle_camera + 0.01 * (mouse_last_x-x);
+		fp_angle_camera2 = fp_angle_camera2 + 0.01 * (mouse_last_y-y);
+
+		mouse_last_x = x;
+		mouse_last_y = y;
+
+		if (fp_angle_camera2 > M_PI/3) fp_angle_camera2 = M_PI/3;
+		if (fp_angle_camera2 < -M_PI/3) fp_angle_camera2 = -M_PI/3;
+
+		if (fp_angle_camera < 0.0) fp_angle_camera += M_PI*2;
+		if (fp_angle_camera > M_PI*2) fp_angle_camera -= M_PI*2;
+
+		update_view_matrix2();
+
+	}
+}
+
+void glut_process_mouse_motion(int x, int y) {
+	if (camara_mode == 1) {
+		if (abs(mouse_last_x - x) > 100 || abs(mouse_last_y - y) > 100) {
+			mouse_last_x = x;
+			mouse_last_y = y;
+			return;
+		}
+
+		angle_camera = angle_camera + 0.01 * (mouse_last_x-x);
+		angle_camera2 = angle_camera2 + 0.01 * (mouse_last_y-y);
+
+		mouse_last_x = x;
+		mouse_last_y = y;
+
+		if (angle_camera2 > M_PI/3) angle_camera2 = M_PI/3;
+		if (angle_camera2 < -M_PI/3) angle_camera2 = -M_PI/3;
+
+		if (angle_camera < 0.0) angle_camera += M_PI*2;
+		if (angle_camera > M_PI*2) angle_camera -= M_PI*2;
+
+		update_view_matrix();
+	}	
 }
 
 void glut_process_keys(unsigned char key, int x, int y) {    
@@ -121,6 +177,15 @@ void glut_process_keys(unsigned char key, int x, int y) {
 		grua->longitud_cable(-0.1);
 	}
 
+	if (key == '1') {
+		camara_mode = 1;
+		update_view_matrix();
+	}
+	if (key == '2')	{
+		camara_mode = 2;
+		update_view_matrix2();
+	}
+
 	if (camara_mode == 1) {
 		if (key == 'w') {
 			camara_dist -= 0.1;
@@ -128,7 +193,34 @@ void glut_process_keys(unsigned char key, int x, int y) {
 		if (key == 's') {
 			camara_dist += 1.0;
 		}
+	}
 
+	if (camara_mode == 2) {
+		if (key == 'a') {
+			posicion_peaton_camara2 = posicion_peaton_camara2 + 
+				glm::vec3(cos(fp_angle_camera+M_PI/2)*VELOCIDAD_PEATON, sin(fp_angle_camera+M_PI/2)*VELOCIDAD_PEATON, 0.0);
+
+			update_view_matrix2();
+		}
+		if (key == 'd') {
+			posicion_peaton_camara2 = posicion_peaton_camara2 + 
+				glm::vec3(cos(fp_angle_camera-M_PI/2)*VELOCIDAD_PEATON, sin(fp_angle_camera-M_PI/2)*VELOCIDAD_PEATON, 0.0);
+
+			update_view_matrix2();
+		}
+
+		if (key == 'w') {
+			posicion_peaton_camara2 = posicion_peaton_camara2 + 
+				glm::vec3(cos(fp_angle_camera)*VELOCIDAD_PEATON, sin(fp_angle_camera)*VELOCIDAD_PEATON, 0.0);
+
+			update_view_matrix2();
+		}
+		if (key == 's') {
+			posicion_peaton_camara2 = posicion_peaton_camara2 + 
+				glm::vec3(-cos(fp_angle_camera)*VELOCIDAD_PEATON, -sin(fp_angle_camera)*VELOCIDAD_PEATON, 0.0);
+
+			update_view_matrix2();
+		}
 	}
 }
 
@@ -159,12 +251,11 @@ void init() {
 	objects.push_front(agua);
 	objects.push_front(piso);
 	objects.push_front(model_object_grua);
+
+	update_view_matrix();
 }
 
 void glut_animate() {
-	angle = angle + 5.1;
-	if (angle > 360) angle = 0;
-
 	glutPostRedisplay();
 	Sleep(25);
 }
@@ -178,11 +269,6 @@ void glut_display() {
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
 	glm::mat4 Projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
 	// Camera matrix
-	glm::mat4 View       = glm::lookAt(
-		posicion_camara, // Camera is at (4,3,3), in World Space
-		glm::vec3(-0.75,1.25,3.0), // and looks at the origin
-		glm::vec3(0,0,1)  // Head is up (set to 0,-1,0 to look upside-down)
-	);
 
 	Dibujable* dibujable;
 	for (std::list<Dibujable*>::iterator it = objects.begin(); it!=objects.end();it++) {
@@ -296,6 +382,7 @@ int _tmain(int argc, char* argv[])
   glutIdleFunc(glut_animate);
   glutMotionFunc(glut_process_mouse_motion);
   glutMouseFunc(glut_process_mouse);
+  glutPassiveMotionFunc(glut_process_passive_mouse_motion);
 
   init();
 
