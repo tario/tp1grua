@@ -30,7 +30,7 @@ Texture::Texture(const std::string& path) {
 	this->texture_data = (unsigned char*)malloc(bm.bmHeight * bm.bmWidth * 4);
 
 	GetDIBits(dcBitmap, hBitmap, 0, bm.bmHeight, bitmap_data, &bmpInfo, DIB_RGB_COLORS );
-	int padding = ((bm.bmWidth * 3 / 4) + 1) * 4 - bm.bmWidth * 3;
+	int padding = ( ((bm.bmWidth * 3 / 4) + 1) * 4 - bm.bmWidth * 3 ) % 4;
 	for (int i=0; i<bm.bmWidth; i++) {
 		for (int j=0; j<bm.bmHeight; j++) {
 			unsigned char* bitmapPixelData = (unsigned char*)bitmap_data + (j*bm.bmWidth + i) * 3 + j*padding;
