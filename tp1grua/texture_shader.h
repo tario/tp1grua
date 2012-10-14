@@ -1,3 +1,6 @@
+#ifndef __TEXTURE_SHADER_H
+#define __TEXTURE_SHADER_H
+
 #include "shader.h"
 #include "glm/glm.hpp"
 
@@ -13,3 +16,5 @@ private:
 	int transform_matrix_index;
 	int texture_location;
 };
+
+#endif

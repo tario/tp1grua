@@ -1,3 +1,6 @@
+#ifndef __CUBO_TEXTURADO_H
+#define __CUBO_TEXTURADO_H
+
 #include "cubo.h" 
 #include "texture.h"
 #include "texture_shader.h"
@@ -27,3 +30,5 @@ private:
 	Texture* texture;
 	TextureShader* textureShader;
 };
+
+#endif

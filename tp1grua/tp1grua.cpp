@@ -73,7 +73,7 @@ void update_view_matrix() {
 
 	View       = glm::lookAt(
 		posicion_camara, // Camera is at (4,3,3), in World Space
-		glm::vec3(-0.75,1.25,3.0), // and looks at the origin
+		glm::vec3(-0.75,1.25,1.5), // mirar a la cabina de la grua
 		glm::vec3(0,0,1)  // Head is up (set to 0,-1,0 to look upside-down)
 	);
 }

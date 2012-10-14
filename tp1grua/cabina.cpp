@@ -6,13 +6,25 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "model_object.h"
 
-static const glm::vec3 ocre = glm::vec3(0.6, 0.7, 0.0);
-static const glm::vec3 gris_oscuro = glm::vec3(0.2, 0.2, 0.2);
+static const glm::vec3 gris_oscuro = glm::vec3(0.4, 0.4, 0.4);
 static const glm::vec3 negro = glm::vec3(0.0,0.0,0.0);
 
-Cabina::Cabina() : cubo(ocre), contra_peso(gris_oscuro), cable(negro), gancho(negro),
-	mo_cubo(&cubo),
-	mo_contra_peso(&contra_peso, glm::scale(glm::translate(glm::mat4(1.0), glm::vec3(-0.5,0.0,0.5)), glm::vec3(0.4, 1.2, 0.4))),
+static CuboTexturado::Cara coordenadas_textura[] = {
+	CuboTexturado::Cara(0.5087,0.287, 0.1,0.287, 0.1,0.5839, 0.5087,0.5839),
+	CuboTexturado::Cara(0.0,1.0, 0.0,0.5839, 0.5556,0.5839, 0.5556,1.0),
+	CuboTexturado::Cara(0.5556,1.0, 0.5556,0.5839, 1.0,0.5839, 1.0,1.0),
+	CuboTexturado::Cara(0.5556,1.0 ,0.5556,0.5839, 0.0,0.5839, 0.0,1.0),
+	CuboTexturado::Cara(0.3,0.287, 0.7,0.287, 0.7,0.5839, 0.3,0.5839),
+	CuboTexturado::Cara(0.0,0.1,0.0,0.0,0.1,0.0,0.1,0.1)
+
+};
+
+Cabina::Cabina() :
+	textura_cabina("textura.bmp"),
+	cubo(&textura_cabina, coordenadas_textura), 
+	contra_peso(gris_oscuro), cable(negro), gancho(negro),
+	mo_cubo(&cubo, ModelObject::cell_matrix(-0.83,0.83,-0.5,0.5,-0.5,0.5)),
+	mo_contra_peso(&contra_peso, glm::scale(glm::translate(glm::mat4(1.0), glm::vec3(-0.83, 0.0,0.5)), glm::vec3(0.4, 1.2, 0.4))),
 	mo_cable(&cable),
 	mo_gancho(&gancho),
 	mo_brazo(&brazo) {
@@ -51,7 +63,7 @@ void Cabina::actualizar_matrices_brazo() {
 		punto_final[2] - _longitud_cable,
 		punto_final[2])
 		);
-	
+
 	this->mo_gancho.set_model_matrix(ModelObject::cell_matrix(
 		punto_final[0] - 0.1,
 		punto_final[0] + 0.1,

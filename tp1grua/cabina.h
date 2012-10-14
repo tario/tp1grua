@@ -3,6 +3,8 @@
 
 #include "dibujable.h"
 #include "cubo_color.h"
+#include "cubo_texturado.h"
+#include "texture.h"
 #include "brazo.h" 
 #include "model_object.h"
 
@@ -22,7 +24,7 @@ class Cabina : public Dibujable {
 		ModelObject mo_gancho;
 		ModelObject mo_brazo;
 
-		CuboColor cubo;
+		CuboTexturado cubo;
 		CuboColor contra_peso;
 		CuboColor cable;
 		CuboColor gancho;
@@ -30,6 +32,8 @@ class Cabina : public Dibujable {
 
 		float angulo_brazo;
 		float _longitud_cable;
+
+		Texture textura_cabina;
 };
 
 #endif
