@@ -1,3 +1,6 @@
+#ifndef __TEXTURE_H
+#define __TEXTURE_H 
+
 #include <fstream>
 #include "glm/glm.hpp"
 #include "glm/ext.hpp"
@@ -20,3 +23,5 @@ class Texture {
 		unsigned char* texture_data;
 		GLuint textureid;
 };
+
+#endif

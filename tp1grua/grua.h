@@ -19,6 +19,7 @@ private:
 	ModelObject mo_cabina;
 	Cabina cabina;
 	float angulo_cabina;
+
 };
 
 #endif

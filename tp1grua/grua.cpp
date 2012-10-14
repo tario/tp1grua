@@ -17,10 +17,10 @@ static glm::mat4 cell_matrix(
 }
 
 static const glm::vec3 ocre = glm::vec3(0.6, 0.7, 0.0);
-static const float proporcion_cabina = 0.15;
+static const float proporcion_cabina = 0.35;
 
 Grua::Grua() : 
-	mo_torre(new Torre(), cell_matrix(-0.35,0.35,-0.35,0.35,-0.5, 0.5 - proporcion_cabina)), 
+	mo_torre(new Torre(), cell_matrix(-0.42,0.42,-0.42,0.42,-0.5, 0.5 - proporcion_cabina)), 
 	mo_cabina(&cabina, cell_matrix(-0.5,0.5,-0.5,0.5,0.5 - proporcion_cabina,0.5)),
 	angulo_cabina(0.0) {
 }
