@@ -1,7 +1,12 @@
 #include "stdafx.h"
-#include "cubo_texturado.h"
+#include "cubo_texturado_suciedad.h"
 
-CuboTexturado::CuboTexturado(Texture* tex, Cara* caras) : Cubo(), texture(tex) {
+CuboTexturadoSuciedad::CuboTexturadoSuciedad(
+	Texture* tex,
+	Texture* dirtmap,
+	CuboTexturado::Cara* caras,
+	float _suciedad
+	) : Cubo(), texture(tex), mapa_suciedad(dirtmap), suciedad(_suciedad) {
 	this->extra_data = new float[36*2];
 	int i;
 
@@ -37,15 +42,23 @@ CuboTexturado::CuboTexturado(Texture* tex, Cara* caras) : Cubo(), texture(tex) {
     glBindBuffer( GL_ARRAY_BUFFER, textureCoordBufferHandle);
     glVertexAttribPointer( 1, 2, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
-	textureShader = TextureShader::instance();
+	this->dirtnessShader = DirtnessShader::instance();
 }
 
-void CuboTexturado::dibujar(const glm::mat4& m) {
-	this->textureShader->use();
+void CuboTexturadoSuciedad::cambiar_suciedad(float _suciedad) {
+	this->suciedad = _suciedad;
+}
+
+void CuboTexturadoSuciedad::dibujar(const glm::mat4& m) {
+	this->dirtnessShader->use();
 
 	texture->load(0);
-	textureShader->setTextureUnit(0);
-	textureShader->setTransformMatrix(m);
+	mapa_suciedad->load(1);
+
+	dirtnessShader->setTextureUnit(0);
+	dirtnessShader->setDirtmapUnit(1);
+	dirtnessShader->setDirtlevel(this->suciedad);
+	dirtnessShader->setTransformMatrix(m);
 
 	glBindVertexArray( this->getVaoHandle() );
 	glDrawArrays( GL_TRIANGLES, 0, 36);

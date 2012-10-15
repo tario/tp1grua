@@ -21,7 +21,8 @@ static CuboTexturado::Cara coordenadas_textura[] = {
 
 Cabina::Cabina() :
 	textura_cabina("textura.bmp"),
-	cubo(&textura_cabina, coordenadas_textura), 
+	mapa_suciedad("mapa-suciedad.bmp"),
+	cubo(&textura_cabina, &mapa_suciedad, coordenadas_textura), 
 	contra_peso(gris_oscuro), cable(negro), gancho(negro),
 	mo_cubo(&cubo, ModelObject::cell_matrix(-0.83,0.83,-0.5,0.5,-0.5,0.5)),
 	mo_contra_peso(&contra_peso, glm::scale(glm::translate(glm::mat4(1.0), glm::vec3(-0.83, 0.0,0.5)), glm::vec3(0.4, 1.2, 0.4))),
@@ -79,4 +80,9 @@ void Cabina::longitud_cable(float delta) {
 
 	_longitud_cable = _longitud_cable + delta;
 	actualizar_matrices_brazo();
+}
+
+void Cabina::suciedad(float _suciedad) {
+	cubo.cambiar_suciedad(_suciedad);
+	brazo.suciedad(_suciedad);
 }

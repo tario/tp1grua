@@ -23,7 +23,7 @@ static void calcular_viga_cruzada(ModelObject& model_object, const glm::vec3& p0
 			);
 }
 
-Brazo::Brazo() : cubo(&texture,caras), texture("textura.bmp"),
+Brazo::Brazo() : cubo(&texture,&mapa_suciedad, caras), texture("textura.bmp"), mapa_suciedad("mapa-suciedad.bmp"),
 	columna11(&cubo, ModelObject::line(glm::vec3(-0.4, -0.4, -0.5), glm::vec3(-0.2, -0.2, 0.5), 0.1, 0.1)),
 	columna12(&cubo, ModelObject::line(glm::vec3(-0.4, 0.4, -0.5), glm::vec3(-0.2, 0.2, 0.5), 0.1, 0.1)),
 	columna21(&cubo, ModelObject::line(glm::vec3(0.4, -0.4, -0.5), glm::vec3(0.2, -0.2, 0.5), 0.1, 0.1)),
@@ -72,4 +72,8 @@ void Brazo::dibujar(const glm::mat4& m) {
 			glm::translate(m,glm::vec3(0.0,0.0,0.75)),
 			glm::vec3(0.5, 0.5, 1.0)
 		));
+}
+
+void Brazo::suciedad(float _suciedad) {
+	cubo.cambiar_suciedad(_suciedad);
 }

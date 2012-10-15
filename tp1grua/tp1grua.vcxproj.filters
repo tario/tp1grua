@@ -48,6 +48,12 @@
     <ClCompile Include="brazo.cpp">
       <Filter>escena</Filter>
     </ClCompile>
+    <ClCompile Include="cubo_texturado_suciedad.cpp">
+      <Filter>primitivas</Filter>
+    </ClCompile>
+    <ClCompile Include="dirtness_shader.cpp">
+      <Filter>shaderscode</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -100,6 +106,12 @@
     <ClInclude Include="brazo.h">
       <Filter>escena</Filter>
     </ClInclude>
+    <ClInclude Include="cubo_texturado_suciedad.h">
+      <Filter>primitivas</Filter>
+    </ClInclude>
+    <ClInclude Include="dirtness_shader.h">
+      <Filter>shaderscode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -113,6 +125,9 @@
       <Filter>shadersglsl</Filter>
     </None>
     <None Include="TextureVShader.vert">
+      <Filter>shadersglsl</Filter>
+    </None>
+    <None Include="DirtnessShader.frag">
       <Filter>shadersglsl</Filter>
     </None>
   </ItemGroup>

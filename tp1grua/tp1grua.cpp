@@ -151,6 +151,15 @@ void glut_process_keys(unsigned char key, int x, int y) {
         exit(0);
     }
 
+	if (key == 't') {
+		// agregar suciedad a la grua
+		grua->cambiar_suciedad(0.05);
+	}
+	if (key == 'g') {
+		// quitar suciedad a la grua
+		grua->cambiar_suciedad(-0.05);
+	}
+
 	if (key == 'y') {
 		// girar cabina de la grua
 		grua->girar_cabina(-10.0);

@@ -20,9 +20,13 @@ static const glm::vec3 ocre = glm::vec3(0.6, 0.7, 0.0);
 static const float proporcion_cabina = 0.35;
 
 Grua::Grua() : 
-	mo_torre(new Torre(), cell_matrix(-0.42,0.42,-0.42,0.42,-0.5, 0.5 - proporcion_cabina)), 
+	mo_torre(&torre, cell_matrix(-0.42,0.42,-0.42,0.42,-0.5, 0.5 - proporcion_cabina)), 
 	mo_cabina(&cabina, cell_matrix(-0.5,0.5,-0.5,0.5,0.5 - proporcion_cabina,0.5)),
-	angulo_cabina(0.0) {
+	angulo_cabina(0.0),
+	_suciedad(0.4) {
+
+	cabina.suciedad(_suciedad);
+	torre.suciedad(_suciedad);
 }
 
 void Grua::girar_cabina(float angulo) {
@@ -48,3 +52,11 @@ void Grua::longitud_cable(float delta) {
 	this->cabina.longitud_cable(delta);
 }
 
+void Grua::cambiar_suciedad(float delta_suciedad) {
+	_suciedad += delta_suciedad;
+	if (_suciedad>1.0) _suciedad = 1.0;
+	if (_suciedad<0.0) _suciedad = 0.0;
+
+	cabina.suciedad(_suciedad);
+	torre.suciedad(_suciedad);
+}

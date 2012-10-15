@@ -3,7 +3,7 @@
 
 #include "dibujable.h"
 #include "cubo_color.h"
-#include "cubo_texturado.h"
+#include "cubo_texturado_suciedad.h"
 #include "texture.h"
 #include "brazo.h" 
 #include "model_object.h"
@@ -15,6 +15,7 @@ class Cabina : public Dibujable {
 
 		void girar_brazo(float angulo);
 		void longitud_cable(float delta);
+		void suciedad(float _suciedad);
 	private:
 		void actualizar_matrices_brazo();
 
@@ -24,7 +25,7 @@ class Cabina : public Dibujable {
 		ModelObject mo_gancho;
 		ModelObject mo_brazo;
 
-		CuboTexturado cubo;
+		CuboTexturadoSuciedad cubo;
 		CuboColor contra_peso;
 		CuboColor cable;
 		CuboColor gancho;
@@ -34,6 +35,7 @@ class Cabina : public Dibujable {
 		float _longitud_cable;
 
 		Texture textura_cabina;
+		Texture mapa_suciedad;
 };
 
 #endif
