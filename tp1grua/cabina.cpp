@@ -53,7 +53,7 @@ void Cabina::actualizar_matrices_brazo() {
 	glm::vec3 punto_final = glm::vec3(4.0*cos(this->angulo_brazo*M_PI/180), 0.0, 4.0*sin(this->angulo_brazo*M_PI/180));
 
 	// = ModelObject::line(glm::vec3(0.5, 0.0, 0.0), punto_final, 0.4f, 0.4f);
-	this->mo_brazo.set_model_matrix(ModelObject::line(glm::vec3(0.5, 0.0, 0.0), punto_final, 0.4f, 0.4f));
+	this->mo_brazo.set_model_matrix(ModelObject::line(glm::vec3(0.5, 0.0, 0.0), punto_final, 0.8f, 0.8f));
 	//this->m_cable = ModelObject::line(punto_final + glm::vec3(0.0,0.0,-5.0), punto_final, 0.1f, 0.1f);
 	this->mo_cable.set_model_matrix(ModelObject::cell_matrix(
 		punto_final[0] - 0.02,
