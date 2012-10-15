@@ -97,6 +97,7 @@
     <ClInclude Include="dibujable.h" />
     <ClInclude Include="dirtness_shader.h" />
     <ClInclude Include="grua.h" />
+    <ClInclude Include="olas.h" />
     <ClInclude Include="model_object.h" />
     <ClInclude Include="piso.h" />
     <ClInclude Include="prisma.h" />
@@ -118,6 +119,7 @@
     <ClCompile Include="cubo_texturado_suciedad.cpp" />
     <ClCompile Include="dirtness_shader.cpp" />
     <ClCompile Include="grua.cpp" />
+    <ClCompile Include="olas.cpp" />
     <ClCompile Include="model_object.cpp" />
     <ClCompile Include="piso.cpp" />
     <ClCompile Include="prisma.cpp" />

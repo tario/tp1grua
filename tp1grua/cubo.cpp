@@ -20,7 +20,7 @@ static void square(float* data, glm::mat4 matrix) {
 	assignvec3(data+15, matrix * glm::vec4(l, l, l, 1.0f));
 }
 
-Cubo::Cubo() {
+Cubo::Cubo(bool carasuperior) {
 	float vertexdata[36*3];
 	GLuint positionBufferHandle;
 
@@ -33,11 +33,15 @@ Cubo::Cubo() {
 	square(vertexdata+6*3, zrotation);
 	square(vertexdata+12*3, zrotation * zrotation);
 	square(vertexdata+18*3, zrotation * zrotation * zrotation);
-	square(vertexdata+24*3, yrotation  * yrotation * yrotation);
-	square(vertexdata+30*3, yrotation);
+	square(vertexdata+24*3, yrotation);
+	if (carasuperior) square(vertexdata+30*3, yrotation  * yrotation * yrotation);
 
     glBindBuffer( GL_ARRAY_BUFFER, positionBufferHandle );
+	if (carasuperior) {
     glBufferData( GL_ARRAY_BUFFER, 36*3 * sizeof (float), vertexdata, GL_STATIC_DRAW );
+	} else {
+    glBufferData( GL_ARRAY_BUFFER, 30*3 * sizeof (float), vertexdata, GL_STATIC_DRAW );
+	}
 
     // Create and set-up the vertex array objet
     glGenVertexArrays( 1, &this->vaoHandle );

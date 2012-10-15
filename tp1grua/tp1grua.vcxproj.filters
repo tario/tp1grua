@@ -54,6 +54,9 @@
     <ClCompile Include="dirtness_shader.cpp">
       <Filter>shaderscode</Filter>
     </ClCompile>
+    <ClCompile Include="olas.cpp">
+      <Filter>primitivas</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -111,6 +114,9 @@
     </ClInclude>
     <ClInclude Include="dirtness_shader.h">
       <Filter>shaderscode</Filter>
+    </ClInclude>
+    <ClInclude Include="olas.h">
+      <Filter>primitivas</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,10 @@
 #include "stdafx.h"
 #include "cubo_texturado.h"
 
-CuboTexturado::CuboTexturado(Texture* tex, Cara* caras) : Cubo(), texture(tex) {
+CuboTexturado::CuboTexturado(Texture* tex, Cara* caras, bool _carasuperior) : 
+	Cubo(_carasuperior), 
+	carasuperior(_carasuperior), 
+	texture(tex) {
 	this->extra_data = new float[36*2];
 	int i;
 
@@ -48,5 +51,9 @@ void CuboTexturado::dibujar(const glm::mat4& m) {
 	textureShader->setTransformMatrix(m);
 
 	glBindVertexArray( this->getVaoHandle() );
-	glDrawArrays( GL_TRIANGLES, 0, 36);
+	if (carasuperior) {
+	glDrawArrays( GL_TRIANGLES, 0, 36); 
+	} else {
+	glDrawArrays( GL_TRIANGLES, 0, 30); 
+	}
 }

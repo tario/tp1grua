@@ -8,11 +8,9 @@
 #include "dibujable.h"
 
 class Cubo : public Dibujable {
-	public:
-
-		Cubo();
-
 	protected:
+		Cubo(bool cara_superior=true);
+
 		GLuint getVaoHandle() { return vaoHandle;};
 		GLuint vaoHandle;
 

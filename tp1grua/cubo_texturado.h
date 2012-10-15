@@ -23,12 +23,13 @@ public:
 		}
 	};
 
-	CuboTexturado(Texture* texture, Cara* caras);
+	CuboTexturado(Texture* texture, Cara* caras, bool carasuperior=true);
 	void dibujar(const glm::mat4& m);
 private:
 	float* extra_data;
 	Texture* texture;
 	TextureShader* textureShader;
+	bool carasuperior;
 };
 
 #endif

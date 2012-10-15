@@ -379,7 +379,7 @@ int _tmain(int argc, char* argv[])
 
   glutInit(&argc, argv);
 
-  glutInitWindowSize(640, 480);
+  glutInitWindowSize(800, 600);
   glutInitWindowPosition ( 100, 100 );
   glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE);
 
