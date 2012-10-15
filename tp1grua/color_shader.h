@@ -1,3 +1,6 @@
+#ifndef __COLOR_SHADER_H
+#define __COLOR_SHADER_H
+
 #include "shader.h"
 #include "glm/glm.hpp"
 
@@ -12,3 +15,5 @@ public:
 private:
 	int transform_matrix_index;
 };
+
+#endif

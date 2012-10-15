@@ -7,6 +7,7 @@
 #include "texture.h"
 #include "brazo.h" 
 #include "model_object.h"
+#include "prisma.h"
 
 class Cabina : public Dibujable {
 	public:
@@ -28,7 +29,7 @@ class Cabina : public Dibujable {
 		CuboTexturadoSuciedad cubo;
 		CuboColor contra_peso;
 		CuboColor cable;
-		CuboColor gancho;
+		Prisma gancho;
 		Brazo brazo;
 
 		float angulo_brazo;
