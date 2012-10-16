@@ -23,13 +23,13 @@ Cabina::Cabina() :
 	textura_cabina("textura.bmp"),
 	mapa_suciedad("mapa-suciedad.bmp"),
 	cubo(&textura_cabina, &mapa_suciedad, coordenadas_textura), 
-	contra_peso(gris_oscuro), cable(negro), gancho(negro),
+	contra_peso(gris_oscuro), cable(negro), gancho(negro,20),
 	mo_cubo(&cubo, ModelObject::cell_matrix(-0.83,0.83,-0.5,0.5,-0.5,0.5)),
 	mo_contra_peso(&contra_peso, glm::scale(glm::translate(glm::mat4(1.0), glm::vec3(-0.83, 0.0,0.5)), glm::vec3(0.4, 1.2, 0.4))),
 	mo_cable(&cable),
 	mo_gancho(&gancho),
 	mo_brazo(&brazo) {
-	angulo_brazo = 0.0;
+	angulo_brazo = 25.0;
 	_longitud_cable = 4.0;
 	actualizar_matrices_brazo();
 }
@@ -43,7 +43,7 @@ void Cabina::dibujar(const glm::mat4& m) {
 }
 #define M_PI       3.14159265358979323846
 void Cabina::girar_brazo(float angulo) {
-	if ((angulo > 0 && this->angulo_brazo+angulo < 75.0) || (angulo < 0 && this->angulo_brazo-angulo > -75.0)) {
+	if ((angulo > 0 && this->angulo_brazo+angulo < 75.0) || (angulo < 0 && this->angulo_brazo-angulo > 0.0)) {
 		this->angulo_brazo += angulo;
 
 		actualizar_matrices_brazo();
