@@ -14,8 +14,9 @@ static CuboTexturado::Cara coordenadas_textura[] = {
 	CuboTexturado::Cara(0.0,1.0, 0.0,0.5839, 0.5556,0.5839, 0.5556,1.0),
 	CuboTexturado::Cara(0.5556,1.0, 0.5556,0.5839, 1.0,0.5839, 1.0,1.0),
 	CuboTexturado::Cara(0.5556,1.0 ,0.5556,0.5839, 0.0,0.5839, 0.0,1.0),
-	CuboTexturado::Cara(0.3,0.287, 0.7,0.287, 0.7,0.5839, 0.3,0.5839),
-	CuboTexturado::Cara(0.0,0.1,0.0,0.0,0.1,0.0,0.1,0.1)
+	CuboTexturado::Cara(0.0,0.1,0.0,0.0,0.1,0.0,0.1,0.1),
+	CuboTexturado::Cara(0.3,0.287, 0.7,0.287, 0.7,0.5839, 0.3,0.5839)
+
 
 };
 
