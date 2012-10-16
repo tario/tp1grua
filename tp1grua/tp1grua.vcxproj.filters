@@ -57,6 +57,9 @@
     <ClCompile Include="olas.cpp">
       <Filter>primitivas</Filter>
     </ClCompile>
+    <ClCompile Include="texture_waves_shader.cpp">
+      <Filter>shaderscode</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -118,6 +121,9 @@
     <ClInclude Include="olas.h">
       <Filter>primitivas</Filter>
     </ClInclude>
+    <ClInclude Include="texture_waves_shader.h">
+      <Filter>shaderscode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -134,6 +140,9 @@
       <Filter>shadersglsl</Filter>
     </None>
     <None Include="DirtnessShader.frag">
+      <Filter>shadersglsl</Filter>
+    </None>
+    <None Include="TextureWavesVShader.vert">
       <Filter>shadersglsl</Filter>
     </None>
   </ItemGroup>

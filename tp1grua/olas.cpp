@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "olas.h" 
 
-static const int filas = 100;
-static const int celdas = 100;
+static const int filas = 50;
+static const int celdas = 50;
 static const int cantidadVertices = filas * (celdas+1) * 2;
 
 Olas::Olas(Texture* _texture) : texture(_texture) {
@@ -57,16 +57,25 @@ Olas::Olas(Texture* _texture) : texture(_texture) {
     glBindBuffer( GL_ARRAY_BUFFER, textureCoordBufferHandle);
     glVertexAttribPointer( 1, 2, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
-	textureShader = TextureShader::instance();
+	textureWavesShader = TextureWavesShader::instance();
 }
 
+static float t=0.0;
+static float t2=0.0;
 void Olas::dibujar(const glm::mat4& m) {
-	this->textureShader->use();
-
+	this->textureWavesShader->use();
+	this->textureWavesShader->setFase(t);
+	this->textureWavesShader->setFase2(t2);
+	t = t + 0.1;
+	if (t<0) t+=6.28;
+	t2 = t2 - 0.2;
+	if (t2<0) t2+=6.28;
 	texture->load(0);
-	textureShader->setTextureUnit(0);
-	textureShader->setTransformMatrix(m);
+	textureWavesShader->setTextureUnit(0);
+	textureWavesShader->setTransformMatrix(m);
 
 	glBindVertexArray( this->vaoHandle );
-	glDrawArrays(GL_TRIANGLE_STRIP,0,cantidadVertices);
+	for (int i=0; i<filas; i++) {
+	glDrawArrays(GL_TRIANGLE_STRIP,i*(celdas+1)*2,(celdas+1)*2);
+	}
 }

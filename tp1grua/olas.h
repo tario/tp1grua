@@ -3,7 +3,7 @@
 
 #include "dibujable.h"
 #include "texture.h"
-#include "texture_shader.h"
+#include "texture_waves_shader.h"
 
 class Olas : public Dibujable {
 	public:
@@ -12,7 +12,7 @@ class Olas : public Dibujable {
 
 	private:
 		Texture* texture;
-		TextureShader* textureShader;
+		TextureWavesShader* textureWavesShader;
 		GLuint vaoHandle;
 };
 
