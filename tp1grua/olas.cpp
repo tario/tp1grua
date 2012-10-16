@@ -66,9 +66,9 @@ void Olas::dibujar(const glm::mat4& m) {
 	this->textureWavesShader->use();
 	this->textureWavesShader->setFase(t);
 	this->textureWavesShader->setFase2(t2);
-	t = t + 0.1;
+	t = t + 0.05;
 	if (t<0) t+=6.28;
-	t2 = t2 - 0.2;
+	t2 = t2 - 0.1;
 	if (t2<0) t2+=6.28;
 	texture->load(0);
 	textureWavesShader->setTextureUnit(0);
