@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "olas.h" 
 
-static const int filas = 50;
-static const int celdas = 50;
+static const int filas = 100;
+static const int celdas = 100;
 static const int cantidadVertices = filas * (celdas+1) * 2;
 
 Olas::Olas(Texture* _texture) : texture(_texture) {
@@ -66,9 +66,9 @@ void Olas::dibujar(const glm::mat4& m) {
 	this->textureWavesShader->use();
 	this->textureWavesShader->setFase(t);
 	this->textureWavesShader->setFase2(t2);
-	t = t + 0.05;
+	t = t + 0.07;
 	if (t<0) t+=6.28;
-	t2 = t2 - 0.1;
+	t2 = t2 - 0.11;
 	if (t2<0) t2+=6.28;
 	texture->load(0);
 	textureWavesShader->setTextureUnit(0);
@@ -76,6 +76,6 @@ void Olas::dibujar(const glm::mat4& m) {
 
 	glBindVertexArray( this->vaoHandle );
 	for (int i=0; i<filas; i++) {
-	glDrawArrays(GL_TRIANGLE_STRIP,i*(celdas+1)*2,(celdas+1)*2);
+		glDrawArrays(GL_TRIANGLE_STRIP,i*(celdas+1)*2,(celdas+1)*2);
 	}
 }
