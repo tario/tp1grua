@@ -41,14 +41,14 @@ void CuboColor::initCube(
 	GLuint colorBufferHandle;
 	glGenBuffers(1, &colorBufferHandle);
 	
-    glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(Cubo::lastIndex);
 	
 	glBindBuffer( GL_ARRAY_BUFFER, colorBufferHandle );
 	glBufferData( GL_ARRAY_BUFFER, 36*3 * sizeof (float), extra_data, GL_STATIC_DRAW );			
 
     // Map index 1 to the texture coord buffer
     glBindBuffer( GL_ARRAY_BUFFER, colorBufferHandle);
-    glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+    glVertexAttribPointer( Cubo::lastIndex, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 	
 	colorShader = ColorShader::instance();
 }

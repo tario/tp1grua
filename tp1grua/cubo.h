@@ -8,6 +8,8 @@
 #include "dibujable.h"
 
 class Cubo : public Dibujable {
+public:
+		static const int lastIndex = 3;
 	protected:
 		Cubo(bool cara_superior=true);
 
