@@ -21,12 +21,17 @@ static void square(float* data, glm::mat4 matrix) {
 }
 
 Cubo::Cubo(bool carasuperior) {
+
+    // Create and set-up the vertex array objet
+    glGenVertexArrays( 1, &this->vaoHandle );
+    glBindVertexArray( this->vaoHandle );
+
 	float vertexdata[36*3];
 	GLuint positionBufferHandle;
-
 	glGenBuffers(1, &positionBufferHandle);
 
 	glm::mat4 reflection = glm::scale(glm::vec3(1.0,1.0,-1.0));
+	glm::mat4 xrotation = glm::rotate(glm::mat4(1.0),90.0f, glm::vec3(1.0f,0.0f,0.0f));
 	glm::mat4 yrotation = glm::rotate(glm::mat4(1.0),90.0f, glm::vec3(0.0f,1.0f,0.0f));
 	glm::mat4 zrotation = glm::rotate(glm::mat4(1.0),90.0f, glm::vec3(0.0f,0.0f,1.0f));
 	square(vertexdata, glm::mat4(1.0));
@@ -43,9 +48,6 @@ Cubo::Cubo(bool carasuperior) {
     glBufferData( GL_ARRAY_BUFFER, 30*3 * sizeof (float), vertexdata, GL_STATIC_DRAW );
 	}
 
-    // Create and set-up the vertex array objet
-    glGenVertexArrays( 1, &this->vaoHandle );
-    glBindVertexArray( this->vaoHandle );
 
     // Enable the vertex attributes array
     glEnableVertexAttribArray(0);
@@ -53,4 +55,40 @@ Cubo::Cubo(bool carasuperior) {
     // Map index 0 to the position buffer
     glBindBuffer( GL_ARRAY_BUFFER, positionBufferHandle);
     glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+
+
+    // Map index 1 to the position buffer
+    glEnableVertexAttribArray(1);	
+	
+	GLuint neighbor1BufferHandle;
+	glGenBuffers(1, &neighbor1BufferHandle);
+
+	glBindBuffer( GL_ARRAY_BUFFER, neighbor1BufferHandle );
+	if (carasuperior) {
+    glBufferData( GL_ARRAY_BUFFER, 36*3 * sizeof (float), vertexdata, GL_STATIC_DRAW );
+	} else {
+    glBufferData( GL_ARRAY_BUFFER, 30*3 * sizeof (float), vertexdata, GL_STATIC_DRAW );
+	}
+
+    glBindBuffer( GL_ARRAY_BUFFER, neighbor1BufferHandle);
+    glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+
+
+    // Map index 1 to the position buffer
+    glEnableVertexAttribArray(2);
+
+	GLuint neighbor2BufferHandle;
+	glGenBuffers(1, &neighbor2BufferHandle);
+
+	glBindBuffer( GL_ARRAY_BUFFER, neighbor2BufferHandle );
+	if (carasuperior) {
+    glBufferData( GL_ARRAY_BUFFER, 36*3 * sizeof (float), vertexdata, GL_STATIC_DRAW );
+	} else {
+    glBufferData( GL_ARRAY_BUFFER, 30*3 * sizeof (float), vertexdata, GL_STATIC_DRAW );
+	}
+
+    glBindBuffer( GL_ARRAY_BUFFER, neighbor2BufferHandle);
+    glVertexAttribPointer( 2, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+
+
 }

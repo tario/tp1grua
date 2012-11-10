@@ -9,7 +9,9 @@
 
 class Cubo : public Dibujable {
 public:
-		static const int lastIndex = 3;
+		int lastIndex () {
+			return 3;
+		}
 	protected:
 		Cubo(bool cara_superior=true);
 
