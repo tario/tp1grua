@@ -135,6 +135,7 @@ Prisma::Prisma(glm::vec3 color, int n) {
 void Prisma::dibujar(const glm::mat4& m) {
 	this->colorShader->use();
 	colorShader->setTransformMatrix(m);
+	colorShader->setProjectionMatrix(Shader::projectionMatrix);
 
 	glBindVertexArray( this->caraSuperior );
 	glDrawArrays(GL_TRIANGLE_FAN, 0, this->caras+2);

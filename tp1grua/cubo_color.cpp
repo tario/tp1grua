@@ -1,5 +1,6 @@
 #include "stdafx.h" 
 #include "cubo_color.h"
+#include "model_object.h"
 
 CuboColor::CuboColor(const glm::vec3& color) {
 	initCube(color,color,color,color,color,color);
@@ -55,6 +56,7 @@ void CuboColor::initCube(
 void CuboColor::dibujar(const glm::mat4& m) {
 	this->colorShader->use();
 	colorShader->setTransformMatrix(m);
+	colorShader->setProjectionMatrix(Shader::projectionMatrix);
 
 	glBindVertexArray( this->getVaoHandle() );
 	glDrawArrays( GL_TRIANGLES, 0, 36);

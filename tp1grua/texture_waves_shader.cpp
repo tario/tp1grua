@@ -11,6 +11,11 @@ TextureWavesShader::TextureWavesShader() : Shader("TextureFShader.frag", "Textur
 	this->transform_matrix_index = this->getUniformLocation("TransformMatrix");
 	this->fase_location = this->getUniformLocation("fase");
 	this->fase2_location = this->getUniformLocation("fase2");
+	this->projection_matrix_index = this->getUniformLocation("ProjectionMatrix");
+}
+
+void TextureWavesShader::setProjectionMatrix(const glm::mat4& m) {
+	glUniformMatrix4fv(this->projection_matrix_index, 1, 0, glm::value_ptr(m));
 }
 
 void TextureWavesShader::setTransformMatrix(const glm::mat4& m) {

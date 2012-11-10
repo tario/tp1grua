@@ -6,11 +6,12 @@ in vec3 Neighbor2;
 in vec3 VertexColor;
 
 uniform mat4 TransformMatrix;
+uniform mat4 ProjectionMatrix;
 
 out vec3 Color;
 
 void main()
 {
         Color = VertexColor;
-        gl_Position = TransformMatrix * vec4( VertexPosition, 1.0);
+        gl_Position = ProjectionMatrix * TransformMatrix * vec4( VertexPosition, 1.0);
 }

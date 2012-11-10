@@ -73,6 +73,7 @@ void Olas::dibujar(const glm::mat4& m) {
 	texture->load(0);
 	textureWavesShader->setTextureUnit(0);
 	textureWavesShader->setTransformMatrix(m);
+	textureWavesShader->setProjectionMatrix(Shader::projectionMatrix);
 
 	glBindVertexArray( this->vaoHandle );
 	for (int i=0; i<filas; i++) {

@@ -4,12 +4,16 @@
 #include "GL/glew.h"
 #include "GL/wglew.h"
 #include "GL/freeglut.h"
-
+#include "glm/glm.hpp"
+#include "glm/ext.hpp"
+#include "glm/gtx/transform.hpp"
+#include <glm/gtc/type_ptr.hpp>
 #include <string>
 
 class Shader {
 
 public:
+	static glm::mat4 projectionMatrix;
 	// carga un programa dadas las rutas del shader de fragmento y shader de vertices
 	Shader(std::string fragmentShader, std::string vertexShader);
 

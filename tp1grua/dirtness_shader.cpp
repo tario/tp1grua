@@ -13,6 +13,11 @@ DirtnessShader::DirtnessShader() : Shader("DirtnessShader.frag", "TextureVShader
 	this->dirtmap_location = this->getUniformLocation("suciedad");
 	this->dirtlevel_location = this->getUniformLocation("nivel_suciedad");
 	this->transform_matrix_index = this->getUniformLocation("TransformMatrix");
+	this->projection_matrix_index = this->getUniformLocation("ProjectionMatrix");
+}
+
+void DirtnessShader::setProjectionMatrix(const glm::mat4& m) {
+	glUniformMatrix4fv(this->projection_matrix_index, 1, 0, glm::value_ptr(m));
 }
 
 void DirtnessShader::setTransformMatrix(const glm::mat4& m) {

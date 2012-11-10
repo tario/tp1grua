@@ -2,6 +2,9 @@
 #include "shader.h"
 #include <iostream>
 #include <fstream>
+
+
+glm::mat4 Shader::projectionMatrix;
 // carga un programa dadas las rutas del shader de fragmento y shader de vertices
 Shader::Shader(std::string fragmentShader, std::string vertexShader) {
 	// ********************************************

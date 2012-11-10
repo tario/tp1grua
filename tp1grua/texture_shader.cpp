@@ -11,6 +11,11 @@ TextureShader::TextureShader() : Shader("TextureFShader.frag", "TextureVShader.v
 
 	this->texture_location = this->getUniformLocation("texture1");
 	this->transform_matrix_index = this->getUniformLocation("TransformMatrix");
+	this->projection_matrix_index = this->getUniformLocation("ProjectionMatrix");
+}
+
+void TextureShader::setProjectionMatrix(const glm::mat4& m) {
+	glUniformMatrix4fv(this->projection_matrix_index, 1, 0, glm::value_ptr(m));
 }
 
 void TextureShader::setTransformMatrix(const glm::mat4& m) {

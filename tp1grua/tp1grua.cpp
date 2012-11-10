@@ -276,13 +276,14 @@ void glut_display() {
 //    glMatrixMode(GL_MODELVIEW);
 //    glLoadIdentity();
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
-	glm::mat4 Projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
 	// Camera matrix
+	Shader::projectionMatrix = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+	glm::mat4 Projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
 
 	Dibujable* dibujable;
 	for (std::list<Dibujable*>::iterator it = objects.begin(); it!=objects.end();it++) {
 		dibujable = (*it);
-		dibujable->dibujar(Projection * View);
+		dibujable->dibujar(View);
 	}
 
 
