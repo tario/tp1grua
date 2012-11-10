@@ -1,5 +1,6 @@
 #version 330
 in vec2 TexCoord;
+in vec3 normal;
 
 uniform sampler2D texture1;
 uniform sampler2D suciedad;

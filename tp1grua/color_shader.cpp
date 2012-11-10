@@ -4,7 +4,9 @@
 
 ColorShader::ColorShader() : Shader("BasicFShader.frag", "PassThroughVShader.vert") { 
 	this->bindAttribLocation(0, "VertexPosition" );
-    this->bindAttribLocation(1, "VertexColor" );
+	this->bindAttribLocation(1, "Neighbor1" );
+	this->bindAttribLocation(2, "Neighbor2" );
+	this->bindAttribLocation(3, "VertexColor" );
 	this->link();
 
 	this->transform_matrix_index = this->getUniformLocation("TransformMatrix");
