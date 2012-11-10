@@ -12,6 +12,7 @@ uniform float fase2;
 
 out vec2 TexCoord;
 out vec3 normal;
+out vec3 light_direction;
 
 void main()
 {
@@ -35,4 +36,6 @@ void main()
 		normal = cross(
 			vec3(trVertexPosition[0],trVertexPosition[1],trVertexPosition[2]) - vec3(trNeighbor1[0],trNeighbor1[1],trNeighbor1[2]), 
 			vec3(trVertexPosition[0],trVertexPosition[1],trVertexPosition[2]) - vec3(trNeighbor2[0],trNeighbor2[1],trNeighbor2[2]));
+
+		light_direction = normalize(vec3(10.0, -0.14, -1.0));
 }
