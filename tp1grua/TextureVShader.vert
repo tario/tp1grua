@@ -9,12 +9,14 @@ uniform mat4 ProjectionMatrix;
 uniform mat4 TransformMatrix;
 
 out vec2 TexCoord;
-out vec3 normal;
-out vec3 light_direction;
+out float light_intensity;
 
 void main()
 {
-        TexCoord = VertexTexCoord;
+		vec3 light_direction;
+		vec3 normal;
+		
+		TexCoord = VertexTexCoord;
         vec4 trVertexPosition = TransformMatrix * vec4( VertexPosition, 1.0);
 		vec4 trNeighbor1 = TransformMatrix * vec4(Neighbor1, 1.0);
 		vec4 trNeighbor2 = TransformMatrix * vec4(Neighbor2, 1.0);
@@ -26,4 +28,6 @@ void main()
 
 		light_direction = normalize(vec3(10.0, -0.14, -1.0));
 
+		float k1 = max(dot(normalize(light_direction), normalize(normal)), 0.0);
+		light_intensity = 0.2 + k1 * 0.8;
 }

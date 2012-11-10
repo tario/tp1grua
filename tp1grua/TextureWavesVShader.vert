@@ -11,11 +11,13 @@ uniform float fase;
 uniform float fase2;
 
 out vec2 TexCoord;
-out vec3 normal;
-out vec3 light_direction;
+out float light_intensity;
 
 void main()
 {
+		vec3 light_direction;
+		vec3 normal;
+
         TexCoord = VertexTexCoord;
 		float t = VertexPosition[0]*20.0 + fase + VertexPosition[1]*VertexPosition[1];
 		float t2 = VertexPosition[0]*50.0 + fase2 + VertexPosition[1]*3.0 + VertexPosition[1]*VertexPosition[1]*0.7;
@@ -38,4 +40,7 @@ void main()
 			vec3(trVertexPosition[0],trVertexPosition[1],trVertexPosition[2]) - vec3(trNeighbor2[0],trNeighbor2[1],trNeighbor2[2]));
 
 		light_direction = normalize(vec3(10.0, -0.14, -1.0));
+
+		float k1 = max(dot(normalize(light_direction), normalize(normal)), 0.0);
+		light_intensity = 0.2 + k1 * 0.8;
 }
