@@ -63,6 +63,13 @@ Cubo::Cubo(bool carasuperior) {
 	GLuint neighbor1BufferHandle;
 	glGenBuffers(1, &neighbor1BufferHandle);
 
+	square(vertexdata, glm::mat4(1.0) * xrotation);
+	square(vertexdata+6*3, zrotation * xrotation);
+	square(vertexdata+12*3, zrotation * zrotation * xrotation);
+	square(vertexdata+18*3, zrotation * zrotation * zrotation * xrotation);
+	square(vertexdata+24*3, yrotation * xrotation);
+	if (carasuperior) square(vertexdata+30*3, yrotation  * yrotation * yrotation * xrotation);
+
 	glBindBuffer( GL_ARRAY_BUFFER, neighbor1BufferHandle );
 	if (carasuperior) {
     glBufferData( GL_ARRAY_BUFFER, 36*3 * sizeof (float), vertexdata, GL_STATIC_DRAW );
@@ -79,6 +86,13 @@ Cubo::Cubo(bool carasuperior) {
 
 	GLuint neighbor2BufferHandle;
 	glGenBuffers(1, &neighbor2BufferHandle);
+
+	square(vertexdata, glm::mat4(1.0) * xrotation * xrotation);
+	square(vertexdata+6*3, zrotation  * xrotation * xrotation);
+	square(vertexdata+12*3, zrotation * zrotation  * xrotation * xrotation);
+	square(vertexdata+18*3, zrotation * zrotation * zrotation  * xrotation * xrotation);
+	square(vertexdata+24*3, yrotation  * xrotation * xrotation);
+	if (carasuperior) square(vertexdata+30*3, yrotation  * yrotation * yrotation  * xrotation * xrotation);
 
 	glBindBuffer( GL_ARRAY_BUFFER, neighbor2BufferHandle );
 	if (carasuperior) {
