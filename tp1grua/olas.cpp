@@ -48,14 +48,14 @@ Olas::Olas(Texture* _texture) : texture(_texture) {
 	GLuint textureCoordBufferHandle;
 	glGenBuffers(1, &textureCoordBufferHandle);
 	
-    glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(3);
 	
 	glBindBuffer( GL_ARRAY_BUFFER, textureCoordBufferHandle );
 	glBufferData( GL_ARRAY_BUFFER, cantidadVertices*2 * sizeof (float), extra_data, GL_STATIC_DRAW );
 
     // Map index 1 to the texture coord buffer
     glBindBuffer( GL_ARRAY_BUFFER, textureCoordBufferHandle);
-    glVertexAttribPointer( 1, 2, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+    glVertexAttribPointer( 3, 2, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
 	textureWavesShader = TextureWavesShader::instance();
 }

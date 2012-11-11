@@ -4,7 +4,9 @@
 
 TextureWavesShader::TextureWavesShader() : Shader("TextureFShader.frag", "TextureWavesVShader.vert") { 
 	this->bindAttribLocation(0, "VertexPosition" );
-    this->bindAttribLocation(1, "VertexColor" );
+    this->bindAttribLocation(1, "Neighbor1" );
+    this->bindAttribLocation(2, "Neighbor2" );
+    this->bindAttribLocation(3, "VertexTexCoord" );
 	this->link();
 
 	this->texture_location = this->getUniformLocation("texture1");
