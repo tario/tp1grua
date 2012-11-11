@@ -5,7 +5,9 @@
 
 
 glm::mat4 Shader::projectionMatrix;
-// carga un programa dadas las rutas del shader de fragmento y shader de vertices
+glm::vec3 Shader::cameraDirection;
+
+	// carga un programa dadas las rutas del shader de fragmento y shader de vertices
 Shader::Shader(std::string fragmentShader, std::string vertexShader) {
 	// ********************************************
     // Compiling the shader programms

@@ -50,6 +50,7 @@ void CuboTexturado::dibujar(const glm::mat4& m) {
 	textureShader->setTextureUnit(0);
 	textureShader->setTransformMatrix(m);
 	textureShader->setProjectionMatrix(Shader::projectionMatrix);
+	textureShader->setCameraDirection(Shader::cameraDirection);
 
 	glBindVertexArray( this->getVaoHandle() );
 	if (carasuperior) {

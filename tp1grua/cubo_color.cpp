@@ -57,6 +57,7 @@ void CuboColor::dibujar(const glm::mat4& m) {
 	this->colorShader->use();
 	colorShader->setTransformMatrix(m);
 	colorShader->setProjectionMatrix(Shader::projectionMatrix);
+	colorShader->setCameraDirection(Shader::cameraDirection);
 
 	glBindVertexArray( this->getVaoHandle() );
 	glDrawArrays( GL_TRIANGLES, 0, 36);

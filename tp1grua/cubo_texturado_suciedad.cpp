@@ -60,6 +60,7 @@ void CuboTexturadoSuciedad::dibujar(const glm::mat4& m) {
 	dirtnessShader->setDirtlevel(this->suciedad);
 	dirtnessShader->setTransformMatrix(m);
 	dirtnessShader->setProjectionMatrix(Shader::projectionMatrix);
+	dirtnessShader->setCameraDirection(Shader::cameraDirection);
 
 	glBindVertexArray( this->getVaoHandle() );
 	glDrawArrays( GL_TRIANGLES, 0, 36);

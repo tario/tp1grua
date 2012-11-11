@@ -12,6 +12,11 @@ TextureShader::TextureShader() : Shader("TextureFShader.frag", "TextureVShader.v
 	this->texture_location = this->getUniformLocation("texture1");
 	this->transform_matrix_index = this->getUniformLocation("TransformMatrix");
 	this->projection_matrix_index = this->getUniformLocation("ProjectionMatrix");
+	this->camera_direction_index = this->getUniformLocation("camera_direction");
+}
+
+void TextureShader::setCameraDirection(const glm::vec3& v) {
+	glUniform3f(this->camera_direction_index, v[0], v[1], v[2]);
 }
 
 void TextureShader::setProjectionMatrix(const glm::mat4& m) {

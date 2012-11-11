@@ -54,14 +54,18 @@ int mouse_last_y = 0;
 
 void update_view_matrix2() {
 
-	View       = glm::lookAt(
-		posicion_peaton_camara2, // Camera is at (4,3,3), in World Space
-		glm::vec3(
+	glm::vec3 look_at = glm::vec3(
 			posicion_peaton_camara2[0]+cos(fp_angle_camera)*cos(fp_angle_camera2),
 			posicion_peaton_camara2[1]+sin(fp_angle_camera)*cos(fp_angle_camera2),
-			posicion_peaton_camara2[2]+sin(fp_angle_camera2)),
+			posicion_peaton_camara2[2]+sin(fp_angle_camera2));
+
+	View       = glm::lookAt(
+		posicion_peaton_camara2, // Camera is at (4,3,3), in World Space
+		look_at,
 		glm::vec3(0,0,1)  // Head is up (set to 0,-1,0 to look upside-down)
 	);
+
+	Shader::cameraDirection = glm::normalize(look_at - posicion_peaton_camara2 );
 }
 
 void update_view_matrix() {
@@ -71,11 +75,14 @@ void update_view_matrix() {
 			camara_dist*sin(angle_camera)*cos(angle_camera2),
 			camara_dist*sin(angle_camera2));
 
+	glm::vec3 look_at(-0.75,1.25,1.5); 
 	View       = glm::lookAt(
 		posicion_camara, // Camera is at (4,3,3), in World Space
-		glm::vec3(-0.75,1.25,1.5), // mirar a la cabina de la grua
+		look_at, // mirar a la cabina de la grua
 		glm::vec3(0,0,1)  // Head is up (set to 0,-1,0 to look upside-down)
 	);
+
+	Shader::cameraDirection = glm::normalize(look_at - posicion_camara );
 }
 
 void glut_process_mouse(int button, int state, int x, int y) {

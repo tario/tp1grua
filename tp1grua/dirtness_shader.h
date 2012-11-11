@@ -10,6 +10,7 @@ public:
 
 	void setTransformMatrix(const glm::mat4& m);
 	void setProjectionMatrix(const glm::mat4& m);
+	void setCameraDirection(const glm::vec3& v);
 	void setTextureUnit(int unitnumber);
 	void setDirtmapUnit(int unitnumber);
 	void setDirtlevel(float level); // 0.0-0.1
@@ -22,6 +23,7 @@ private:
 	int texture_location;
 	int dirtmap_location;
 	int dirtlevel_location;
+	int camera_direction_index;
 };
 
 #endif

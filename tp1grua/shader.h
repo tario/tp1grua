@@ -14,6 +14,7 @@ class Shader {
 
 public:
 	static glm::mat4 projectionMatrix;
+	static glm::vec3 cameraDirection;
 	// carga un programa dadas las rutas del shader de fragmento y shader de vertices
 	Shader(std::string fragmentShader, std::string vertexShader);
 

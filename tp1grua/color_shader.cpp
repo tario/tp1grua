@@ -11,6 +11,11 @@ ColorShader::ColorShader() : Shader("BasicFShader.frag", "PassThroughVShader.ver
 
 	this->transform_matrix_index = this->getUniformLocation("TransformMatrix");
 	this->projection_matrix_index = this->getUniformLocation("ProjectionMatrix");
+	this->camera_direction_index = this->getUniformLocation("camera_direction");
+}
+
+void ColorShader::setCameraDirection(const glm::vec3& v) {
+	glUniform3f(this->camera_direction_index, v[0], v[1], v[2]);
 }
 
 void ColorShader::setProjectionMatrix(const glm::mat4& m) {
