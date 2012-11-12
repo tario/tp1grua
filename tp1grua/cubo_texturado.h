@@ -4,6 +4,7 @@
 #include "cubo.h" 
 #include "texture.h"
 #include "texture_shader.h"
+#include "material.h"
 
 class CuboTexturado : public Cubo {
 public:
@@ -23,12 +24,11 @@ public:
 		}
 	};
 
-	CuboTexturado(Texture* texture, Cara* caras, bool carasuperior=true);
+	CuboTexturado(Material* material, Cara* caras, bool carasuperior=true);
 	void dibujar(const glm::mat4& m);
 private:
 	float* extra_data;
-	Texture* texture;
-	TextureShader* textureShader;
+	Material* material;
 	bool carasuperior;
 };
 

@@ -11,7 +11,7 @@ static CuboTexturado::Cara caras[] = {
 	CuboTexturado::Cara(cara1)
 };
 
-Agua::Agua() : texture("agua.bmp"), cubo(&texture, caras, false), olas(&texture) {
+Agua::Agua() : texture("agua.bmp"), material(&texture), cubo(&material, caras, false), olas(&texture) {
 }
 
 void Agua::dibujar(const glm::mat4& m) {

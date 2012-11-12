@@ -11,9 +11,9 @@ static CuboTexturado::Cara caras[] = {
 	CuboTexturado::Cara(cara1)
 };
 
-Piso::Piso() : 
-	cubo(new Texture("piedras.bmp"),
-		caras) {
+Piso::Piso() :
+	material(new Texture("piedras.bmp")),
+	cubo(&material, caras) {
 }
 
 void Piso::dibujar(const glm::mat4& m) {

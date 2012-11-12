@@ -22,7 +22,8 @@ void main()
 	// reflexion especular
 	vec3 reflected = reflect(light_direction, nnormal);
 	float k2 = max(dot(reflected, camera_direction), 0.0);
-
+	k2 = pow(k2,6);
+	
 	float light_intensity = 0.2 + k1 * 0.4 + k2 * 0.4;
 
 	float range = texture( suciedad, TexCoord )[0] * nivel_suciedad + 1.0 - nivel_suciedad;

@@ -1,6 +1,7 @@
 #include "dibujable.h"
 #include "cubo_texturado.h"
 #include "olas.h"
+#include "material_textura.h"
 
 class Agua : public Dibujable {
 public:
@@ -10,6 +11,7 @@ public:
 
 private:
 	Texture texture;
+	MaterialTextura material;
 	CuboTexturado cubo;
 	Olas olas;
 };

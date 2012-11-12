@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #include "cubo_texturado.h"
 
-CuboTexturado::CuboTexturado(Texture* tex, Cara* caras, bool _carasuperior) : 
+CuboTexturado::CuboTexturado(Material* material, Cara* caras, bool _carasuperior) : 
+	material(material),
 	Cubo(_carasuperior), 
-	carasuperior(_carasuperior), 
-	texture(tex) {
+	carasuperior(_carasuperior) {
 	this->extra_data = new float[36*2];
 	int i;
 
@@ -39,18 +39,10 @@ CuboTexturado::CuboTexturado(Texture* tex, Cara* caras, bool _carasuperior) :
     // Map index 1 to the texture coord buffer
     glBindBuffer( GL_ARRAY_BUFFER, textureCoordBufferHandle);
     glVertexAttribPointer( lastIndex(), 2, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
-
-	textureShader = TextureShader::instance();
 }
 
 void CuboTexturado::dibujar(const glm::mat4& m) {
-	this->textureShader->use();
-
-	texture->load(0);
-	textureShader->setTextureUnit(0);
-	textureShader->setTransformMatrix(m);
-	textureShader->setProjectionMatrix(Shader::projectionMatrix);
-	textureShader->setCameraDirection(Shader::cameraDirection);
+	this->material->use(m);
 
 	glBindVertexArray( this->getVaoHandle() );
 	if (carasuperior) {

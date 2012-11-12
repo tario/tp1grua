@@ -60,6 +60,9 @@
     <ClCompile Include="texture_waves_shader.cpp">
       <Filter>shaderscode</Filter>
     </ClCompile>
+    <ClCompile Include="material_textura.cpp">
+      <Filter>material</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -124,6 +127,12 @@
     <ClInclude Include="texture_waves_shader.h">
       <Filter>shaderscode</Filter>
     </ClInclude>
+    <ClInclude Include="material.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="material_textura.h">
+      <Filter>material</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -164,6 +173,9 @@
     </Filter>
     <Filter Include="modelobjects">
       <UniqueIdentifier>{b769a66a-d6a9-4188-9b5c-2f971ae5c372}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="material">
+      <UniqueIdentifier>{5ec625d2-fab9-4fbc-a8f6-9ae158bd0611}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
