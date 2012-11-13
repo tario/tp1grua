@@ -24,8 +24,14 @@ void main()
 	float k2 = max(dot(reflected, camera_direction), 0.0);
 	k2 = pow(k2,6);
 	
-	float light_intensity = 0.2 + k1 * 0.4 + k2 * 0.4;
+	//float light_intensity = 0.2 + k1 * 0.4 + k2 * 0.4;
 
 	float range = texture( suciedad, TexCoord )[0] * nivel_suciedad + 1.0 - nivel_suciedad;
-	FragColor = light_intensity * texture( texture1, TexCoord ) * range;
+	
+	vec4 TextureColor = texture( texture1, TexCoord );
+	FragColor = vec4(
+		(0.2 + k1) * TextureColor[0] * range + k2 * 0.4,
+		(0.2 + k1) * TextureColor[1] * range + k2 * 0.4,
+		(0.2 + k1) * TextureColor[2] * range + k2 * 0.4,
+		1.0);
 }
