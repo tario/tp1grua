@@ -2,9 +2,11 @@
 #define __TORRE_H
 
 #include "dibujable.h"
-#include "cubo_texturado_suciedad.h"
+#include "cubo_texturado.h"
 #include "texture.h"
 #include "model_object.h"
+#include "material.h"
+#include "material_textura_suciedad.h"
 
 class Torre : public Dibujable {
 	public:
@@ -14,8 +16,10 @@ class Torre : public Dibujable {
 	private:
 		Texture texture;
 		Texture mapa_suciedad;
-		CuboTexturadoSuciedad cubo;
-		CuboTexturadoSuciedad solido;
+		CuboTexturado cubo;
+		CuboTexturado solido;
+
+		MaterialTexturaSuciedad material;
 
 		ModelObject columna11, columna12, columna22, columna21; // columnas de la torre
 		ModelObject base; // la base encima de la torre que separa a la cabina de las vigas

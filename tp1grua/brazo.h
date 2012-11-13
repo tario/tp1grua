@@ -2,9 +2,10 @@
 #define __BRAZO_H
 
 #include "dibujable.h"
-#include "cubo_texturado_suciedad.h"
 #include "texture.h"
 #include "model_object.h"
+#include "material_textura_suciedad.h"
+#include "cubo_texturado.h"
 
 class Brazo: public Dibujable {
 public:
@@ -12,7 +13,8 @@ public:
 	void dibujar(const glm::mat4& m);
 	void suciedad(float _suciedad);
 private:
-	CuboTexturadoSuciedad cubo;
+	CuboTexturado cubo;
+	MaterialTexturaSuciedad material;
 
 	ModelObject columna11, columna12, columna21, columna22;
 	ModelObject viga_lateral_1, viga_lateral_2, viga_lateral_3, viga_lateral_4;

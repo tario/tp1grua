@@ -3,11 +3,11 @@
 
 #include "dibujable.h"
 #include "cubo_color.h"
-#include "cubo_texturado_suciedad.h"
 #include "texture.h"
 #include "brazo.h" 
 #include "model_object.h"
 #include "prisma.h"
+#include "material_textura_suciedad.h"
 
 class Cabina : public Dibujable {
 	public:
@@ -26,7 +26,8 @@ class Cabina : public Dibujable {
 		ModelObject mo_gancho;
 		ModelObject mo_brazo;
 
-		CuboTexturadoSuciedad cubo;
+		CuboTexturado cubo;
+		MaterialTexturaSuciedad material;
 		CuboColor contra_peso;
 		CuboColor cable;
 		Prisma gancho;

@@ -26,9 +26,11 @@ Torre::Torre() :
 	// inicializar texturas
 	texture("textura.bmp"),
 	mapa_suciedad("mapa-suciedad.bmp"),
+	// material
+	material(&texture, &mapa_suciedad, 0.2),
 	// inicializar primitivas graficas
-	cubo(&texture, &mapa_suciedad, caras),
-	solido(&texture, &mapa_suciedad, caras_cubo_solido),
+	cubo(&material, caras),
+	solido(&material, caras_cubo_solido),
 	// inicializar objetos del modelo
 	columna11(&cubo, ModelObject::cell_matrix(-0.5,-0.4, -0.5,-0.4,-0.5,0.45) ),
 	columna12(&cubo, ModelObject::cell_matrix(-0.5,-0.4, 0.4,0.5,-0.5,0.45) ),
@@ -71,8 +73,7 @@ void Torre::calcular_viga_cruzada(ModelObject& mo, const glm::vec3& p0, const gl
 }
 
 void Torre::suciedad(float _suciedad) {
-	this->cubo.cambiar_suciedad(_suciedad);
-	this->solido.cambiar_suciedad(_suciedad);
+	this->material.cambiar_suciedad(_suciedad);
 }
 
 void Torre::dibujar(const glm::mat4& m) {

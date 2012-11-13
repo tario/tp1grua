@@ -48,9 +48,6 @@
     <ClCompile Include="brazo.cpp">
       <Filter>escena</Filter>
     </ClCompile>
-    <ClCompile Include="cubo_texturado_suciedad.cpp">
-      <Filter>primitivas</Filter>
-    </ClCompile>
     <ClCompile Include="dirtness_shader.cpp">
       <Filter>shaderscode</Filter>
     </ClCompile>
@@ -61,6 +58,9 @@
       <Filter>shaderscode</Filter>
     </ClCompile>
     <ClCompile Include="material_textura.cpp">
+      <Filter>material</Filter>
+    </ClCompile>
+    <ClCompile Include="material_textura_suciedad.cpp">
       <Filter>material</Filter>
     </ClCompile>
   </ItemGroup>
@@ -115,9 +115,6 @@
     <ClInclude Include="brazo.h">
       <Filter>escena</Filter>
     </ClInclude>
-    <ClInclude Include="cubo_texturado_suciedad.h">
-      <Filter>primitivas</Filter>
-    </ClInclude>
     <ClInclude Include="dirtness_shader.h">
       <Filter>shaderscode</Filter>
     </ClInclude>
@@ -131,6 +128,9 @@
       <Filter>utils</Filter>
     </ClInclude>
     <ClInclude Include="material_textura.h">
+      <Filter>material</Filter>
+    </ClInclude>
+    <ClInclude Include="material_textura_suciedad.h">
       <Filter>material</Filter>
     </ClInclude>
   </ItemGroup>

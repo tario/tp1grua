@@ -94,12 +94,12 @@
     <ClInclude Include="cubo.h" />
     <ClInclude Include="cubo_color.h" />
     <ClInclude Include="cubo_texturado.h" />
-    <ClInclude Include="cubo_texturado_suciedad.h" />
     <ClInclude Include="dibujable.h" />
     <ClInclude Include="dirtness_shader.h" />
     <ClInclude Include="grua.h" />
     <ClInclude Include="material.h" />
     <ClInclude Include="material_textura.h" />
+    <ClInclude Include="material_textura_suciedad.h" />
     <ClInclude Include="olas.h" />
     <ClInclude Include="model_object.h" />
     <ClInclude Include="piso.h" />
@@ -120,10 +120,10 @@
     <ClCompile Include="cubo.cpp" />
     <ClCompile Include="cubo_color.cpp" />
     <ClCompile Include="cubo_texturado.cpp" />
-    <ClCompile Include="cubo_texturado_suciedad.cpp" />
     <ClCompile Include="dirtness_shader.cpp" />
     <ClCompile Include="grua.cpp" />
     <ClCompile Include="material_textura.cpp" />
+    <ClCompile Include="material_textura_suciedad.cpp" />
     <ClCompile Include="olas.cpp" />
     <ClCompile Include="model_object.cpp" />
     <ClCompile Include="piso.cpp" />
