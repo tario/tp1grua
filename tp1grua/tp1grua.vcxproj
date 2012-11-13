@@ -82,6 +82,7 @@
     <None Include="DirtnessShader.frag" />
     <None Include="PassThroughVShader.vert" />
     <None Include="ReadMe.txt" />
+    <None Include="SpecularDirtnessShader.frag" />
     <None Include="TextureFShader.frag" />
     <None Include="TextureVShader.vert" />
     <None Include="TextureWavesVShader.vert" />
@@ -100,11 +101,13 @@
     <ClInclude Include="material.h" />
     <ClInclude Include="material_textura.h" />
     <ClInclude Include="material_textura_suciedad.h" />
+    <ClInclude Include="material_textura_suciedad_specular.h" />
     <ClInclude Include="olas.h" />
     <ClInclude Include="model_object.h" />
     <ClInclude Include="piso.h" />
     <ClInclude Include="prisma.h" />
     <ClInclude Include="shader.h" />
+    <ClInclude Include="specular_dirtness_shader.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="texture.h" />
@@ -124,11 +127,13 @@
     <ClCompile Include="grua.cpp" />
     <ClCompile Include="material_textura.cpp" />
     <ClCompile Include="material_textura_suciedad.cpp" />
+    <ClCompile Include="material_textura_suciedad_specular.cpp" />
     <ClCompile Include="olas.cpp" />
     <ClCompile Include="model_object.cpp" />
     <ClCompile Include="piso.cpp" />
     <ClCompile Include="prisma.cpp" />
     <ClCompile Include="shader.cpp" />
+    <ClCompile Include="specular_dirtness_shader.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="texture_shader.cpp" />
     <ClCompile Include="texture_waves_shader.cpp" />

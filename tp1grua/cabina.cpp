@@ -23,7 +23,8 @@ static CuboTexturado::Cara coordenadas_textura[] = {
 Cabina::Cabina() :
 	textura_cabina("textura.bmp"),
 	mapa_suciedad("mapa-suciedad.bmp"),
-	material(&textura_cabina, &mapa_suciedad, 0.2),
+	mapa_specular("mapa-specular.bmp"),
+	material(&textura_cabina, &mapa_suciedad, &mapa_specular, 0.2),
 	cubo(&material, coordenadas_textura, true), 
 	contra_peso(gris_oscuro), cable(negro), gancho(negro,20),
 	mo_cubo(&cubo, ModelObject::cell_matrix(-0.83,0.83,-0.5,0.5,-0.5,0.5)),

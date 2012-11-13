@@ -6,7 +6,7 @@
 #include "texture.h"
 #include "model_object.h"
 #include "material.h"
-#include "material_textura_suciedad.h"
+#include "material_textura_suciedad_specular.h"
 
 class Torre : public Dibujable {
 	public:
@@ -15,11 +15,11 @@ class Torre : public Dibujable {
 		void suciedad(float _suciedad);
 	private:
 		Texture texture;
-		Texture mapa_suciedad;
+		Texture mapa_suciedad, mapa_specular;
 		CuboTexturado cubo;
 		CuboTexturado solido;
 
-		MaterialTexturaSuciedad material;
+		MaterialTexturaSuciedadSpecular material;
 
 		ModelObject columna11, columna12, columna22, columna21; // columnas de la torre
 		ModelObject base; // la base encima de la torre que separa a la cabina de las vigas

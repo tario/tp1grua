@@ -2,7 +2,8 @@
 #include "dirtness_shader.h"
 #include "glm/ext.hpp"
 
-DirtnessShader::DirtnessShader() : Shader("DirtnessShader.frag", "TextureVShader.vert") { 
+DirtnessShader::DirtnessShader(const std::string& fragShader, const std::string& vertexShader) : 
+	Shader(fragShader, vertexShader) { 
 	this->bindAttribLocation(0, "VertexPosition" );
 	this->bindAttribLocation(1, "VertexNormal" );
     this->bindAttribLocation(2, "VertexTexCoord" );
@@ -43,6 +44,6 @@ void DirtnessShader::setDirtlevel(float level) {
 }
 
 DirtnessShader* DirtnessShader::instance() {
-	static DirtnessShader _instance;
+	static DirtnessShader _instance("DirtnessShader.frag", "TextureVShader.vert");
 	return &_instance;
 }

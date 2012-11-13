@@ -26,8 +26,9 @@ Torre::Torre() :
 	// inicializar texturas
 	texture("textura.bmp"),
 	mapa_suciedad("mapa-suciedad.bmp"),
+	mapa_specular("mapa-specular.bmp"),
 	// material
-	material(&texture, &mapa_suciedad, 0.2),
+	material(&texture, &mapa_suciedad, &mapa_specular, 0.2),
 	// inicializar primitivas graficas
 	cubo(&material, caras),
 	solido(&material, caras_cubo_solido),

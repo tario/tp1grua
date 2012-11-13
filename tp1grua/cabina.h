@@ -7,7 +7,7 @@
 #include "brazo.h" 
 #include "model_object.h"
 #include "prisma.h"
-#include "material_textura_suciedad.h"
+#include "material_textura_suciedad_specular.h"
 
 class Cabina : public Dibujable {
 	public:
@@ -27,7 +27,7 @@ class Cabina : public Dibujable {
 		ModelObject mo_brazo;
 
 		CuboTexturado cubo;
-		MaterialTexturaSuciedad material;
+		MaterialTexturaSuciedadSpecular material;
 		CuboColor contra_peso;
 		CuboColor cable;
 		Prisma gancho;
@@ -38,6 +38,7 @@ class Cabina : public Dibujable {
 
 		Texture textura_cabina;
 		Texture mapa_suciedad;
+		Texture mapa_specular;
 };
 
 #endif

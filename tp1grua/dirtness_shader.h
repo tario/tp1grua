@@ -6,7 +6,8 @@
 
 class DirtnessShader : public Shader {
 public:
-	DirtnessShader();
+	DirtnessShader(const std::string& fragShader,
+					const std::string& vertexShader);
 
 	void setTransformMatrix(const glm::mat4& m);
 	void setProjectionMatrix(const glm::mat4& m);
