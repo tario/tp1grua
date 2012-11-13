@@ -19,6 +19,7 @@ private:
 	int projection_matrix_index;
 	int texture_location;
 	int camera_direction_index;
+	int normal_matrix_index;
 };
 
 #endif

@@ -4,15 +4,15 @@
 
 TextureShader::TextureShader() : Shader("TextureFShader.frag", "TextureVShader.vert") { 
 	this->bindAttribLocation(0, "VertexPosition" );
-	this->bindAttribLocation(1, "Neighbor1" );
-	this->bindAttribLocation(2, "Neighbor2" );
-	this->bindAttribLocation(3, "VertexTexCoord" );
+	this->bindAttribLocation(1, "VertexNormal" );
+	this->bindAttribLocation(2, "VertexTexCoord" );
 	this->link();
 
 	this->texture_location = this->getUniformLocation("texture1");
 	this->transform_matrix_index = this->getUniformLocation("TransformMatrix");
 	this->projection_matrix_index = this->getUniformLocation("ProjectionMatrix");
 	this->camera_direction_index = this->getUniformLocation("camera_direction");
+	this->normal_matrix_index = this->getUniformLocation("NormalMatrix");
 }
 
 void TextureShader::setCameraDirection(const glm::vec3& v) {
@@ -25,6 +25,7 @@ void TextureShader::setProjectionMatrix(const glm::mat4& m) {
 
 void TextureShader::setTransformMatrix(const glm::mat4& m) {
 	glUniformMatrix4fv(this->transform_matrix_index, 1, 0, glm::value_ptr(m));
+	glUniformMatrix3fv(this->normal_matrix_index, 1, 0, glm::value_ptr(compute_normal_matrix(m)));
 }
 
 void TextureShader::setTextureUnit(int unitnumber) {

@@ -4,14 +4,14 @@
 
 ColorShader::ColorShader() : Shader("BasicFShader.frag", "PassThroughVShader.vert") { 
 	this->bindAttribLocation(0, "VertexPosition" );
-	this->bindAttribLocation(1, "Neighbor1" );
-	this->bindAttribLocation(2, "Neighbor2" );
-	this->bindAttribLocation(3, "VertexColor" );
+	this->bindAttribLocation(1, "VertexNormal" );
+	this->bindAttribLocation(2, "VertexColor" );
 	this->link();
 
 	this->transform_matrix_index = this->getUniformLocation("TransformMatrix");
 	this->projection_matrix_index = this->getUniformLocation("ProjectionMatrix");
 	this->camera_direction_index = this->getUniformLocation("camera_direction");
+	this->normal_matrix_index = this->getUniformLocation("NormalMatrix");
 }
 
 void ColorShader::setCameraDirection(const glm::vec3& v) {
@@ -29,5 +29,6 @@ ColorShader* ColorShader::instance() {
 
 void ColorShader::setTransformMatrix(const glm::mat4& m) {
 	glUniformMatrix4fv(this->transform_matrix_index, 1, 0, glm::value_ptr(m));
+	glUniformMatrix3fv(this->normal_matrix_index, 1, 0, glm::value_ptr(compute_normal_matrix(m)));
 }
 

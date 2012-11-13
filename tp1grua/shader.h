@@ -23,6 +23,7 @@ public:
 	void bindAttribLocation(GLuint location, std::string attrib);
 	int getUniformLocation(std::string attrib);
 
+	glm::mat3 compute_normal_matrix(const glm::mat4& m);
 private:
 	GLuint programHandle;
 

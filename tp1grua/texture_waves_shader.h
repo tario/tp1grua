@@ -18,6 +18,7 @@ private:
 	int transform_matrix_index;
 	int projection_matrix_index;
 	int texture_location;
+	int normal_matrix_index;
 	int fase_location;
 	int fase2_location;
 };

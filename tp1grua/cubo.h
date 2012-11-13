@@ -10,7 +10,7 @@
 class Cubo : public Dibujable {
 public:
 		int lastIndex () {
-			return 3;
+			return 2;
 		}
 	protected:
 		Cubo(bool cara_superior=true);

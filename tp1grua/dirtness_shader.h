@@ -24,6 +24,7 @@ private:
 	int dirtmap_location;
 	int dirtlevel_location;
 	int camera_direction_index;
+	int normal_matrix_index;
 };
 
 #endif

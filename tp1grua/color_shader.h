@@ -18,7 +18,7 @@ private:
 	int transform_matrix_index;
 	int projection_matrix_index;
 	int camera_direction_index;
-
+	int normal_matrix_index;
 };
 
 #endif

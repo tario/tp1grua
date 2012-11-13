@@ -20,6 +20,13 @@ static void square(float* data, glm::mat4 matrix) {
 	assignvec3(data+15, matrix * glm::vec4(l, l, l, 1.0f));
 }
 
+static void assign_face_normal(float* data, glm::vec3 normal) {
+	// asigna la misma normal a todos los vertices de la cara
+	for (int i=0; i<18; i+=3) {
+		assignvec3(data+i, glm::vec4(normal,1.0));
+	}
+}
+
 Cubo::Cubo(bool carasuperior) {
 
     // Create and set-up the vertex array objet
@@ -57,18 +64,18 @@ Cubo::Cubo(bool carasuperior) {
     glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
 
-    // Map index 1 to the position buffer
+    // Map index 1 to the vertex normal
     glEnableVertexAttribArray(1);	
 	
 	GLuint neighbor1BufferHandle;
 	glGenBuffers(1, &neighbor1BufferHandle);
 
-	square(vertexdata, glm::mat4(1.0) * xrotation);
-	square(vertexdata+6*3, zrotation * xrotation);
-	square(vertexdata+12*3, zrotation * zrotation * xrotation);
-	square(vertexdata+18*3, zrotation * zrotation * zrotation * xrotation);
-	square(vertexdata+24*3, yrotation * xrotation);
-	if (carasuperior) square(vertexdata+30*3, yrotation  * yrotation * yrotation * xrotation);
+	assign_face_normal(vertexdata, glm::vec3(1.0,0.0,0.0));
+	assign_face_normal(vertexdata+6*3, glm::vec3(0.0,1.0,0.0));
+	assign_face_normal(vertexdata+12*3, glm::vec3(-1.0,0.0,0.0));
+	assign_face_normal(vertexdata+18*3, glm::vec3(0.0,-1.0,0.0));
+	assign_face_normal(vertexdata+24*3, glm::vec3(0.0,0.0,-1.0));
+	if (carasuperior) assign_face_normal(vertexdata+30*3, glm::vec3(0.0,0.0,1.0));
 
 	glBindBuffer( GL_ARRAY_BUFFER, neighbor1BufferHandle );
 	if (carasuperior) {
@@ -79,30 +86,6 @@ Cubo::Cubo(bool carasuperior) {
 
     glBindBuffer( GL_ARRAY_BUFFER, neighbor1BufferHandle);
     glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
-
-
-    // Map index 1 to the position buffer
-    glEnableVertexAttribArray(2);
-
-	GLuint neighbor2BufferHandle;
-	glGenBuffers(1, &neighbor2BufferHandle);
-
-	square(vertexdata, glm::mat4(1.0) * xrotation * xrotation);
-	square(vertexdata+6*3, zrotation  * xrotation * xrotation);
-	square(vertexdata+12*3, zrotation * zrotation  * xrotation * xrotation);
-	square(vertexdata+18*3, zrotation * zrotation * zrotation  * xrotation * xrotation);
-	square(vertexdata+24*3, yrotation  * xrotation * xrotation);
-	if (carasuperior) square(vertexdata+30*3, yrotation  * yrotation * yrotation  * xrotation * xrotation);
-
-	glBindBuffer( GL_ARRAY_BUFFER, neighbor2BufferHandle );
-	if (carasuperior) {
-    glBufferData( GL_ARRAY_BUFFER, 36*3 * sizeof (float), vertexdata, GL_STATIC_DRAW );
-	} else {
-    glBufferData( GL_ARRAY_BUFFER, 30*3 * sizeof (float), vertexdata, GL_STATIC_DRAW );
-	}
-
-    glBindBuffer( GL_ARRAY_BUFFER, neighbor2BufferHandle);
-    glVertexAttribPointer( 2, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
 
 }

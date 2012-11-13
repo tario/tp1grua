@@ -148,3 +148,13 @@ int Shader::getUniformLocation(std::string attrib) {
 void Shader::use() {
 	glUseProgram( this->programHandle );
 }
+
+glm::mat3 Shader::compute_normal_matrix(const glm::mat4& m) {
+    glm::mat3 normal_matrix = glm::mat3 ( 1.0f );
+    for (int i=0; i<3; i++)
+        for (int j=0; j<3; j++)
+            normal_matrix[i][j] = m[i][j];
+
+	return normal_matrix;
+}
+
