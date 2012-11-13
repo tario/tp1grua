@@ -18,9 +18,12 @@ void main()
 	// reflexion especular
 	vec3 reflected = reflect(light_direction, nnormal);
 	float k2 = max(dot(reflected, camera_direction), 0.0);
-	k2 = pow(k2,6);
+	k2 = pow(k2,12);
 
-	float light_intensity = 0.2 + k1 * 0.4 + k2 * 0.4;
-
-	FragColor = light_intensity * texture( texture1, TexCoord );
+	vec4 TextureColor = texture( texture1, TexCoord );
+	FragColor = vec4(
+		(0.2 + k1) * TextureColor[0] + k2 * 0.6,
+		(0.2 + k1) * TextureColor[1] + k2 * 0.6,
+		(0.2 + k1) * TextureColor[2] + k2 * 0.6,
+		1.0);
 }

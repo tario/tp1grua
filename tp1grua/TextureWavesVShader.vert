@@ -11,12 +11,12 @@ uniform float fase;
 uniform float fase2;
 
 out vec2 TexCoord;
+out vec3 normal;
 out float light_intensity;
 
 void main()
 {
 		vec3 light_direction;
-		vec3 normal;
 
         TexCoord = VertexTexCoord;
 		float t = VertexPosition[0]*20.0 + fase + VertexPosition[1]*VertexPosition[1];
@@ -32,10 +32,14 @@ void main()
 				1.0);
 
         gl_Position = ProjectionMatrix * trVertexPosition; 
-
-		normal = vec3(0.0,0.0,1.0);
-		light_direction = normalize(vec3(10.0, -0.14, -1.0));
-
-		float k1 = max(dot(normalize(light_direction), normalize(normal)), 0.0);
-		light_intensity = 0.2 + k1 * 0.8;
+		float x = VertexPosition[0];
+		float y = VertexPosition[1];
+		normal = -vec3(
+			0.4 * sin(20.0*x + fase + y*y) + 0.4*(x + 0.5)*cos(20.0*x+fase + y*y)*20.0 -
+			0.15 * sin(50.0*x + fase2 + 3*y + y*y*0.7) + 0.15*(0.5-x)*cos(50*x + fase2 + 3*y + y*y*0.7)*50
+			,
+			0.4 * (x + 0.5) * cos(20*x + fase + y*y) * 2 * y + 
+			0.15 * (0.5 - x) * cos(50*x + fase2 + 3*y + y*y*0.7)*(3+2*y),
+			-1.0);
+		normal = normalize(normal);
 }

@@ -48,14 +48,14 @@ Olas::Olas(Texture* _texture) : texture(_texture) {
 	GLuint textureCoordBufferHandle;
 	glGenBuffers(1, &textureCoordBufferHandle);
 	
-    glEnableVertexAttribArray(3);
+    glEnableVertexAttribArray(2);
 	
 	glBindBuffer( GL_ARRAY_BUFFER, textureCoordBufferHandle );
 	glBufferData( GL_ARRAY_BUFFER, cantidadVertices*2 * sizeof (float), extra_data, GL_STATIC_DRAW );
 
     // Map index 1 to the texture coord buffer
     glBindBuffer( GL_ARRAY_BUFFER, textureCoordBufferHandle);
-    glVertexAttribPointer( 3, 2, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+    glVertexAttribPointer( 2, 2, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
 	textureWavesShader = TextureWavesShader::instance();
 }
@@ -74,6 +74,7 @@ void Olas::dibujar(const glm::mat4& m) {
 	textureWavesShader->setTextureUnit(0);
 	textureWavesShader->setTransformMatrix(m);
 	textureWavesShader->setProjectionMatrix(Shader::projectionMatrix);
+	textureWavesShader->setCameraDirection(Shader::cameraDirection);
 
 	glBindVertexArray( this->vaoHandle );
 	for (int i=0; i<filas; i++) {

@@ -14,6 +14,11 @@ TextureWavesShader::TextureWavesShader() : Shader("TextureFShader.frag", "Textur
 	this->fase2_location = this->getUniformLocation("fase2");
 	this->projection_matrix_index = this->getUniformLocation("ProjectionMatrix");
 	this->normal_matrix_index = this->getUniformLocation("NormalMatrix");
+	this->camera_direction_index = this->getUniformLocation("camera_direction");
+}
+
+void TextureWavesShader::setCameraDirection(const glm::vec3& v) {
+	glUniform3f(this->camera_direction_index, v[0], v[1], v[2]);
 }
 
 void TextureWavesShader::setProjectionMatrix(const glm::mat4& m) {
