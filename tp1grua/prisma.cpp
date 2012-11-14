@@ -6,14 +6,16 @@
 
 static GLuint construirPoligono(float z, int caras, glm::vec3 color) {
 	GLuint vboHandles[20];
-    glGenBuffers(2, vboHandles);
+    glGenBuffers(3, vboHandles);
     GLuint positionBufferHandle = vboHandles[0];
     GLuint colorBufferHandle = vboHandles[1];
+    GLuint normalBufferHandle = vboHandles[2];
 
 	int cantidadVertices = caras+2;
 
 	float* vertexdata = new float[cantidadVertices*3];
 	float* colordata = new float[cantidadVertices*3];
+	float* normaldata = new float[cantidadVertices*3];
 
 	for (int i=0; i++; i<cantidadVertices) {
 		colordata[i*3] = color[0];
@@ -35,11 +37,18 @@ static GLuint construirPoligono(float z, int caras, glm::vec3 color) {
 		vertexdata[i*3+1] = esquina[1];
 		vertexdata[i*3+2] = esquina[2];
 
+		normaldata[i*3] = 0.0;
+		normaldata[i*3+1] = 0.0;
+		normaldata[i*3+2] = z>0.0 ? 1.0 : -1.0;
+
 		esquina = girar * esquina;
 	}
 	
     glBindBuffer( GL_ARRAY_BUFFER, positionBufferHandle );
     glBufferData( GL_ARRAY_BUFFER, cantidadVertices*3 * sizeof (float), vertexdata, GL_STATIC_DRAW );
+
+	glBindBuffer( GL_ARRAY_BUFFER, normalBufferHandle );
+    glBufferData( GL_ARRAY_BUFFER, cantidadVertices*3 * sizeof (float), normaldata, GL_STATIC_DRAW);
 
     glBindBuffer( GL_ARRAY_BUFFER, colorBufferHandle );
     glBufferData( GL_ARRAY_BUFFER, cantidadVertices*3 * sizeof (float), colordata, GL_STATIC_DRAW );
@@ -50,12 +59,16 @@ static GLuint construirPoligono(float z, int caras, glm::vec3 color) {
 
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
 
     glBindBuffer( GL_ARRAY_BUFFER, positionBufferHandle);
     glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
-    glBindBuffer( GL_ARRAY_BUFFER, colorBufferHandle);
+	glBindBuffer( GL_ARRAY_BUFFER, normalBufferHandle);
     glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+
+    glBindBuffer( GL_ARRAY_BUFFER, colorBufferHandle);
+    glVertexAttribPointer( 2, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
 	delete[] colordata;
 	delete[] vertexdata;
@@ -65,16 +78,18 @@ static GLuint construirPoligono(float z, int caras, glm::vec3 color) {
 
 static GLuint construirCostado(int caras, glm::vec3 color) {
 	GLuint vboHandles[20];
-    glGenBuffers(2, vboHandles);
+    glGenBuffers(3, vboHandles);
     GLuint positionBufferHandle = vboHandles[0];
     GLuint colorBufferHandle = vboHandles[1];
+    GLuint normalBufferHandle = vboHandles[2];
 
 	int cantidadVertices = caras*2+2;
 
 	float* vertexdata = new float[cantidadVertices*3];
 	float* colordata = new float[cantidadVertices*3];
+	float* normaldata = new float[cantidadVertices*3];
 	
-	for (int i=0; i++; i<cantidadVertices) {
+	for (int i=0; i<cantidadVertices; i++) {
 		colordata[i*3] = color[0];
 		colordata[i*3+1] = color[1];
 		colordata[i*3+2] = color[2];
@@ -92,6 +107,17 @@ static GLuint construirCostado(int caras, glm::vec3 color) {
 		vertexdata[i*6+4] = esquina[1];
 		vertexdata[i*6+5] = esquina[2]+1.0;
 
+		glm::vec3 vertex_normal = glm::normalize(
+				glm::vec3(esquina[0], esquina[1], esquina[2])
+			);
+
+		normaldata[i*6] = vertex_normal[0];
+		normaldata[i*6+1] = vertex_normal[1];
+		normaldata[i*6+2] = vertex_normal[2];
+		normaldata[i*6+3] = vertex_normal[0];
+		normaldata[i*6+4] = vertex_normal[1];
+		normaldata[i*6+5] = vertex_normal[2];
+
 		esquina = girar * esquina;
 	}
 	
@@ -101,20 +127,27 @@ static GLuint construirCostado(int caras, glm::vec3 color) {
     glBindBuffer( GL_ARRAY_BUFFER, colorBufferHandle );
     glBufferData( GL_ARRAY_BUFFER, cantidadVertices*3 * sizeof (float), colordata, GL_STATIC_DRAW );
 
+	glBindBuffer( GL_ARRAY_BUFFER, normalBufferHandle );
+    glBufferData( GL_ARRAY_BUFFER, cantidadVertices*3 * sizeof (float), normaldata, GL_STATIC_DRAW );
+
 	GLuint vaoHandle;
     glGenVertexArrays( 1, &vaoHandle );
     glBindVertexArray( vaoHandle );
 
     glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
-
     glBindBuffer( GL_ARRAY_BUFFER, positionBufferHandle);
     glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
-    glBindBuffer( GL_ARRAY_BUFFER, colorBufferHandle);
+    glEnableVertexAttribArray(1);
+	glBindBuffer( GL_ARRAY_BUFFER, normalBufferHandle);
     glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
+	glEnableVertexAttribArray(2);
+	glBindBuffer( GL_ARRAY_BUFFER, colorBufferHandle);
+    glVertexAttribPointer( 2, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+
 	delete[] colordata;
+	delete[] normaldata;
 	delete[] vertexdata;
 
 	return vaoHandle;

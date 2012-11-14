@@ -69,6 +69,9 @@
     <ClCompile Include="material_textura_suciedad_specular.cpp">
       <Filter>material</Filter>
     </ClCompile>
+    <ClCompile Include="material_color_solido.cpp">
+      <Filter>material</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -143,6 +146,9 @@
       <Filter>shaderscode</Filter>
     </ClInclude>
     <ClInclude Include="material_textura_suciedad_specular.h">
+      <Filter>material</Filter>
+    </ClInclude>
+    <ClInclude Include="material_color_solido.h">
       <Filter>material</Filter>
     </ClInclude>
   </ItemGroup>

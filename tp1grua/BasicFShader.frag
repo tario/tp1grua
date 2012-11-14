@@ -17,8 +17,11 @@ void main()
 	// reflexion especular
 	vec3 reflected = reflect(light_direction, nnormal);
 	float k2 = max(dot(reflected, camera_direction), 0.0);
+	//k2 = pow(k2,8);
 
-	float light_intensity = 0.2 + k1 * 0.4 + k2 * 0.4;
-
-        FragColor = light_intensity * vec4( Color, 1.0) ;
+	FragColor = vec4(
+		(0.2 + k1) * Color[0] + k2 * 0.6,
+		(0.2 + k1) * Color[1] + k2 * 0.6,
+		(0.2 + k1) * Color[2] + k2 * 0.6,
+		1.0);
 }

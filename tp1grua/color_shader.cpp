@@ -29,6 +29,7 @@ ColorShader* ColorShader::instance() {
 
 void ColorShader::setTransformMatrix(const glm::mat4& m) {
 	glUniformMatrix4fv(this->transform_matrix_index, 1, 0, glm::value_ptr(m));
-	glUniformMatrix3fv(this->normal_matrix_index, 1, 0, glm::value_ptr(compute_normal_matrix(m)));
+	glm::mat3 normal_matrix = compute_normal_matrix(m);
+	glUniformMatrix3fv(this->normal_matrix_index, 1, 0, glm::value_ptr(normal_matrix));
 }
 
