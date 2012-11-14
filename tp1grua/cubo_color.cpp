@@ -2,18 +2,19 @@
 #include "cubo_color.h"
 #include "model_object.h"
 
-CuboColor::CuboColor(const glm::vec3& color) {
+CuboColor::CuboColor(Material* material, const glm::vec3& color) : material(material) {
 	initCube(color,color,color,color,color,color);
 }
 
 CuboColor::CuboColor(
+		Material* material,
 		const glm::vec3& colorzp,
 		const glm::vec3& colorzm,
 		const glm::vec3& colorxp,
 		const glm::vec3& colorxm,
 		const glm::vec3& coloryp,
 		const glm::vec3& colorym
-		) { 
+		) : material(material) { 
 	initCube(colorzp, colorzm, colorxp, colorxm, coloryp, colorym);		
 }
 
@@ -50,14 +51,9 @@ void CuboColor::initCube(
     // Map index 1 to the texture coord buffer
     glBindBuffer( GL_ARRAY_BUFFER, colorBufferHandle);
     glVertexAttribPointer( lastIndex(), 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
-	
-	colorShader = ColorShader::instance();
 }
 void CuboColor::dibujar(const glm::mat4& m) {
-	this->colorShader->use();
-	colorShader->setTransformMatrix(m);
-	colorShader->setProjectionMatrix(Shader::projectionMatrix);
-	colorShader->setCameraDirection(Shader::cameraDirection);
+	this->material->use(m);
 
 	glBindVertexArray( this->getVaoHandle() );
 	glDrawArrays( GL_TRIANGLES, 0, 36);

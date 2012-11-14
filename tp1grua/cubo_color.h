@@ -2,12 +2,13 @@
 #define __CUBO_COLOR_H
 
 #include "cubo.h"
-#include "color_shader.h"
+#include "material.h"
 
 class CuboColor : public Cubo {
 public:
-	CuboColor(const glm::vec3& color);
+	CuboColor(Material* material, const glm::vec3& color);
 	CuboColor(
+		Material* material,
 		const glm::vec3& colorzp,
 		const glm::vec3& colorzm,
 		const glm::vec3& colorxp,
@@ -18,7 +19,7 @@ public:
 
 	void dibujar(const glm::mat4& m);
 private:
-	ColorShader* colorShader;
+	Material* material;
 
 	void initCube(
 		const glm::vec3& colorzp,
