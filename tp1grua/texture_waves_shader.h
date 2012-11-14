@@ -11,6 +11,7 @@ public:
 	void setTransformMatrix(const glm::mat4& m);
 	void setProjectionMatrix(const glm::mat4& m);
 	void setCameraDirection(const glm::vec3& v);
+	void setLightningParameters(float ka, float kd, float ks);
 
 	void setTextureUnit(int unitnumber);
 	void setFase(float fase);
@@ -24,6 +25,8 @@ private:
 	int normal_matrix_index;
 	int fase_location;
 	int fase2_location;
+
+	int ka_index, kd_index, ks_index;
 };
 
 #endif

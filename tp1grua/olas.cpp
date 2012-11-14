@@ -75,6 +75,7 @@ void Olas::dibujar(const glm::mat4& m) {
 	textureWavesShader->setTransformMatrix(m);
 	textureWavesShader->setProjectionMatrix(Shader::projectionMatrix);
 	textureWavesShader->setCameraDirection(Shader::cameraDirection);
+	textureWavesShader->setLightningParameters(0.2,0.4,0.4);
 
 	glBindVertexArray( this->vaoHandle );
 	for (int i=0; i<filas; i++) {

@@ -13,6 +13,15 @@ TextureShader::TextureShader() : Shader("TextureFShader.frag", "TextureVShader.v
 	this->projection_matrix_index = this->getUniformLocation("ProjectionMatrix");
 	this->camera_direction_index = this->getUniformLocation("camera_direction");
 	this->normal_matrix_index = this->getUniformLocation("NormalMatrix");
+	this->ka_index = this->getUniformLocation("ka");
+	this->kd_index = this->getUniformLocation("kd");
+	this->ks_index = this->getUniformLocation("ks");
+}
+
+void TextureShader::setLightningParameters(float ka, float kd, float ks) {
+	glUniform1f(this->ka_index, 1.0);
+	glUniform1f(this->kd_index, kd);
+	glUniform1f(this->ks_index, ks);
 }
 
 void TextureShader::setCameraDirection(const glm::vec3& v) {

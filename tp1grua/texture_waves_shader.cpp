@@ -15,6 +15,15 @@ TextureWavesShader::TextureWavesShader() : Shader("TextureFShader.frag", "Textur
 	this->projection_matrix_index = this->getUniformLocation("ProjectionMatrix");
 	this->normal_matrix_index = this->getUniformLocation("NormalMatrix");
 	this->camera_direction_index = this->getUniformLocation("camera_direction");
+	this->ka_index = this->getUniformLocation("ka");
+	this->kd_index = this->getUniformLocation("kd");
+	this->ks_index = this->getUniformLocation("ks");
+}
+
+void TextureWavesShader::setLightningParameters(float ka, float kd, float ks) {
+	glUniform1f(this->ka_index, 1.0);
+	glUniform1f(this->kd_index, kd);
+	glUniform1f(this->ks_index, ks);
 }
 
 void TextureWavesShader::setCameraDirection(const glm::vec3& v) {

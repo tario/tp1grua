@@ -13,6 +13,8 @@ public:
 	void setCameraDirection(const glm::vec3& v);
 	void setTextureUnit(int unitnumber);
 
+	void setLightningParameters(float ka, float kd, float ks);
+
 	static TextureShader* instance();
 private:
 	int transform_matrix_index;
@@ -20,6 +22,8 @@ private:
 	int texture_location;
 	int camera_direction_index;
 	int normal_matrix_index;
+
+	int ka_index, kd_index, ks_index;
 };
 
 #endif

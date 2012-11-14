@@ -4,8 +4,9 @@ in vec3 normal;
 in vec3 position;
 
 uniform vec3 camera_direction;
-
 uniform sampler2D texture1;
+uniform float ka, kd, ks;
+
 out vec4 FragColor;
 void main()
 {
@@ -13,17 +14,17 @@ void main()
 	vec3 nnormal = normalize(normal);
 
 	// reflexion difusa de la luz
-	float k1 = max(dot(light_direction, nnormal), 0.0);
+	float id = max(dot(light_direction, nnormal), 0.0);
 	
 	// reflexion especular
 	vec3 reflected = reflect(light_direction, nnormal);
-	float k2 = max(dot(reflected, camera_direction), 0.0);
-	k2 = pow(k2,12);
+	float is = max(dot(reflected, camera_direction), 0.0);
+	is = pow(is,12);
 
 	vec4 TextureColor = texture( texture1, TexCoord );
 	FragColor = vec4(
-		(0.2 + k1) * TextureColor[0] + k2 * 0.6,
-		(0.2 + k1) * TextureColor[1] + k2 * 0.6,
-		(0.2 + k1) * TextureColor[2] + k2 * 0.6,
+		(ka + kd * id) * TextureColor[0] + ks * is,
+		(ka + kd * id) * TextureColor[1] + ks * is,
+		(ka + kd * id) * TextureColor[2] + ks * is,
 		1.0);
 }

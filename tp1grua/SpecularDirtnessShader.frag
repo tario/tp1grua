@@ -31,8 +31,8 @@ void main()
 	
 	vec4 TextureColor = texture( texture1, TexCoord );
 	FragColor = vec4(
-		(0.2 + id) * TextureColor[0] * range + is * ks,
-		(0.2 + id) * TextureColor[1] * range + is * ks,
-		(0.2 + id) * TextureColor[2] * range + is * ks,
+		(0.4 + id) * TextureColor[0] * range + is * ks,
+		(0.4 + id) * TextureColor[1] * range + is * ks,
+		(0.4 + id) * TextureColor[2] * range + is * ks,
 		1.0);
 }
