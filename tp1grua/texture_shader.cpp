@@ -19,7 +19,7 @@ TextureShader::TextureShader() : Shader("TextureFShader.frag", "TextureVShader.v
 }
 
 void TextureShader::setLightningParameters(float ka, float kd, float ks) {
-	glUniform1f(this->ka_index, 1.0);
+	glUniform1f(this->ka_index, ka);
 	glUniform1f(this->kd_index, kd);
 	glUniform1f(this->ks_index, ks);
 }
