@@ -78,6 +78,15 @@
     <ClCompile Include="bump_mapping_material.cpp">
       <Filter>material</Filter>
     </ClCompile>
+    <ClCompile Include="esfera.cpp">
+      <Filter>primitivas</Filter>
+    </ClCompile>
+    <ClCompile Include="solid_color_shader.cpp">
+      <Filter>shaderscode</Filter>
+    </ClCompile>
+    <ClCompile Include="material_color.cpp">
+      <Filter>material</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -163,6 +172,15 @@
     <ClInclude Include="bump_mapping_material.h">
       <Filter>material</Filter>
     </ClInclude>
+    <ClInclude Include="esfera.h">
+      <Filter>primitivas</Filter>
+    </ClInclude>
+    <ClInclude Include="solid_color_shader.h">
+      <Filter>shaderscode</Filter>
+    </ClInclude>
+    <ClInclude Include="material_color.h">
+      <Filter>material</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -188,6 +206,12 @@
       <Filter>shadersglsl</Filter>
     </None>
     <None Include="BumpMappingFShader.frag">
+      <Filter>shadersglsl</Filter>
+    </None>
+    <None Include="BasicColorFShader.frag">
+      <Filter>shadersglsl</Filter>
+    </None>
+    <None Include="BasicColorVShader.vert">
       <Filter>shadersglsl</Filter>
     </None>
   </ItemGroup>

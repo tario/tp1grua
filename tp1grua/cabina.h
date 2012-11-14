@@ -8,7 +8,7 @@
 #include "model_object.h"
 #include "prisma.h"
 #include "material_textura_suciedad_specular.h"
-#include "material_color_solido.h"
+#include "material_color.h"
 
 class Cabina : public Dibujable {
 	public:
@@ -21,7 +21,7 @@ class Cabina : public Dibujable {
 	private:
 		void actualizar_matrices_brazo();
 
-		MaterialColorSolido material_gancho;
+		MaterialColor material_gancho;
 
 		ModelObject mo_cubo;
 		ModelObject mo_contra_peso;

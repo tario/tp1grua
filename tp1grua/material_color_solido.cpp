@@ -1,14 +1,15 @@
 #include "stdafx.h"
 #include "material_color_solido.h"
 
-MaterialColorSolido::MaterialColorSolido() {
-	colorShader = ColorShader::instance();
+MaterialColorSolido::MaterialColorSolido(const glm::vec3& color) : color(color) {
+	solidColorShader = SolidColorShader::instance();
 }
 
 void MaterialColorSolido::use(const glm::mat4& m) {
-	colorShader->use();
+	solidColorShader->use();
 
-	colorShader->setTransformMatrix(m);
-	colorShader->setProjectionMatrix(Shader::projectionMatrix);
-	colorShader->setCameraDirection(Shader::cameraDirection);
+	solidColorShader->setTransformMatrix(m);
+	solidColorShader->setProjectionMatrix(Shader::projectionMatrix);
+	solidColorShader->setCameraDirection(Shader::cameraDirection);
+	solidColorShader->setColor(color);
 }

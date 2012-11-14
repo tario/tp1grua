@@ -78,6 +78,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="BasicColorFShader.frag" />
+    <None Include="BasicColorVShader.vert" />
     <None Include="BasicFShader.frag" />
     <None Include="BumpMappingFShader.frag" />
     <None Include="DirtnessShader.frag" />
@@ -100,8 +102,10 @@
     <ClInclude Include="cubo_texturado.h" />
     <ClInclude Include="dibujable.h" />
     <ClInclude Include="dirtness_shader.h" />
+    <ClInclude Include="esfera.h" />
     <ClInclude Include="grua.h" />
     <ClInclude Include="material.h" />
+    <ClInclude Include="material_color.h" />
     <ClInclude Include="material_color_solido.h" />
     <ClInclude Include="material_textura.h" />
     <ClInclude Include="material_textura_suciedad.h" />
@@ -111,6 +115,7 @@
     <ClInclude Include="piso.h" />
     <ClInclude Include="prisma.h" />
     <ClInclude Include="shader.h" />
+    <ClInclude Include="solid_color_shader.h" />
     <ClInclude Include="specular_dirtness_shader.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -130,7 +135,9 @@
     <ClCompile Include="cubo_color.cpp" />
     <ClCompile Include="cubo_texturado.cpp" />
     <ClCompile Include="dirtness_shader.cpp" />
+    <ClCompile Include="esfera.cpp" />
     <ClCompile Include="grua.cpp" />
+    <ClCompile Include="material_color.cpp" />
     <ClCompile Include="material_color_solido.cpp" />
     <ClCompile Include="material_textura.cpp" />
     <ClCompile Include="material_textura_suciedad.cpp" />
@@ -140,6 +147,7 @@
     <ClCompile Include="piso.cpp" />
     <ClCompile Include="prisma.cpp" />
     <ClCompile Include="shader.cpp" />
+    <ClCompile Include="solid_color_shader.cpp" />
     <ClCompile Include="specular_dirtness_shader.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="texture_shader.cpp" />
