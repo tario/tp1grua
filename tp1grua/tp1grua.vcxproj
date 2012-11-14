@@ -79,6 +79,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="BasicFShader.frag" />
+    <None Include="BumpMappingFShader.frag" />
     <None Include="DirtnessShader.frag" />
     <None Include="PassThroughVShader.vert" />
     <None Include="ReadMe.txt" />
@@ -90,6 +91,8 @@
   <ItemGroup>
     <ClInclude Include="agua.h" />
     <ClInclude Include="brazo.h" />
+    <ClInclude Include="bump_mapping_material.h" />
+    <ClInclude Include="bump_mapping_shader.h" />
     <ClInclude Include="cabina.h" />
     <ClInclude Include="color_shader.h" />
     <ClInclude Include="cubo.h" />
@@ -119,6 +122,8 @@
   <ItemGroup>
     <ClCompile Include="agua.cpp" />
     <ClCompile Include="brazo.cpp" />
+    <ClCompile Include="bump_mapping_material.cpp" />
+    <ClCompile Include="bump_mapping_shader.cpp" />
     <ClCompile Include="cabina.cpp" />
     <ClCompile Include="color_shader.cpp" />
     <ClCompile Include="cubo.cpp" />

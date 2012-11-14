@@ -1,6 +1,6 @@
 #include "dibujable.h"
 #include "cubo_texturado.h"
-#include "material_textura.h"
+#include "bump_mapping_material.h"
 
 class Piso : public Dibujable {
 public:
@@ -9,6 +9,6 @@ public:
 	void dibujar(const glm::mat4& m);
 
 private:
-	MaterialTextura material;
+	MaterialBumpMapping material;
 	CuboTexturado cubo;
 };

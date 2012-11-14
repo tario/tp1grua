@@ -12,7 +12,7 @@ static CuboTexturado::Cara caras[] = {
 };
 
 Piso::Piso() :
-	material(new Texture("piedras.bmp"), 0.2, 0.4, 0.0),
+	material(new Texture("piedras.bmp"), new Texture("normal-piedras.bmp"), 0.2, 0.3, 0.5),
 	cubo(&material, caras) {
 }
 
