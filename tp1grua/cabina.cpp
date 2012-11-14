@@ -26,7 +26,7 @@ Cabina::Cabina() :
 	mapa_specular("mapa-specular.bmp"),
 	material(&textura_cabina, &mapa_suciedad, &mapa_specular, 0.2),
 	cubo(&material, coordenadas_textura, true), 
-	contra_peso(gris_oscuro), cable(negro), gancho(negro,20),
+	contra_peso(gris_oscuro), cable(negro), gancho(&material_gancho,negro,20),
 	mo_cubo(&cubo, ModelObject::cell_matrix(-0.83,0.83,-0.5,0.5,-0.5,0.5)),
 	mo_contra_peso(&contra_peso, glm::scale(glm::translate(glm::mat4(1.0), glm::vec3(-0.83, 0.0,0.5)), glm::vec3(0.4, 1.2, 0.4))),
 	mo_cable(&cable),

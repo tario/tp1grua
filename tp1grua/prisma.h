@@ -17,10 +17,11 @@
 
 #include "dibujable.h"
 #include "color_shader.h"
+#include "material.h"
 
 class Prisma : public Dibujable {
 public:
-	Prisma(glm::vec3 color, int n = 4);
+	Prisma(Material* material, glm::vec3 color, int n = 4);
 
 	// dibuja el objeto transformando los vertices con una matriz de transformacion
 	void dibujar(const glm::mat4& m);
@@ -32,6 +33,7 @@ private:
 	int caras; // cantidad de caras
 
 	ColorShader* colorShader;
+	Material* material;
 };
 
 #endif

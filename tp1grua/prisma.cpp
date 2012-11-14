@@ -153,7 +153,8 @@ static GLuint construirCostado(int caras, glm::vec3 color) {
 	return vaoHandle;
 }
 
-Prisma::Prisma(glm::vec3 color, int n) {
+Prisma::Prisma(Material* material, glm::vec3 color, int n) :
+	material(material) {
 	// instanciar los buffers de vertices requeridos para el prisma
 	this->caras = n;
 
@@ -166,9 +167,7 @@ Prisma::Prisma(glm::vec3 color, int n) {
 }
 
 void Prisma::dibujar(const glm::mat4& m) {
-	this->colorShader->use();
-	colorShader->setTransformMatrix(m);
-	colorShader->setProjectionMatrix(Shader::projectionMatrix);
+	this->material->use(m);
 
 	glBindVertexArray( this->caraSuperior );
 	glDrawArrays(GL_TRIANGLE_FAN, 0, this->caras+2);
