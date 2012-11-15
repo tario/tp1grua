@@ -3,7 +3,6 @@
 #include "glm/ext.hpp"
 #include "glm/gtx/transform.hpp"
 #include <glm/gtc/type_ptr.hpp>
-#include "cubo_color.h"
 #include "cabina.h"
 #include "torre.h"
 

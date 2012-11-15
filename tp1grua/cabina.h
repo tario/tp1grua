@@ -2,13 +2,12 @@
 #define __CABINA_H
 
 #include "dibujable.h"
-#include "cubo_color.h"
 #include "texture.h"
 #include "brazo.h" 
 #include "model_object.h"
 #include "prisma.h"
 #include "material_textura_suciedad_specular.h"
-#include "material_color.h"
+#include "material_color_solido.h"
 
 class Cabina : public Dibujable {
 	public:
@@ -21,7 +20,8 @@ class Cabina : public Dibujable {
 	private:
 		void actualizar_matrices_brazo();
 
-		MaterialColor material_gancho;
+		MaterialColorSolido material_gancho;
+		MaterialColorSolido material_contrapeso;
 
 		ModelObject mo_cubo;
 		ModelObject mo_contra_peso;
@@ -31,8 +31,8 @@ class Cabina : public Dibujable {
 
 		CuboTexturado cubo;
 		MaterialTexturaSuciedadSpecular material;
-		CuboColor contra_peso;
-		CuboColor cable;
+		CuboTexturado contra_peso;
+		CuboTexturado cable;
 		Prisma gancho;
 		Brazo brazo;
 

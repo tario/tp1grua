@@ -162,8 +162,6 @@ Prisma::Prisma(Material* material, glm::vec3 color, int n) :
 	this->caraSuperior = construirPoligono(0.5, this->caras, color);
 	this->caraInferior = construirPoligono(-0.5, this->caras, color);
 	this->carasCostado = construirCostado(this->caras, color);
-
-	this->colorShader = ColorShader::instance();
 }
 
 void Prisma::dibujar(const glm::mat4& m) {

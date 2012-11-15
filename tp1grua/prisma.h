@@ -14,9 +14,10 @@
 #include "glm/ext.hpp"
 #include "glm/gtx/transform.hpp"
 #include <glm/gtc/type_ptr.hpp>
-
+#include "GL/glew.h"
+#include "GL/wglew.h"
+#include "GL/freeglut.h"
 #include "dibujable.h"
-#include "color_shader.h"
 #include "material.h"
 
 class Prisma : public Dibujable {
@@ -32,7 +33,6 @@ private:
 
 	int caras; // cantidad de caras
 
-	ColorShader* colorShader;
 	Material* material;
 };
 

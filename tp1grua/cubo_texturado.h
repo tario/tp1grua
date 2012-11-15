@@ -3,7 +3,6 @@
 
 #include "cubo.h" 
 #include "texture.h"
-#include "texture_shader.h"
 #include "material.h"
 
 class CuboTexturado : public Cubo {
