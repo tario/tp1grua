@@ -1,5 +1,5 @@
-#ifndef __ESFERA_H
-#define __ESFERA_H
+#ifndef __TOROIDE_H
+#define __TOROIDE_H
 
 #include "GL/glew.h"
 #include "GL/wglew.h"
@@ -7,9 +7,9 @@
 #include "dibujable.h"
 #include "material.h"
 
-class Esfera : public Dibujable {
+class Toroide : public Dibujable {
 	public:
-		Esfera(Material* material, int geometric_detail = 20);
+		Toroide(Material* material, float section_ratio, int geometric_detail = 20);
 		void dibujar(const glm::mat4& m);
 	protected:
 		

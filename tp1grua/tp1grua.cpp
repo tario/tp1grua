@@ -246,14 +246,22 @@ void glut_reshape(int w, int h) {
 
 float angle = 0;
 
+#include "bump_mapping_material.h"
+#include "esfera.h"
+#include "material_color_solido.h"
 
 void init() {
   glClearColor(0.3f, 0.3f, 0.4f, 0.0f);
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
 
-	//Texture* texture = new Texture("e:\\imagen.bmp");
-	//cubo2 = new CuboTexturado(texture);
+	Texture* texture = new Texture("piedras.bmp");
+	Texture* texture2 = new Texture("normal-piedras.bmp");
+	//Material* material = new MaterialBumpMapping(texture, texture2, 0.2, 0.4, 0.4);
+	Material* material = new MaterialColorSolido(glm::vec3(1.0,0.0,0.0));
+	ModelObject* cubo2 = new ModelObject(new Esfera(material));
+	cubo2->set_model_matrix(
+		glm::translate(glm::mat4(1.0), glm::vec3(0.0, 0.0, 2.0)));
 	//cubo = new CuboColor(glm::vec3(1.0,0.0,0.0));
 	agua = new ModelObject(new Agua());
 	piso = new ModelObject(new Piso());
@@ -267,6 +275,7 @@ void init() {
 	objects.push_front(agua);
 	objects.push_front(piso);
 	objects.push_front(model_object_grua);
+	objects.push_front(cubo2);
 
 	update_view_matrix();
 }

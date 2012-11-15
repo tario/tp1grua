@@ -75,6 +75,9 @@
     <ClCompile Include="solid_color_shader.cpp">
       <Filter>shaderscode</Filter>
     </ClCompile>
+    <ClCompile Include="toroide.cpp">
+      <Filter>primitivas</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -157,13 +160,13 @@
     <ClInclude Include="solid_color_shader.h">
       <Filter>shaderscode</Filter>
     </ClInclude>
+    <ClInclude Include="toroide.h">
+      <Filter>primitivas</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
     <None Include="BasicFShader.frag">
-      <Filter>shadersglsl</Filter>
-    </None>
-    <None Include="PassThroughVShader.vert">
       <Filter>shadersglsl</Filter>
     </None>
     <None Include="TextureFShader.frag">
