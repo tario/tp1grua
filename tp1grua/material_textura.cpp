@@ -3,18 +3,30 @@
 #include "texture.h"
 
 MaterialTextura::MaterialTextura(Texture* texture, float ka, float kd, float ks) :
-	ka(ka), kd(kd), ks(ks),
 	texture(texture) {
-	textureShader = TextureShader::instance();
+	shader = new Shader("TextureFShader.frag", "TextureVShader.vert");
+
+	shader->bindAttribLocation(0, "VertexPosition" );
+	shader->bindAttribLocation(1, "VertexNormal" );
+	shader->bindAttribLocation(2, "VertexTexCoord" );
+	shader->link();
+
+	shader->setter<float>("ka")->set(ka);
+	shader->setter<float>("kd")->set(kd);
+	shader->setter<float>("ks")->set(ks);
+	shader->setter<int>("texture1")->set(0);
+	transformMatrixSetter = shader->setter<glm::mat4>("TransformMatrix");
+	normalMatrixSetter = shader->setter<glm::mat3>("NormalMatrix");
+	projectionMatrixSetter = shader->setter<glm::mat4>("ProjectionMatrix");
+	cameraSetter = shader->setter<glm::vec3>("camera_direction");
 }
 
 void MaterialTextura::use(const glm::mat4& m) {
-	textureShader->use();
+	transformMatrixSetter->set(m);
+	normalMatrixSetter->set(shader->compute_normal_matrix(m));
+	projectionMatrixSetter->set(Shader::projectionMatrix);
+	cameraSetter->set(Shader::cameraDirection);
+	shader->use();
 
 	texture->load(0);
-	textureShader->setTextureUnit(0);
-	textureShader->setLightningParameters(ka, kd, ks);
-	textureShader->setTransformMatrix(m);
-	textureShader->setProjectionMatrix(Shader::projectionMatrix);
-	textureShader->setCameraDirection(Shader::cameraDirection);
 }

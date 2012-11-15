@@ -141,12 +141,37 @@ void Shader::bindAttribLocation(GLuint location, std::string attrib) {
 	glBindAttribLocation(this->programHandle, location, attrib.c_str());
 }
 
-int Shader::getUniformLocation(std::string attrib) {
+int Shader::getUniformLocation(const std::string& attrib) {
 	return glGetUniformLocation(programHandle, attrib.c_str());
+}
+
+void Shader::ConcreteSetter<int>::apply() {
+	glUniform1i(index, x);
+}
+
+void Shader::ConcreteSetter<float>::apply() {
+	glUniform1f(index, x);
+}
+
+void Shader::ConcreteSetter<glm::mat4>::apply() {
+	glUniformMatrix4fv(index, 1, 0, glm::value_ptr(x));
+}
+
+void Shader::ConcreteSetter<glm::mat3>::apply() {
+	glUniformMatrix3fv(index, 1, 0, glm::value_ptr(x));
+}
+
+void Shader::ConcreteSetter<glm::vec3>::apply() {
+	glUniform3f(index, x[0], x[1], x[2]);
 }
 
 void Shader::use() {
 	glUseProgram( this->programHandle );
+
+	for (std::vector<Setter*>::iterator it = setters.begin();
+		it != setters.end(); it++) {
+		(*it)->apply();
+	}
 }
 
 glm::mat3 Shader::compute_normal_matrix(const glm::mat4& m) {

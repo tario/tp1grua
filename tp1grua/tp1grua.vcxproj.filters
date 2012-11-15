@@ -18,9 +18,6 @@
     <ClCompile Include="texture.cpp">
       <Filter>utils</Filter>
     </ClCompile>
-    <ClCompile Include="texture_shader.cpp">
-      <Filter>shaderscode</Filter>
-    </ClCompile>
     <ClCompile Include="cubo_color.cpp">
       <Filter>primitivas</Filter>
     </ClCompile>
@@ -108,9 +105,6 @@
     </ClInclude>
     <ClInclude Include="dibujable.h">
       <Filter>primitivas</Filter>
-    </ClInclude>
-    <ClInclude Include="texture_shader.h">
-      <Filter>shaderscode</Filter>
     </ClInclude>
     <ClInclude Include="cubo_color.h">
       <Filter>primitivas</Filter>

@@ -2,7 +2,7 @@
 #define __MATERIAL_TEXTURA_H
 
 #include "material.h"
-#include "texture_shader.h"
+#include "shader.h"
 #include "texture.h"
 
 class MaterialTextura : public Material {
@@ -13,10 +13,13 @@ class MaterialTextura : public Material {
 		void use(const glm::mat4& m);
 
 	private:
-		TextureShader* textureShader;
+		Shader* shader;
 		Texture* texture;
 
-		float ka, kd, ks;
+		Shader::ConcreteSetter<glm::mat4>* transformMatrixSetter;
+		Shader::ConcreteSetter<glm::mat4>* projectionMatrixSetter;
+		Shader::ConcreteSetter<glm::mat3>* normalMatrixSetter;
+		Shader::ConcreteSetter<glm::vec3>* cameraSetter;
 };
 
 #endif
