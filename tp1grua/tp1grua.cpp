@@ -70,12 +70,12 @@ void update_view_matrix2() {
 
 void update_view_matrix() {
 
-	posicion_camara = glm::vec3(-0.75,1.25,3.0) + glm::vec3(
+	posicion_camara = glm::vec3(
 			camara_dist*cos(angle_camera)*cos(angle_camera2),
 			camara_dist*sin(angle_camera)*cos(angle_camera2),
 			camara_dist*sin(angle_camera2));
 
-	glm::vec3 look_at(-0.75,1.25,1.5); 
+	glm::vec3 look_at(0.0,0.0,0.0); 
 	View       = glm::lookAt(
 		posicion_camara, // Camera is at (4,3,3), in World Space
 		look_at, // mirar a la cabina de la grua
@@ -247,11 +247,11 @@ void glut_reshape(int w, int h) {
 float angle = 0;
 
 #include "bump_mapping_material.h"
-#include "esfera.h"
+#include "toroide.h"
 #include "material_color_solido.h"
 
 void init() {
-  glClearColor(0.3f, 0.3f, 0.4f, 0.0f);
+  glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
 
@@ -259,24 +259,11 @@ void init() {
 	Texture* texture2 = new Texture("normal-piedras.bmp");
 	//Material* material = new MaterialBumpMapping(texture, texture2, 0.2, 0.4, 0.4);
 	Material* material = new MaterialColorSolido(glm::vec3(1.0,0.0,0.0));
-	ModelObject* cubo2 = new ModelObject(new Esfera(material));
-	cubo2->set_model_matrix(
-		glm::translate(glm::mat4(1.0), glm::vec3(0.0, 0.0, 2.0)));
+	ModelObject* cubo2 = new ModelObject(new Toroide(material, 0.7,100));
+	//cubo2->set_model_matrix(
+	//	glm::translate(glm::mat4(1.0), glm::vec3(0.0, 0.0, 2.0)));
 	//cubo = new CuboColor(glm::vec3(1.0,0.0,0.0));
-	agua = new ModelObject(new Agua());
-	piso = new ModelObject(new Piso());
-	grua = new Grua();
-	model_object_grua = new ModelObject(grua);
-
-	agua->set_model_matrix(ModelObject::cell_matrix(0.0, 3.0, -2.0, 2.0, -0.5, 0.0));
-	piso->set_model_matrix(ModelObject::cell_matrix(-3.0, 0.0, -2.0, 2.0, -0.5, 0.5));
-	model_object_grua->set_model_matrix(ModelObject::cell_matrix(-1.0, -0.5, 1.0, 1.5, 0.5, 2.0));
-
-	objects.push_front(agua);
-	objects.push_front(piso);
-	objects.push_front(model_object_grua);
 	objects.push_front(cubo2);
-
 	update_view_matrix();
 }
 
