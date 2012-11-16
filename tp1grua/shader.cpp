@@ -6,7 +6,7 @@
 
 glm::mat4 Shader::projectionMatrix;
 glm::vec3 Shader::cameraDirection;
-
+glm::vec3 Shader::cameraPosition;
 	// carga un programa dadas las rutas del shader de fragmento y shader de vertices
 Shader::Shader(std::string fragmentShader, std::string vertexShader) {
 	// ********************************************

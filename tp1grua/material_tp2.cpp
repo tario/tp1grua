@@ -30,14 +30,14 @@ MaterialTP2::MaterialTP2(
 	transformMatrixSetter = shader->setter<glm::mat4>("TransformMatrix");
 	normalMatrixSetter = shader->setter<glm::mat3>("NormalMatrix");
 	projectionMatrixSetter = shader->setter<glm::mat4>("ProjectionMatrix");
-	cameraSetter = shader->setter<glm::vec3>("camera_direction");
+	cameraSetter = shader->setter<glm::vec3>("camera_position");
 }
 
 void MaterialTP2::use(const glm::mat4& m) {
 	transformMatrixSetter->set(m);
 	normalMatrixSetter->set(shader->compute_normal_matrix(m));
 	projectionMatrixSetter->set(Shader::projectionMatrix);
-	cameraSetter->set(Shader::cameraDirection);
+	cameraSetter->set(Shader::cameraPosition);
 
 	this->shader->use();
 

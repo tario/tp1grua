@@ -3,7 +3,7 @@ in vec2 TexCoord;
 in vec3 normal;
 in vec3 position;
 
-uniform vec3 camera_direction;
+uniform vec3 camera_position;
 
 // texturas para mapas difuso, de relieve y de reflexion
 uniform sampler2D diffuse_map;
@@ -22,6 +22,7 @@ uniform float intensidad_difuso, intensidad_reflexion, intensidad_gris;
 out vec4 FragColor;
 void main()
 {
+	vec3 camera_direction = normalize(position - camera_position);
 	vec3 light_direction = normalize(vec3(10.0, -0.14, -1.0));
 	// calculo de la normal, usando el mapa de normales
 	vec3 nnormal = normalize(normal);

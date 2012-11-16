@@ -66,6 +66,7 @@ void update_view_matrix2() {
 	);
 
 	Shader::cameraDirection = glm::normalize(look_at - posicion_peaton_camara2 );
+	Shader::cameraPosition = posicion_peaton_camara2;
 }
 
 void update_view_matrix() {
@@ -83,6 +84,7 @@ void update_view_matrix() {
 	);
 
 	Shader::cameraDirection = glm::normalize(look_at - posicion_camara );
+	Shader::cameraPosition = posicion_camara;
 }
 
 void glut_process_mouse(int button, int state, int x, int y) {
