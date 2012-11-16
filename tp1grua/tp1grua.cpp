@@ -249,6 +249,7 @@ float angle = 0;
 #include "bump_mapping_material.h"
 #include "toroide.h"
 #include "material_color_solido.h"
+#include "material_tp2.h"
 
 void init() {
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -258,7 +259,10 @@ void init() {
 	Texture* texture = new Texture("piedras.bmp");
 	Texture* texture2 = new Texture("normal-piedras.bmp");
 	//Material* material = new MaterialBumpMapping(texture, texture2, 0.2, 0.4, 0.4);
-	Material* material = new MaterialColorSolido(glm::vec3(1.0,0.0,0.0));
+	Material* material = new MaterialTP2(
+		texture,
+		texture2,
+		texture2);
 	ModelObject* cubo2 = new ModelObject(new Toroide(material, 0.7,100));
 	//cubo2->set_model_matrix(
 	//	glm::translate(glm::mat4(1.0), glm::vec3(0.0, 0.0, 2.0)));

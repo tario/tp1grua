@@ -88,6 +88,8 @@
     <None Include="TextureFShader.frag" />
     <None Include="TextureVShader.vert" />
     <None Include="TextureWavesVShader.vert" />
+    <None Include="tp2Shader.frag" />
+    <None Include="tp2Shader.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="agua.h" />
@@ -106,6 +108,7 @@
     <ClInclude Include="material_textura.h" />
     <ClInclude Include="material_textura_suciedad.h" />
     <ClInclude Include="material_textura_suciedad_specular.h" />
+    <ClInclude Include="material_tp2.h" />
     <ClInclude Include="olas.h" />
     <ClInclude Include="model_object.h" />
     <ClInclude Include="piso.h" />
@@ -135,6 +138,7 @@
     <ClCompile Include="material_textura.cpp" />
     <ClCompile Include="material_textura_suciedad.cpp" />
     <ClCompile Include="material_textura_suciedad_specular.cpp" />
+    <ClCompile Include="material_tp2.cpp" />
     <ClCompile Include="olas.cpp" />
     <ClCompile Include="model_object.cpp" />
     <ClCompile Include="piso.cpp" />

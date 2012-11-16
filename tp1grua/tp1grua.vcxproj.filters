@@ -78,6 +78,9 @@
     <ClCompile Include="toroide.cpp">
       <Filter>primitivas</Filter>
     </ClCompile>
+    <ClCompile Include="material_tp2.cpp">
+      <Filter>material</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -163,6 +166,9 @@
     <ClInclude Include="toroide.h">
       <Filter>primitivas</Filter>
     </ClInclude>
+    <ClInclude Include="material_tp2.h">
+      <Filter>material</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -191,6 +197,12 @@
       <Filter>shadersglsl</Filter>
     </None>
     <None Include="BasicColorVShader.vert">
+      <Filter>shadersglsl</Filter>
+    </None>
+    <None Include="tp2Shader.frag">
+      <Filter>shadersglsl</Filter>
+    </None>
+    <None Include="tp2Shader.vert">
       <Filter>shadersglsl</Filter>
     </None>
   </ItemGroup>
