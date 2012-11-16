@@ -251,6 +251,16 @@ float angle = 0;
 #include "material_color_solido.h"
 #include "material_tp2.h"
 
+static float cara1[] = {0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0};
+static CuboTexturado::Cara caras[] = {
+	CuboTexturado::Cara(cara1),
+	CuboTexturado::Cara(cara1),
+	CuboTexturado::Cara(cara1),
+	CuboTexturado::Cara(cara1),
+	CuboTexturado::Cara(cara1),
+	CuboTexturado::Cara(cara1)
+};
+
 void init() {
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glShadeModel(GL_SMOOTH);
@@ -263,7 +273,7 @@ void init() {
 		texture,
 		texture2,
 		texture2);
-	ModelObject* cubo2 = new ModelObject(new Toroide(material, 0.7,100));
+	ModelObject* cubo2 = new ModelObject(new CuboTexturado(material, caras));
 	//cubo2->set_model_matrix(
 	//	glm::translate(glm::mat4(1.0), glm::vec3(0.0, 0.0, 2.0)));
 	//cubo = new CuboColor(glm::vec3(1.0,0.0,0.0));
