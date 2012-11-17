@@ -22,9 +22,8 @@ void main()
 		vec4 normal4 = NormalMatrix * vec4(VertexNormal,1.0);
 		normal = vec3(normal4[0], normal4[1], normal4[2]);
 
-//		normal4 = NormalMatrix * vec4(VertexNormalX,1.0);
-//		normalx = vec3(normal4[0], normal4[1], normal4[2]);
-		normalx = vec3(VertexNormalX[0], VertexNormalX[1], VertexNormalX[2]);
+		normal4 = NormalMatrix * vec4(VertexNormalX,1.0);
+		normalx = vec3(normal4[0], normal4[1], normal4[2]);
 
 		gl_Position = ProjectionMatrix * TransformMatrix * vec4( VertexPosition, 1.0);
 		position = vec3(trVertexPosition[0], trVertexPosition[1], trVertexPosition[2]);

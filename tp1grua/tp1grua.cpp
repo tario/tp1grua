@@ -253,7 +253,7 @@ float angle = 0;
 #include "material_color_solido.h"
 #include "material_tp2.h"
 
-static float cara1[] = {0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0};
+static float cara1[] = {0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0};
 static CuboTexturado::Cara caras[] = {
 	CuboTexturado::Cara(cara1),
 	CuboTexturado::Cara(cara1),
