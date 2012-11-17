@@ -40,8 +40,10 @@ void main()
 						normalx[2], normaly[2], normalz[2]);
 
 	vec3 nnormal = 
-		intensidad_relieve * rotNormal * vec3(textureNormal[0],textureNormal[1],textureNormal[2]) + 
+		intensidad_relieve * rotNormal * normalize(vec3(textureNormal[0],textureNormal[1],textureNormal[2])) + 
 		(1.0 - intensidad_relieve) * normalz;
+	
+	nnormal = normalize(nnormal);
 
 	// reflexion difusa de la luz
 	float id = max(dot(light_direction, nnormal), 0.0);
