@@ -5,7 +5,7 @@ in vec3 VertexNormal;
 in vec2 VertexTexCoord;
 
 uniform mat4 TransformMatrix;
-uniform mat3 NormalMatrix;
+uniform mat4 NormalMatrix;
 uniform mat4 ProjectionMatrix;
 uniform float fase;
 uniform float fase2;

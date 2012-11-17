@@ -28,7 +28,7 @@ MaterialTP2::MaterialTP2(
 	shader->setter<float>("intensidad_difuso")->set(1.0);
 
 	transformMatrixSetter = shader->setter<glm::mat4>("TransformMatrix");
-	normalMatrixSetter = shader->setter<glm::mat3>("NormalMatrix");
+	normalMatrixSetter = shader->setter<glm::mat4>("NormalMatrix");
 	projectionMatrixSetter = shader->setter<glm::mat4>("ProjectionMatrix");
 	cameraSetter = shader->setter<glm::vec3>("camera_position");
 }

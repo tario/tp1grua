@@ -20,7 +20,7 @@ class MaterialTP2 : public Material {
 
 		Shader::ConcreteSetter<glm::mat4>* transformMatrixSetter;
 		Shader::ConcreteSetter<glm::mat4>* projectionMatrixSetter;
-		Shader::ConcreteSetter<glm::mat3>* normalMatrixSetter;
+		Shader::ConcreteSetter<glm::mat4>* normalMatrixSetter;
 		Shader::ConcreteSetter<glm::vec3>* cameraSetter;
 };
 

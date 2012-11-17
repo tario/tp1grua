@@ -48,7 +48,7 @@ public:
 		return s;
 	}
 
-	glm::mat3 compute_normal_matrix(const glm::mat4& m);
+	glm::mat4 compute_normal_matrix(const glm::mat4& m);
 private:
 	GLuint programHandle;
 	std::vector<Setter*> setters;

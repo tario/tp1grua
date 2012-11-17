@@ -16,7 +16,7 @@ MaterialTextura::MaterialTextura(Texture* texture, float ka, float kd, float ks)
 	shader->setter<float>("ks")->set(ks);
 	shader->setter<int>("texture1")->set(0);
 	transformMatrixSetter = shader->setter<glm::mat4>("TransformMatrix");
-	normalMatrixSetter = shader->setter<glm::mat3>("NormalMatrix");
+	normalMatrixSetter = shader->setter<glm::mat4>("NormalMatrix");
 	projectionMatrixSetter = shader->setter<glm::mat4>("ProjectionMatrix");
 	cameraSetter = shader->setter<glm::vec3>("camera_direction");
 }

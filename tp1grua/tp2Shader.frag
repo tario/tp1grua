@@ -59,4 +59,6 @@ void main()
 		(ka + kd * id) * TextureColor[1] + ks * is,
 		(ka + kd * id) * TextureColor[2] + ks * is,
 		1.0);
+
+	FragColor = vec4(nnormal,1.0);
 }
