@@ -12,8 +12,8 @@ static void assign_normalx(float* normalp, const glm::vec4& normalx) {
 static glm::vec4 cara_normalx(CuboTexturado::Cara* cara) {
 	glm::vec4 ret = glm::vec4(glm::normalize(glm::vec3(
 		0.0,
-		cara->coords[4] - cara->coords[2], 
-		cara->coords[5] - cara->coords[3])
+		cara->coords[2] - cara->coords[4], 
+		cara->coords[3] - cara->coords[5])
 		),1.0);
 
 	return ret;

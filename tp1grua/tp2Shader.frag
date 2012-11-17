@@ -23,7 +23,7 @@ uniform float intensidad_difuso, intensidad_reflexion, intensidad_gris;
 // intensidad de mapa de relieve
 uniform float intensidad_relieve;
 
-const float h = 0.0002;
+const float h = 0.00002;
 
 out vec4 FragColor;
 void main()
@@ -32,20 +32,15 @@ void main()
 	vec3 light_direction = normalize(vec3(10.0, -0.14, -1.0));
 	// calculo de la normal, usando el mapa de normales
 	vec3 normalz = normalize(normal);
-	//vec4 textureNormal = ( texture(bump_map, TexCoord) - vec4(0.5,0.5,0.5,0.5) ) * 2;
 	vec4 textureNormal = vec4(
-		-(
-			texture(bump_map, TexCoord - vec2(2*h,0))
-			- 8 * texture(bump_map, TexCoord - vec2(h,0))
-			+ 8 * texture(bump_map, TexCoord + vec2(h,0)) 
-			- texture(bump_map, TexCoord + vec2(2*h,0))
-		)[0] / 12 / h,
-		-(
-			texture(bump_map, TexCoord - vec2(0,2*h))
-			- 8 * texture(bump_map, TexCoord - vec2(0,h))
-			+ 8 * texture(bump_map, TexCoord + vec2(0,h)) 
-			- texture(bump_map, TexCoord + vec2(0,2*h))
-		)[0] / 12 / h,
+		(
+			texture(bump_map, TexCoord + vec2(h,0))
+			- texture(bump_map, TexCoord - vec2(h,0))
+		)[0] / 2 / h,
+		(
+			texture(bump_map, TexCoord + vec2(0,h))
+			- texture(bump_map, TexCoord - vec2(0,h))
+		)[0] / 2 / h,
 		1.0,
 		1.0);
 
@@ -81,6 +76,4 @@ void main()
 		1.0);
 
 	//FragColor = vec4(normalize(vec3(textureNormal[0],textureNormal[1],textureNormal[2])),1.0);
-
-	//FragColor = vec4(nnormal,1.0);
 }
