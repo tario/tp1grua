@@ -20,7 +20,6 @@ class Texture {
 	private:
 		int height;
 		int width;
-		unsigned char* texture_data;
 		GLuint textureid;
 };
 

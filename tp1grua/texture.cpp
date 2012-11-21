@@ -25,20 +25,22 @@ Texture::Texture(const std::string& path) {
 	HDC dcBitmap = CreateCompatibleDC ( NULL );
     SelectObject( dcBitmap, hBitmap );
 
-	//COLORREF* pixel = new COLORREF [ bm.bmWidth * bm.bmHeight ];
-	unsigned char* bitmap_data = (unsigned char*)malloc(bm.bmHeight * bm.bmWidth * 3);
-	this->texture_data = (unsigned char*)malloc(bm.bmHeight * bm.bmWidth * 4);
+	unsigned char* texture_data = (unsigned char*)malloc(bm.bmHeight * bm.bmWidth * 4);
 
-	GetDIBits(dcBitmap, hBitmap, 0, bm.bmHeight, bitmap_data, &bmpInfo, DIB_RGB_COLORS );
-	int padding = ( ((bm.bmWidth * 3 / 4) + 1) * 4 - bm.bmWidth * 3 ) % 4;
-	for (int i=0; i<bm.bmWidth; i++) {
-		for (int j=0; j<bm.bmHeight; j++) {
-			unsigned char* bitmapPixelData = (unsigned char*)bitmap_data + (j*bm.bmWidth + i) * 3 + j*padding;
+	for (int j=0; j<bm.bmHeight-1; j++) { 
+		unsigned char* bitmap_data = (unsigned char*)malloc(bm.bmWidth * 3 + 3);
+		GetDIBits(dcBitmap, hBitmap, bm.bmHeight-j-1, 1, bitmap_data, &bmpInfo, DIB_RGB_COLORS );
+
+		for (int i=0; i<bm.bmWidth; i++) 
+		{
+			unsigned char* bitmapPixelData = (unsigned char*)bitmap_data + i * 3;
 			unsigned char* texturePixelData = (unsigned char*)texture_data + (j*bm.bmWidth + i) * 4;
 			texturePixelData[0] = bitmapPixelData[2];
 			texturePixelData[1] = bitmapPixelData[1];
 			texturePixelData[2] = bitmapPixelData[0];
 		}
+
+		free(bitmap_data);
 	}
 
 	width = bm.bmWidth;
@@ -47,9 +49,13 @@ Texture::Texture(const std::string& path) {
 	glGenTextures(1, &textureid);
     glBindTexture(GL_TEXTURE_2D, textureid);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, this->texture_data);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture_data);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	free(texture_data);
+	DeleteDC(dcBitmap);
+	DeleteObject(hBitmap);
 }
 
 void Texture::load(int slot) {
