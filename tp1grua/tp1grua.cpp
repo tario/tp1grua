@@ -269,7 +269,7 @@ void init() {
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
 
-	Texture* texture = new Texture("esfera.bmp");
+	Texture* texture = new Texture("tierra.bmp");
 	Texture* texture2 = new Texture("normal-piedras.bmp");
 	//Material* material = new MaterialBumpMapping(texture, texture2, 0.2, 0.4, 0.4);
 	Material* material = new MaterialTP2(
