@@ -5,6 +5,9 @@
 #include "glm/gtx/transform.hpp"
 #include <glm/gtc/type_ptr.hpp>
 
+static glm::vec4 project_xy(glm::vec4 vect) {
+	return glm::vec4(vect[0], vect[1], 0.0, 1.0);
+}
 
 static void assignvec3(float* data, glm::vec4 vect) {
 	data[0] = glm::vec3(vect)[0];
@@ -30,6 +33,7 @@ Esfera::Esfera(Material* material, int geometric_detail) : material(material) {
 	float* vertexdata = new float[cantidadVertices*3];
 	float* normaldata = new float[cantidadVertices*3];
 	float* texcoord_data = new float[cantidadVertices*2];
+	float* normalx_data = new float[cantidadVertices*3];
 
 	glm::mat4 girox = glm::rotate(glm::mat4(1.0), 180.0f / geometric_detail, glm::vec3(1.0, 0.0, 0.0));
 	glm::mat4 girox_contrario = glm::rotate(glm::mat4(1.0), -180.0f / geometric_detail, glm::vec3(1.0, 0.0, 0.0));
@@ -104,8 +108,13 @@ Esfera::Esfera(Material* material, int geometric_detail) : material(material) {
 		}
 	}
 
+	giroz = glm::rotate(glm::mat4(1.0), 90.0f, glm::vec3(0.0, 0.0, 1.0));
 	for (int i=0; i<cantidadVertices; i++) {
-		assignvec3(normaldata+i*3, glm::normalize(getvec4(vertexdata+i*3)));
+		glm::vec4 normal_centro = getvec4(vertexdata+i*3);
+		assignvec3(normaldata+i*3, glm::normalize(normal_centro));
+		assignvec3(normalx_data+i*3, glm::normalize(
+			project_xy(giroz * normal_centro)
+			));
 	}
 
     glBindBuffer( GL_ARRAY_BUFFER, positionBufferHandle );
@@ -138,9 +147,23 @@ Esfera::Esfera(Material* material, int geometric_detail) : material(material) {
 	glBindBuffer( GL_ARRAY_BUFFER, textureCoordBufferHandle);
     glVertexAttribPointer( 2, 2, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
+	GLuint normalxBufferHandle;
+	glGenBuffers(1, &normalxBufferHandle);
+
+    glEnableVertexAttribArray(3);
+
+	glBindBuffer( GL_ARRAY_BUFFER, normalxBufferHandle );
+	glBufferData( GL_ARRAY_BUFFER, cantidadVertices*3 * sizeof (float), normalx_data, GL_STATIC_DRAW );
+
+    // Map index 1 to the texture coord buffer
+    glBindBuffer( GL_ARRAY_BUFFER, normalxBufferHandle );
+    glVertexAttribPointer( 3, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+
 	delete[] texcoord_data;
 	delete[] vertexdata;
 	delete[] normaldata;
+	delete[] normalx_data;
+
 }
 
 void Esfera::dibujar(const glm::mat4& m) {
