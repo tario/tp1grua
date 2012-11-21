@@ -252,6 +252,7 @@ float angle = 0;
 #include "toroide.h"
 #include "material_color_solido.h"
 #include "material_tp2.h"
+#include "esfera.h" 
 
 static float cara1[] = {0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0};
 static CuboTexturado::Cara caras[] = {
@@ -268,14 +269,14 @@ void init() {
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
 
-	Texture* texture = new Texture("piedras.bmp");
+	Texture* texture = new Texture("esfera.bmp");
 	Texture* texture2 = new Texture("normal-piedras.bmp");
 	//Material* material = new MaterialBumpMapping(texture, texture2, 0.2, 0.4, 0.4);
 	Material* material = new MaterialTP2(
 		texture,
 		texture2,
 		texture2);
-	ModelObject* cubo2 = new ModelObject(new CuboTexturado(material, caras));
+	ModelObject* cubo2 = new ModelObject(new Esfera(material, 20));
 	//cubo2->set_model_matrix(
 	//	glm::translate(glm::mat4(1.0), glm::vec3(0.0, 0.0, 2.0)));
 	//cubo = new CuboColor(glm::vec3(1.0,0.0,0.0));
