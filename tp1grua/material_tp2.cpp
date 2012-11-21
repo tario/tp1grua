@@ -21,13 +21,14 @@ MaterialTP2::MaterialTP2(
 	this->shader->setter<int>("diffuse_map")->set(0);
 	this->shader->setter<int>("bump_map")->set(1);
 	this->shader->setter<int>("reflection_map")->set(2);
-	shader->setter<float>("ka")->set(0.1);
-	shader->setter<float>("kd")->set(0.6);
-	shader->setter<float>("ks")->set(0.2);
+	shader->setter<float>("ka")->set(0.6);
+	shader->setter<float>("kd")->set(0.3);
+	shader->setter<float>("ks")->set(0.4);
 	shader->setter<float>("glossiness")->set(4.0);
 	shader->setter<float>("intensidad_gris")->set(0.0);
-	shader->setter<float>("intensidad_difuso")->set(0.8);
-	shader->setter<float>("intensidad_relieve")->set(1.0);
+	shader->setter<float>("intensidad_difuso")->set(0.3);
+	shader->setter<float>("intensidad_relieve")->set(0.1);
+	shader->setter<float>("intensidad_reflexion")->set(0.9);
 
 	transformMatrixSetter = shader->setter<glm::mat4>("TransformMatrix");
 	normalMatrixSetter = shader->setter<glm::mat4>("NormalMatrix");

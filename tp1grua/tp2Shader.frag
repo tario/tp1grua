@@ -23,7 +23,7 @@ uniform float intensidad_difuso, intensidad_reflexion, intensidad_gris;
 // intensidad de mapa de relieve
 uniform float intensidad_relieve;
 
-const float h = 0.00002;
+const float h = 0.002;
 
 out vec4 FragColor;
 void main()
@@ -67,8 +67,14 @@ void main()
 		max(dot(reflected, camera_direction), 0.0),
 		glossiness);
 
+	// aplicacion del mapa de reflexion
+	vec3 point_direction = reflect(camera_direction, nnormal);
+	vec2 reflection_coord = -vec2(point_direction[0], point_direction[2]) * 0.5 + vec2(0.5,0.5);
+	vec4 ColorReflexion = texture( reflection_map, reflection_coord);
+
 	vec4 TextureColor = texture( diffuse_map, TexCoord ) * intensidad_difuso + 
-						vec4(0.5,0.5,0.5,1.0) * intensidad_gris;
+						vec4(0.5,0.5,0.5,1.0) * intensidad_gris +
+						ColorReflexion * intensidad_reflexion;
 	FragColor = vec4(
 		(ka + kd * id) * TextureColor[0] + ks * is,
 		(ka + kd * id) * TextureColor[1] + ks * is,

@@ -28,11 +28,11 @@
 #define VELOCIDAD_PEATON 0.05
 
 std::list<Dibujable*> objects;
-
-ModelObject* agua;
-ModelObject* piso;
-ModelObject* model_object_grua;
-Grua* grua;
+Dibujable* main_object;
+Dibujable* cubo;
+Dibujable* toroide;
+Dibujable* esfera;
+Dibujable* cilindro;
 
 #define wglewGetContext() (&_wglewctx)
 
@@ -160,85 +160,17 @@ void glut_process_keys(unsigned char key, int x, int y) {
         exit(0);
     }
 
-	if (key == 't') {
-		// agregar suciedad a la grua
-		grua->cambiar_suciedad(0.05);
-	}
-	if (key == 'g') {
-		// quitar suciedad a la grua
-		grua->cambiar_suciedad(-0.05);
-	}
-
-	if (key == 'y') {
-		// girar cabina de la grua
-		grua->girar_cabina(-10.0);
-	}
-	if (key == 'h') {
-		// girar cabina de la grua
-		grua->girar_cabina(10.0);
-	}
-
-	if (key == 'u') {
-		// girar brazo de la grua
-		grua->girar_brazo(2.0);
-	}
-	if (key == 'j') {
-		// girar brazo de la grua
-		grua->girar_brazo(-2.0);
-	}
-	if (key == 'l') {
-		// aumentar la longitud del cable
-		grua->longitud_cable(0.1);
-	}
-	if (key == 'k') {
-		// disminuir la longitud del cable
-		grua->longitud_cable(-0.1);
-	}
-
 	if (key == '1') {
-		camara_mode = 1;
-		update_view_matrix();
+		main_object = toroide;
 	}
 	if (key == '2')	{
-		camara_mode = 2;
-		update_view_matrix2();
+		main_object = cubo;
 	}
-
-	if (camara_mode == 1) {
-		if (key == 'w') {
-			camara_dist -= 0.1;
-		}
-		if (key == 's') {
-			camara_dist += 1.0;
-		}
+	if (key == '3')	{
+		main_object = esfera;
 	}
-
-	if (camara_mode == 2) {
-		if (key == 'a') {
-			posicion_peaton_camara2 = posicion_peaton_camara2 + 
-				glm::vec3(cos(fp_angle_camera+M_PI/2)*VELOCIDAD_PEATON, sin(fp_angle_camera+M_PI/2)*VELOCIDAD_PEATON, 0.0);
-
-			update_view_matrix2();
-		}
-		if (key == 'd') {
-			posicion_peaton_camara2 = posicion_peaton_camara2 + 
-				glm::vec3(cos(fp_angle_camera-M_PI/2)*VELOCIDAD_PEATON, sin(fp_angle_camera-M_PI/2)*VELOCIDAD_PEATON, 0.0);
-
-			update_view_matrix2();
-		}
-
-		if (key == 'w') {
-			posicion_peaton_camara2 = posicion_peaton_camara2 + 
-				glm::vec3(cos(fp_angle_camera)*VELOCIDAD_PEATON, sin(fp_angle_camera)*VELOCIDAD_PEATON, 0.0);
-
-			update_view_matrix2();
-		}
-		if (key == 's') {
-			posicion_peaton_camara2 = posicion_peaton_camara2 + 
-				glm::vec3(-cos(fp_angle_camera)*VELOCIDAD_PEATON, -sin(fp_angle_camera)*VELOCIDAD_PEATON, 0.0);
-
-			update_view_matrix2();
-		}
+	if (key == '4')	{
+		main_object = cilindro;
 	}
 }
 
@@ -253,6 +185,8 @@ float angle = 0;
 #include "material_color_solido.h"
 #include "material_tp2.h"
 #include "esfera.h" 
+#include "cubo_texturado.h" 
+#include "prisma.h"
 
 static float cara1[] = {0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0};
 static CuboTexturado::Cara caras[] = {
@@ -269,18 +203,27 @@ void init() {
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
 
-	Texture* texture = new Texture("donut.bmp");
-	Texture* texture2 = new Texture("normal-piedras.bmp");
-	//Material* material = new MaterialBumpMapping(texture, texture2, 0.2, 0.4, 0.4);
-	Material* material = new MaterialTP2(
-		texture,
-		texture2,
-		texture2);
-	ModelObject* cubo2 = new ModelObject(new Toroide(material, 0.7, 100));
-	//cubo2->set_model_matrix(
-	//	glm::translate(glm::mat4(1.0), glm::vec3(0.0, 0.0, 2.0)));
-	//cubo = new CuboColor(glm::vec3(1.0,0.0,0.0));
-	objects.push_front(cubo2);
+	Texture* donut = new Texture("donut.bmp");
+	Texture* tierra = new Texture("tierra.bmp");
+	Texture* brickmap = new Texture("brick-bump.bmp");
+	Texture* brick = new Texture("brick.bmp");
+	Texture* chateau = new Texture("chateau_TM.bmp");
+
+	toroide = new Toroide(
+		new MaterialTP2(donut, donut, chateau), 0.7, 50);
+
+	cubo = new CuboTexturado(
+		new MaterialTP2(brick, brickmap, chateau), caras);
+
+	esfera = new Esfera(
+		new MaterialTP2(tierra, tierra, chateau), 50
+		);
+
+	cilindro = new Prisma(
+		new MaterialTP2(brick, brickmap, brickmap),
+		glm::vec3(0.5,0.5,0.5), 100);
+
+	main_object = cubo;
 	update_view_matrix();
 }
 
@@ -306,6 +249,7 @@ void glut_display() {
 		dibujable->dibujar(glm::mat4(1.0));
 	}
 
+	main_object->dibujar(glm::mat4(1.0));
 
 	//textureShader->use();
   //  glUniform1i(loc, 1);
