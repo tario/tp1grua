@@ -12,6 +12,11 @@ static void assignvec3(float* data, glm::vec4 vect) {
 	data[2] = glm::vec3(vect)[2];
 }
 
+static void assignvec2(float* data, glm::vec2 vect) {
+	data[0] = vect[0];
+	data[1] = vect[1];
+}
+
 static glm::vec4 getvec4(float* data) {
 	return glm::vec4(data[0],data[1],data[2],1.0);
 }
@@ -32,7 +37,8 @@ Toroide::Toroide(Material* material, float section_ratio, int geometric_detail) 
 
 	float* vertexdata = new float[cantidadVertices*3];
 	float* normaldata = new float[cantidadVertices*3];
-
+	float* texcoord_data = new float[cantidadVertices*2];
+	
 	glm::mat4 girox = glm::rotate(glm::mat4(1.0), 360.0f / geometric_detail, glm::vec3(1.0, 0.0, 0.0));
 	glm::mat4 trSectionCenter = glm::translate(glm::mat4(1.0), glm::vec3(0.0, -ratio, 0.0));
 	glm::mat4 trSectionCenterContrario = glm::translate(glm::mat4(1.0), glm::vec3(0.0, ratio, 0.0));
@@ -56,6 +62,13 @@ Toroide::Toroide(Material* material, float section_ratio, int geometric_detail) 
 		assignvec3(indiceMeridiano+i*18+9, currentPoint);
 		assignvec3(indiceMeridiano+i*18+12, giroz * currentPoint);
 		assignvec3(indiceMeridiano+i*18+15, giroz * nextPoint);
+
+		assignvec2(texcoord_data+i*12, glm::vec2(0.0, i*1.0/geometric_detail));
+		assignvec2(texcoord_data+i*12+2, glm::vec2(0.0, (i+1)*1.0/geometric_detail));
+		assignvec2(texcoord_data+i*12+4, glm::vec2(1.0/geometric_detail, (i+1)*1.0/geometric_detail));
+		assignvec2(texcoord_data+i*12+6, glm::vec2(0.0, i*1.0/geometric_detail));
+		assignvec2(texcoord_data+i*12+8, glm::vec2(1.0/geometric_detail, i*1.0/geometric_detail));
+		assignvec2(texcoord_data+i*12+10, glm::vec2(1.0/geometric_detail, (i+1)*1.0/geometric_detail));
 
 			assignvec3(normaldata+(indiceMeridiano-vertexdata)+i*18, glm::normalize(
 				getvec4(indiceMeridiano+i*18) - sectionCenter) 
@@ -86,7 +99,16 @@ Toroide::Toroide(Material* material, float section_ratio, int geometric_detail) 
 		for (int i=0; i<cantidadVerticesMeridiano; i++){
 			assignvec3(indiceMeridiano+i*3, giroz_j * getvec4(vertexdata+i*3));
 		}
+
 		for (int i=0; i<geometric_detail; i++){
+			int b1 = j*cantidadVerticesMeridiano*2 + i*12;
+			int b2 = (j-1)*cantidadVerticesMeridiano*2 + i*12;
+
+			for (int k=0;k<6;k++) {
+				texcoord_data[b1+k*2] = texcoord_data[b2+k*2] + 1.0/geometric_detail;
+				texcoord_data[b1+k*2+1] = texcoord_data[b2+k*2+1];
+			}
+
 			assignvec3(indiceMeridianoNormal+i*18, glm::normalize(
 				getvec4(indiceMeridiano+i*18) - giroz_j * sectionCenter)
 				);
@@ -129,6 +151,18 @@ Toroide::Toroide(Material* material, float section_ratio, int geometric_detail) 
 	glBindBuffer( GL_ARRAY_BUFFER, normalBufferHandle);
     glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
+	GLuint textureCoordBufferHandle;
+	glGenBuffers(1, &textureCoordBufferHandle);
+
+    glEnableVertexAttribArray(2);
+	
+	glBindBuffer( GL_ARRAY_BUFFER, textureCoordBufferHandle );
+	glBufferData( GL_ARRAY_BUFFER, cantidadVertices*2 * sizeof (float), texcoord_data, GL_STATIC_DRAW );
+
+	glBindBuffer( GL_ARRAY_BUFFER, textureCoordBufferHandle);
+    glVertexAttribPointer( 2, 2, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+
+	delete[] texcoord_data;
 	delete[] vertexdata;
 	delete[] normaldata;
 }

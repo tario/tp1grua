@@ -269,14 +269,14 @@ void init() {
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
 
-	Texture* texture = new Texture("tierra.bmp");
+	Texture* texture = new Texture("donut.bmp");
 	Texture* texture2 = new Texture("normal-piedras.bmp");
 	//Material* material = new MaterialBumpMapping(texture, texture2, 0.2, 0.4, 0.4);
 	Material* material = new MaterialTP2(
 		texture,
 		texture2,
 		texture2);
-	ModelObject* cubo2 = new ModelObject(new Esfera(material, 20));
+	ModelObject* cubo2 = new ModelObject(new Toroide(material, 0.7, 100));
 	//cubo2->set_model_matrix(
 	//	glm::translate(glm::mat4(1.0), glm::vec3(0.0, 0.0, 2.0)));
 	//cubo = new CuboColor(glm::vec3(1.0,0.0,0.0));
