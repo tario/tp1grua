@@ -207,7 +207,7 @@ void init() {
 	Texture* tierra = new Texture("tierra.bmp");
 	Texture* brickmap = new Texture("brick-bump.bmp");
 	Texture* brick = new Texture("brick.bmp");
-	Texture* chateau = new Texture("chateau_TM.bmp");
+	Texture* chateau = new Texture("reflectionmap.bmp");
 
 	toroide = new Toroide(
 		new MaterialTP2(donut, donut, chateau), 0.7, 50);

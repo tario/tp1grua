@@ -69,7 +69,13 @@ void main()
 
 	// aplicacion del mapa de reflexion
 	vec3 point_direction = reflect(camera_direction, nnormal);
-	vec2 reflection_coord = -vec2(point_direction[0], point_direction[2]) * 0.5 + vec2(0.5,0.5);
+	vec2 reflection_coord;
+	
+	if (point_direction[2] > 0.0) {
+	  reflection_coord = vec2(point_direction[0] * 0.245, point_direction[1] * 0.49) + vec2(0.25,0.5);
+	} else {
+	  reflection_coord = vec2(point_direction[0] * 0.245, point_direction[1] * 0.49) + vec2(0.75,0.5);
+	}
 	vec4 ColorReflexion = texture( reflection_map, reflection_coord);
 
 	vec4 TextureColor = texture( diffuse_map, TexCoord ) * intensidad_difuso + 
