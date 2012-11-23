@@ -25,6 +25,8 @@ uniform float intensidad_relieve;
 
 const float h = 0.002;
 
+#define M_PI 3.1415926535897932384626433832795
+
 out vec4 FragColor;
 void main()
 {
@@ -69,13 +71,18 @@ void main()
 
 	// aplicacion del mapa de reflexion
 	vec3 point_direction = reflect(camera_direction, nnormal);
-	vec2 reflection_coord;
-	
+	vec3 projected_point_direction = normalize(vec3(point_direction[0], point_direction[1], 0.0));
+
+	float angley = acos(dot(projected_point_direction, point_direction));
+	float anglex = acos(dot(projected_point_direction, vec3(1.0,0.0,0.0)));
 	if (point_direction[2] > 0.0) {
-	  reflection_coord = vec2(point_direction[0] * 0.2475, point_direction[1] * 0.495) + vec2(0.25,0.5);
-	} else {
-	  reflection_coord = vec2(point_direction[0] * 0.2475, point_direction[1] * 0.495) + vec2(0.75,0.5);
+	  angley = -angley;
 	}
+	if (point_direction[1] < 0.0) {
+	  anglex = -anglex;
+	}
+	vec2 reflection_coord = vec2(anglex / 2 / M_PI, angley / M_PI + 0.5) ;
+
 	vec4 ColorReflexion = texture( reflection_map, reflection_coord);
 
 	vec4 TextureColor = texture( diffuse_map, TexCoord ) * intensidad_difuso + 
