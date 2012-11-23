@@ -24,6 +24,7 @@ public:
 			ConcreteSetter(int index) : index(index) {};
 			ConcreteSetter<T>* set(const T& _x) { this->x = _x; return this; };
 			void apply();
+			T get();
 		private:
 			T x;
 			int index;

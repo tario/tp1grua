@@ -28,11 +28,24 @@
 #define VELOCIDAD_PEATON 0.05
 
 std::list<Dibujable*> objects;
-Dibujable* main_object;
-Dibujable* cubo;
-Dibujable* toroide;
-Dibujable* esfera;
-Dibujable* cilindro;
+
+class MaterialObject : public Dibujable {
+public:
+	MaterialObject(Material* material, Dibujable* object) : object(object), material(material) {
+	}
+	void dibujar(const glm::mat4& m) {
+		object->dibujar(m);
+	};
+
+	Material* material;
+	Dibujable* object;
+};
+
+MaterialObject* main_object;
+MaterialObject* cubo;
+MaterialObject* toroide;
+MaterialObject* esfera;
+MaterialObject* cilindro;
 
 #define wglewGetContext() (&_wglewctx)
 
@@ -105,29 +118,27 @@ void glut_process_mouse(int button, int state, int x, int y) {
 	}
 }
 
+Shader::ConcreteSetter<float> *nullSetter = new Shader::ConcreteSetter<float>(0.0);
+Shader::ConcreteSetter<float> *currentSetter = nullSetter;
+float tope_maximo = 1.0;
+float tope_minimo = 0.0;
+
 void glut_process_passive_mouse_motion(int x, int y) {
-	if (camara_mode == 2) {
-		if (abs(mouse_last_x - x) > 100 || abs(mouse_last_y - y) > 100) {
-			mouse_last_x = x;
-			mouse_last_y = y;
-			return;
-		}
-
-		fp_angle_camera = fp_angle_camera + 0.01 * (mouse_last_x-x);
-		fp_angle_camera2 = fp_angle_camera2 + 0.01 * (mouse_last_y-y);
-
+	if (abs(mouse_last_x - x) > 100 || abs(mouse_last_y - y) > 100) {
 		mouse_last_x = x;
 		mouse_last_y = y;
-
-		if (fp_angle_camera2 > M_PI/3) fp_angle_camera2 = M_PI/3;
-		if (fp_angle_camera2 < -M_PI/3) fp_angle_camera2 = -M_PI/3;
-
-		if (fp_angle_camera < 0.0) fp_angle_camera += M_PI*2;
-		if (fp_angle_camera > M_PI*2) fp_angle_camera -= M_PI*2;
-
-		update_view_matrix2();
-
+		return;
 	}
+
+	float current_value = currentSetter->get();
+	current_value = current_value + (float(mouse_last_y) - float(y)) * 0.01;
+	if (current_value > tope_maximo) current_value = tope_maximo;
+	if (current_value < tope_minimo) current_value = tope_minimo;
+
+	currentSetter->set(current_value);
+
+	mouse_last_x = x;
+	mouse_last_y = y;
 }
 
 void glut_process_mouse_motion(int x, int y) {
@@ -154,11 +165,41 @@ void glut_process_mouse_motion(int x, int y) {
 	}	
 }
 
+
+void keyboardUp(unsigned char key, int x, int y)
+{
+    currentSetter = nullSetter;
+}
+
+#include "bump_mapping_material.h"
+#include "toroide.h"
+#include "material_color_solido.h"
+#include "material_tp2.h"
+#include "esfera.h" 
+#include "cubo_texturado.h" 
+#include "prisma.h"
+
+
 void glut_process_keys(unsigned char key, int x, int y) {    
     if (key == 27) 
     {
         exit(0);
     }
+	MaterialTP2* material = (MaterialTP2*)main_object->material;
+	tope_maximo = 1.0;
+	tope_minimo = 0.0;
+	if (key == 'z')	currentSetter = material->kaSetter;
+	if (key == 'x')	currentSetter = material->kdSetter;
+	if (key == 'z')	currentSetter = material->ksSetter;
+	if (key == 'v') {
+		currentSetter = material->glossinessSetter;
+		tope_maximo = 10.0;
+		tope_minimo = 1.0;
+	}
+	if (key == 'b') currentSetter = material->intensidadGrisSetter;
+	if (key == 'n') currentSetter = material->intensidadDifusoSetter;
+	if (key == 'm') currentSetter = material->intensidadRelieveSetter;
+	if (key == 'k') currentSetter = material->intensidadReflexionSetter;
 
 	if (key == '1') {
 		main_object = toroide;
@@ -180,13 +221,6 @@ void glut_reshape(int w, int h) {
 
 float angle = 0;
 
-#include "bump_mapping_material.h"
-#include "toroide.h"
-#include "material_color_solido.h"
-#include "material_tp2.h"
-#include "esfera.h" 
-#include "cubo_texturado.h" 
-#include "prisma.h"
 
 static float cara1[] = {0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0};
 static CuboTexturado::Cara caras[] = {
@@ -208,20 +242,27 @@ void init() {
 	Texture* brickmap = new Texture("ladrillos_normal.bmp");
 	Texture* brick = new Texture("brick.bmp");
 	Texture* chateau = new Texture("chateau_TM.bmp");
+	
+	Material* material;
+	
+	material = new MaterialTP2(donut, donut, chateau);
+	toroide = new MaterialObject(
+		material,
+		new Toroide(material, 0.7, 50));
 
-	toroide = new Toroide(
-		new MaterialTP2(donut, donut, chateau), 0.7, 50);
+	material = new MaterialTP2(brick, brickmap, chateau);
+	cubo = new MaterialObject(
+		material,
+		new CuboTexturado(material, caras));
 
-	cubo = new CuboTexturado(
-		new MaterialTP2(brick, brickmap, chateau), caras);
+	material = new MaterialTP2(tierra, tierra, chateau);
+	esfera = new MaterialObject(
+		material,
+		new Esfera(material, 50));
 
-	esfera = new Esfera(
-		new MaterialTP2(tierra, tierra, chateau), 50
-		);
-
-	cilindro = new Prisma(
-		new MaterialTP2(brick, brickmap, chateau),
-		100);
+	material = new MaterialTP2(brick, brickmap, chateau);
+	cilindro = new MaterialObject(material,
+		new Prisma(material, 100));
 
 	main_object = cubo;
 	update_view_matrix();
@@ -357,7 +398,7 @@ int _tmain(int argc, char* argv[])
   glutMotionFunc(glut_process_mouse_motion);
   glutMouseFunc(glut_process_mouse);
   glutPassiveMotionFunc(glut_process_passive_mouse_motion);
-
+  glutKeyboardUpFunc(keyboardUp);
   init();
 
   glutMainLoop();

@@ -165,6 +165,9 @@ void Shader::ConcreteSetter<glm::vec3>::apply() {
 	glUniform3f(index, x[0], x[1], x[2]);
 }
 
+float Shader::ConcreteSetter<float>::get() {
+	return x;
+}
 void Shader::use() {
 	glUseProgram( this->programHandle );
 
