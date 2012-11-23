@@ -205,7 +205,7 @@ void init() {
 
 	Texture* donut = new Texture("donut.bmp");
 	Texture* tierra = new Texture("tierra.bmp");
-	Texture* brickmap = new Texture("brick-bump.bmp");
+	Texture* brickmap = new Texture("ladrillos_normal.bmp");
 	Texture* brick = new Texture("brick.bmp");
 	Texture* chateau = new Texture("chateau_TM.bmp");
 

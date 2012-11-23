@@ -34,17 +34,7 @@ void main()
 	vec3 light_direction = normalize(vec3(10.0, -0.14, -1.0));
 	// calculo de la normal, usando el mapa de normales
 	vec3 normalz = normalize(normal);
-	vec4 textureNormal = vec4(
-		(
-			texture(bump_map, TexCoord + vec2(h,0))
-			- texture(bump_map, TexCoord - vec2(h,0))
-		)[0] / 2 / h,
-		(
-			texture(bump_map, TexCoord + vec2(0,h))
-			- texture(bump_map, TexCoord - vec2(0,h))
-		)[0] / 2 / h,
-		1.0,
-		1.0);
+	vec4 textureNormal = texture(bump_map, TexCoord) * 2 - vec4(1.0,1.0,1.0,1.0);
 
 	vec3 normalx = normalize(normalx);
 	vec3 normaly = -normalize(cross(normalz,normalx));
