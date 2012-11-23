@@ -27,8 +27,8 @@ MaterialTP2::MaterialTP2(
 	shader->setter<float>("glossiness")->set(4.0);
 	shader->setter<float>("intensidad_gris")->set(0.0);
 	shader->setter<float>("intensidad_difuso")->set(0.0);
-	shader->setter<float>("intensidad_relieve")->set(0.0);
-	shader->setter<float>("intensidad_reflexion")->set(0.9);
+	shader->setter<float>("intensidad_relieve")->set(0.5);
+	shader->setter<float>("intensidad_reflexion")->set(1.0);
 
 	transformMatrixSetter = shader->setter<glm::mat4>("TransformMatrix");
 	normalMatrixSetter = shader->setter<glm::mat4>("NormalMatrix");

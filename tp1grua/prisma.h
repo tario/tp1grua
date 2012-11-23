@@ -22,7 +22,7 @@
 
 class Prisma : public Dibujable {
 public:
-	Prisma(Material* material, glm::vec3 color, int n = 4);
+	Prisma(Material* material, int n = 4);
 
 	// dibuja el objeto transformando los vertices con una matriz de transformacion
 	void dibujar(const glm::mat4& m);

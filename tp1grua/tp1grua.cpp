@@ -207,7 +207,7 @@ void init() {
 	Texture* tierra = new Texture("tierra.bmp");
 	Texture* brickmap = new Texture("brick-bump.bmp");
 	Texture* brick = new Texture("brick.bmp");
-	Texture* chateau = new Texture("reflectionmap.bmp");
+	Texture* chateau = new Texture("reflectionmap3.bmp");
 
 	toroide = new Toroide(
 		new MaterialTP2(donut, donut, chateau), 0.7, 50);
@@ -220,8 +220,8 @@ void init() {
 		);
 
 	cilindro = new Prisma(
-		new MaterialTP2(brick, brickmap, brickmap),
-		glm::vec3(0.5,0.5,0.5), 100);
+		new MaterialTP2(brick, brickmap, chateau),
+		100);
 
 	main_object = cubo;
 	update_view_matrix();
