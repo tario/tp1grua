@@ -190,7 +190,7 @@ void glut_process_keys(unsigned char key, int x, int y) {
 	tope_minimo = 0.0;
 	if (key == 'z')	currentSetter = material->kaSetter;
 	if (key == 'x')	currentSetter = material->kdSetter;
-	if (key == 'z')	currentSetter = material->ksSetter;
+	if (key == 'c')	currentSetter = material->ksSetter;
 	if (key == 'v') {
 		currentSetter = material->glossinessSetter;
 		tope_maximo = 10.0;
@@ -242,10 +242,10 @@ void init() {
 	Texture* brickmap = new Texture("ladrillos_normal.bmp");
 	Texture* brick = new Texture("brick.bmp");
 	Texture* chateau = new Texture("chateau_TM.bmp");
-	
+	Texture* normaldonut = new Texture("normal-donut.bmp");
 	Material* material;
 	
-	material = new MaterialTP2(donut, donut, chateau);
+	material = new MaterialTP2(donut, normaldonut, chateau);
 	toroide = new MaterialObject(
 		material,
 		new Toroide(material, 0.7, 50));

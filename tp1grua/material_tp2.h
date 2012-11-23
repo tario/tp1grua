@@ -12,6 +12,18 @@ class MaterialTP2 : public Material {
 			Texture* bump_map,
 			Texture* reflection_map);
 		void use(const glm::mat4& m);
+
+		Shader::ConcreteSetter<float>
+			*kaSetter,
+			*kdSetter,
+			*ksSetter,
+			*glossinessSetter,
+			*intensidadGrisSetter,
+			*intensidadDifusoSetter,
+			*intensidadRelieveSetter,
+			*intensidadReflexionSetter;
+
+
 	private:
 		Texture* diffuse_map;
 		Texture* bump_map;
@@ -22,6 +34,7 @@ class MaterialTP2 : public Material {
 		Shader::ConcreteSetter<glm::mat4>* projectionMatrixSetter;
 		Shader::ConcreteSetter<glm::mat4>* normalMatrixSetter;
 		Shader::ConcreteSetter<glm::vec3>* cameraSetter;
+
 };
 
 #endif

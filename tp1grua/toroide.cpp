@@ -21,6 +21,10 @@ static glm::vec4 getvec4(float* data) {
 	return glm::vec4(data[0],data[1],data[2],1.0);
 }
 
+static glm::vec4 project_xy(glm::vec4 vect) {
+	return glm::vec4(vect[0], vect[1], 0.0, 1.0);
+}
+
 Toroide::Toroide(Material* material, float section_ratio, int geometric_detail) : 
 	material(material) {
 	GLuint vboHandles[3];
@@ -37,6 +41,7 @@ Toroide::Toroide(Material* material, float section_ratio, int geometric_detail) 
 
 	float* vertexdata = new float[cantidadVertices*3];
 	float* normaldata = new float[cantidadVertices*3];
+	float* normalxdata = new float[cantidadVertices*3];
 	float* texcoord_data = new float[cantidadVertices*2];
 	
 	glm::mat4 girox = glm::rotate(glm::mat4(1.0), 360.0f / geometric_detail, glm::vec3(1.0, 0.0, 0.0));
@@ -130,9 +135,13 @@ Toroide::Toroide(Material* material, float section_ratio, int geometric_detail) 
 		}
 	}
 
-//	for (int i=0; i<cantidadVertices; i++) {
-//		assignvec3(normaldata+i*3, glm::normalize(getvec4(vertexdata+i*3)));
-//	}
+	giroz = glm::rotate(glm::mat4(1.0), 90.0f, glm::vec3(0.0, 0.0, 1.0));
+	for (int i=0; i<cantidadVertices; i++) {
+		glm::vec4 normal_centro = getvec4(vertexdata+i*3);
+		assignvec3(normalxdata+i*3, glm::normalize(
+			project_xy(giroz * normal_centro)
+			));
+	}
 	
     glBindBuffer( GL_ARRAY_BUFFER, positionBufferHandle );
     glBufferData( GL_ARRAY_BUFFER, cantidadVertices*3 * sizeof (float), vertexdata, GL_STATIC_DRAW );
@@ -162,8 +171,22 @@ Toroide::Toroide(Material* material, float section_ratio, int geometric_detail) 
 	glBindBuffer( GL_ARRAY_BUFFER, textureCoordBufferHandle);
     glVertexAttribPointer( 2, 2, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
+ 
+	GLuint normalxBufferHandle;
+	glGenBuffers(1, &normalxBufferHandle);
+	
+	glEnableVertexAttribArray(3);
+
+	glBindBuffer( GL_ARRAY_BUFFER, normalxBufferHandle );
+	glBufferData( GL_ARRAY_BUFFER, cantidadVertices*3 * sizeof (float), normalxdata, GL_STATIC_DRAW );
+
+    // Map index 1 to the texture coord buffer
+    glBindBuffer( GL_ARRAY_BUFFER, normalxBufferHandle );
+    glVertexAttribPointer( 3, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+
 	delete[] texcoord_data;
 	delete[] vertexdata;
+	delete[] normalxdata;
 	delete[] normaldata;
 }
 
