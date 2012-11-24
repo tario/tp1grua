@@ -31,7 +31,7 @@ out vec4 FragColor;
 void main()
 {
 	vec3 camera_direction = normalize(position - camera_position);
-	vec3 light_direction = normalize(position - vec3(-1.0, 1.0, 1.0));
+	vec3 light_direction = -normalize(position - vec3(-1.0, 1.0, 1.0));
 	// calculo de la normal, usando el mapa de normales
 	vec3 normalz = normalize(normal);
 	vec4 textureNormal = texture(bump_map, TexCoord) * 2 - vec4(1.0,1.0,1.0,1.0);
