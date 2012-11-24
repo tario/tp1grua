@@ -2,7 +2,7 @@
 #define __CABINA_H
 
 #include "dibujable.h"
-#include "texture.h"
+#include "bitmap_texture.h"
 #include "brazo.h" 
 #include "model_object.h"
 #include "prisma.h"
@@ -39,9 +39,9 @@ class Cabina : public Dibujable {
 		float angulo_brazo;
 		float _longitud_cable;
 
-		Texture textura_cabina;
-		Texture mapa_suciedad;
-		Texture mapa_specular;
+		BitmapTexture textura_cabina;
+		BitmapTexture mapa_suciedad;
+		BitmapTexture mapa_specular;
 };
 
 #endif

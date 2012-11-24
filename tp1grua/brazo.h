@@ -2,7 +2,7 @@
 #define __BRAZO_H
 
 #include "dibujable.h"
-#include "texture.h"
+#include "bitmap_texture.h"
 #include "model_object.h"
 #include "material_textura_suciedad_specular.h"
 #include "cubo_texturado.h"
@@ -18,8 +18,8 @@ private:
 
 	ModelObject columna11, columna12, columna21, columna22;
 	ModelObject viga_lateral_1, viga_lateral_2, viga_lateral_3, viga_lateral_4;
-	Texture texture;
-	Texture mapa_suciedad, mapa_specular;
+	BitmapTexture texture;
+	BitmapTexture mapa_suciedad, mapa_specular;
 
 	void dibujar_vigas_laterales(const glm::mat4& m);
 };

@@ -3,7 +3,7 @@
 
 #include "dibujable.h"
 #include "cubo_texturado.h"
-#include "texture.h"
+#include "bitmap_texture.h"
 #include "model_object.h"
 #include "material.h"
 #include "material_textura_suciedad_specular.h"
@@ -14,8 +14,8 @@ class Torre : public Dibujable {
 		void dibujar(const glm::mat4& m);
 		void suciedad(float _suciedad);
 	private:
-		Texture texture;
-		Texture mapa_suciedad, mapa_specular;
+		BitmapTexture texture;
+		BitmapTexture mapa_suciedad, mapa_specular;
 		CuboTexturado cubo;
 		CuboTexturado solido;
 

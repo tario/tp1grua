@@ -1,5 +1,9 @@
 #include "stdafx.h"
 #include "cubo_texturado.h"
+#include "glm/glm.hpp"
+#include "glm/ext.hpp"
+#include "glm/gtx/transform.hpp"
+#include <glm/gtc/type_ptr.hpp>
 
 static void assign_normalx(float* normalp, const glm::vec4& normalx) {
 	for (int i=0; i<6; i++) {

@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="agua.h" />
+    <ClInclude Include="bitmap_texture.h" />
     <ClInclude Include="brazo.h" />
     <ClInclude Include="bump_mapping_material.h" />
     <ClInclude Include="bump_mapping_shader.h" />
@@ -125,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="agua.cpp" />
+    <ClCompile Include="bitmap_texture.cpp" />
     <ClCompile Include="brazo.cpp" />
     <ClCompile Include="bump_mapping_material.cpp" />
     <ClCompile Include="bump_mapping_shader.cpp" />
@@ -146,7 +148,6 @@
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="solid_color_shader.cpp" />
     <ClCompile Include="specular_dirtness_shader.cpp" />
-    <ClCompile Include="texture.cpp" />
     <ClCompile Include="texture_waves_shader.cpp" />
     <ClCompile Include="toroide.cpp" />
     <ClCompile Include="torre.cpp" />

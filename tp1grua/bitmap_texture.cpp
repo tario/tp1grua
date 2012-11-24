@@ -1,9 +1,8 @@
 #include "stdafx.h"
-#include "texture.h"
+#include "bitmap_texture.h"
 #include "windows.h"
-#include <sstream> 
 
-Texture::Texture(const std::string& path) {
+BitmapTexture::BitmapTexture(const std::string& path) {
 	HBITMAP hBitmap = (HBITMAP)::LoadImage(NULL, path.c_str(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE|LR_CREATEDIBSECTION);
    if(NULL == hBitmap)
    {
@@ -59,7 +58,7 @@ Texture::Texture(const std::string& path) {
 	DeleteObject(hBitmap);
 }
 
-void Texture::load(int slot) {
+void BitmapTexture::load(int slot) {
 	glActiveTexture(GL_TEXTURE0+slot);
     glBindTexture(GL_TEXTURE_2D, textureid);
 }

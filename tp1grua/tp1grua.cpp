@@ -41,6 +41,23 @@ public:
 	Dibujable* object;
 };
 
+#include "texture.h"
+class TextureSwitch : public Texture {
+	public:
+		TextureSwitch(Texture* texture) : texture(texture) {
+		}
+
+		void load(int unit) {
+			texture->load(unit);
+		}
+
+		void set(Texture* texture_){
+			this->texture = texture_;
+		}
+	private:
+		Texture* texture;
+};
+
 MaterialObject* main_object;
 MaterialObject* cubo;
 MaterialObject* toroide;
@@ -178,7 +195,11 @@ void keyboardUp(unsigned char key, int x, int y)
 #include "esfera.h" 
 #include "cubo_texturado.h" 
 #include "prisma.h"
+#include "bitmap_texture.h"
 
+std::vector<Texture*> textureVector;
+int currentTextureIndex = 0;
+TextureSwitch* textureSwitch;
 
 void glut_process_keys(unsigned char key, int x, int y) {    
     if (key == 27) 
@@ -200,7 +221,14 @@ void glut_process_keys(unsigned char key, int x, int y) {
 	if (key == 'n') currentSetter = material->intensidadDifusoSetter;
 	if (key == 'm') currentSetter = material->intensidadRelieveSetter;
 	if (key == 'k') currentSetter = material->intensidadReflexionSetter;
+	if (key == 9) {
+		currentTextureIndex++;
+		if (currentTextureIndex > textureVector.size() - 1) {
+			currentTextureIndex=0;
+		}
 
+		textureSwitch->set(textureVector.at(currentTextureIndex));
+	}
 	if (key == '1') {
 		main_object = toroide;
 	}
@@ -237,30 +265,36 @@ void init() {
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
 
-	Texture* donut = new Texture("donut.bmp");
-	Texture* tierra = new Texture("tierra.bmp");
-	Texture* brickmap = new Texture("ladrillos_normal.bmp");
-	Texture* brick = new Texture("brick.bmp");
-	Texture* chateau = new Texture("chateau_TM.bmp");
-	Texture* normaldonut = new Texture("normal-donut.bmp");
+	Texture* donut = new BitmapTexture("donut.bmp");
+	Texture* tierra = new BitmapTexture("tierra.bmp");
+	Texture* brickmap = new BitmapTexture("ladrillos_normal.bmp");
+	Texture* brick = new BitmapTexture("brick.bmp");
+	Texture* normaldonut = new BitmapTexture("normal-donut.bmp");
+
+	textureVector.push_back(new BitmapTexture("Milkyway_BG.bmp"));
+	textureVector.push_back(new BitmapTexture("chateau_TM.bmp"));
+	textureVector.push_back(new BitmapTexture("Road_to_MonumentValley_8k.bmp"));
+	textureVector.push_back(new BitmapTexture("Zion_7_Sunsetpeek_8k_Bg.bmp"));
 	Material* material;
 	
-	material = new MaterialTP2(donut, normaldonut, chateau);
+	textureSwitch = new TextureSwitch(textureVector.at(0));
+
+	material = new MaterialTP2(donut, normaldonut, textureSwitch);
 	toroide = new MaterialObject(
 		material,
 		new Toroide(material, 0.7, 50));
 
-	material = new MaterialTP2(brick, brickmap, chateau);
+	material = new MaterialTP2(brick, brickmap, textureSwitch);
 	cubo = new MaterialObject(
 		material,
 		new CuboTexturado(material, caras));
 
-	material = new MaterialTP2(tierra, tierra, chateau);
+	material = new MaterialTP2(tierra, brickmap, textureSwitch);
 	esfera = new MaterialObject(
 		material,
 		new Esfera(material, 50));
 
-	material = new MaterialTP2(brick, brickmap, chateau);
+	material = new MaterialTP2(brick, brickmap, textureSwitch);
 	cilindro = new MaterialObject(material,
 		new Prisma(material, 100));
 
