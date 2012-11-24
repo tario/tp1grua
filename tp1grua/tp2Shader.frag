@@ -31,7 +31,7 @@ out vec4 FragColor;
 void main()
 {
 	vec3 camera_direction = normalize(position - camera_position);
-	vec3 light_direction = -normalize(position - vec3(-1.0, 1.0, 1.0));
+	vec3 light_direction = normalize(position - vec3(-1.0, 1.0, 1.0));
 	// calculo de la normal, usando el mapa de normales
 	vec3 normalz = normalize(normal);
 	vec4 textureNormal = texture(bump_map, TexCoord) * 2 - vec4(1.0,1.0,1.0,1.0);
@@ -51,10 +51,10 @@ void main()
 	nnormal = normalize(nnormal);
 
 	// reflexion difusa de la luz
-	float id = max(dot(light_direction, nnormal), 0.0);
+	float id = max(dot(-light_direction, nnormal), 0.0);
 	
 	// reflexion especular
-	vec3 reflected = reflect(light_direction, nnormal);
+	vec3 reflected = reflect(-light_direction, nnormal);
 	float is =pow(
 		max(dot(reflected, camera_direction), 0.0),
 		glossiness);
@@ -85,4 +85,7 @@ void main()
 		1.0);
 
 	//FragColor = vec4(normalize(vec3(textureNormal[0],textureNormal[1],textureNormal[2])),1.0);
+    //FragColor = vec4(light_direction, 1.0);
+	//FragColor = vec4(normalz, 1.0);
+
 }
