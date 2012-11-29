@@ -64,6 +64,10 @@ MaterialObject* toroide;
 MaterialObject* esfera;
 MaterialObject* cilindro;
 
+glm::mat4 main_object_matrix = glm::mat4(1.0);
+bool mouserotation = false;
+bool mousechangesize = false;
+
 #define wglewGetContext() (&_wglewctx)
 
 float camara_dist = 10;
@@ -147,6 +151,26 @@ void glut_process_passive_mouse_motion(int x, int y) {
 		return;
 	}
 
+	if (mouserotation) {
+		glm::vec3 yaxis = glm::normalize(glm::cross(glm::vec3(0.0,0.0,1.0), Shader::cameraDirection));
+		glm::vec3 xaxis = glm::normalize(glm::cross(yaxis, Shader::cameraDirection));
+
+		main_object_matrix = glm::rotate(glm::mat4(1.0), (mouse_last_y - y)*0.5f, yaxis) * main_object_matrix;
+		main_object_matrix = glm::rotate(glm::mat4(1.0), (mouse_last_x - x)*0.5f, xaxis) * main_object_matrix;
+		mouse_last_x = x;
+		mouse_last_y = y;
+
+		return;
+	}
+
+	if (mousechangesize) {
+		float scalefactor = exp((mouse_last_y - y)*0.01f);
+		main_object_matrix = glm::scale(glm::mat4(1.0), glm::vec3(scalefactor,scalefactor,scalefactor)) * main_object_matrix;
+
+		mouse_last_x = x;
+		mouse_last_y = y;
+	}
+
 	float current_value = currentSetter->get();
 	current_value = current_value + (float(mouse_last_y) - float(y)) * 0.01;
 	if (current_value > tope_maximo) current_value = tope_maximo;
@@ -186,6 +210,8 @@ void glut_process_mouse_motion(int x, int y) {
 void keyboardUp(unsigned char key, int x, int y)
 {
     currentSetter = nullSetter;
+	mouserotation = false;
+	mousechangesize = false;
 }
 
 #include "bump_mapping_material.h"
@@ -206,6 +232,7 @@ void glut_process_keys(unsigned char key, int x, int y) {
     {
         exit(0);
     }
+
 	MaterialTP2* material = (MaterialTP2*)main_object->material;
 	tope_maximo = 1.0;
 	tope_minimo = 0.0;
@@ -229,6 +256,10 @@ void glut_process_keys(unsigned char key, int x, int y) {
 
 		textureSwitch->set(textureVector.at(currentTextureIndex));
 	}
+
+	if (key == 'r') mouserotation = true;
+	if (key == 't') mousechangesize = true;
+
 	if (key == '1') {
 		main_object = toroide;
 	}
@@ -335,7 +366,7 @@ void glut_display() {
 		dibujable->dibujar(glm::mat4(1.0));
 	}
 
-	main_object->dibujar(glm::mat4(1.0));
+	main_object->dibujar(main_object_matrix);
 
 	//textureShader->use();
   //  glUniform1i(loc, 1);
