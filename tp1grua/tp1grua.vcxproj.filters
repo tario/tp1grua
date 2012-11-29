@@ -15,32 +15,11 @@
     <ClCompile Include="cubo_texturado.cpp">
       <Filter>primitivas</Filter>
     </ClCompile>
-    <ClCompile Include="piso.cpp">
-      <Filter>escena</Filter>
-    </ClCompile>
-    <ClCompile Include="agua.cpp">
-      <Filter>escena</Filter>
-    </ClCompile>
     <ClCompile Include="model_object.cpp">
       <Filter>utils</Filter>
     </ClCompile>
-    <ClCompile Include="grua.cpp">
-      <Filter>escena</Filter>
-    </ClCompile>
-    <ClCompile Include="cabina.cpp">
-      <Filter>escena</Filter>
-    </ClCompile>
-    <ClCompile Include="torre.cpp">
-      <Filter>escena</Filter>
-    </ClCompile>
-    <ClCompile Include="brazo.cpp">
-      <Filter>escena</Filter>
-    </ClCompile>
     <ClCompile Include="dirtness_shader.cpp">
       <Filter>shaderscode</Filter>
-    </ClCompile>
-    <ClCompile Include="olas.cpp">
-      <Filter>primitivas</Filter>
     </ClCompile>
     <ClCompile Include="texture_waves_shader.cpp">
       <Filter>shaderscode</Filter>
@@ -103,32 +82,11 @@
     <ClInclude Include="dibujable.h">
       <Filter>primitivas</Filter>
     </ClInclude>
-    <ClInclude Include="piso.h">
-      <Filter>escena</Filter>
-    </ClInclude>
-    <ClInclude Include="agua.h">
-      <Filter>escena</Filter>
-    </ClInclude>
     <ClInclude Include="model_object.h">
       <Filter>utils</Filter>
     </ClInclude>
-    <ClInclude Include="grua.h">
-      <Filter>escena</Filter>
-    </ClInclude>
-    <ClInclude Include="cabina.h">
-      <Filter>escena</Filter>
-    </ClInclude>
-    <ClInclude Include="torre.h">
-      <Filter>escena</Filter>
-    </ClInclude>
-    <ClInclude Include="brazo.h">
-      <Filter>escena</Filter>
-    </ClInclude>
     <ClInclude Include="dirtness_shader.h">
       <Filter>shaderscode</Filter>
-    </ClInclude>
-    <ClInclude Include="olas.h">
-      <Filter>primitivas</Filter>
     </ClInclude>
     <ClInclude Include="texture_waves_shader.h">
       <Filter>shaderscode</Filter>

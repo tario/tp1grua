@@ -19,9 +19,6 @@
 #include "shader.h"
 
 // elementos necesarios para la escena
-#include "agua.h"
-#include "piso.h"
-#include "grua.h"
 #include "model_object.h"
 
 #define M_PI       3.14159265358979323846
@@ -69,6 +66,7 @@ glm::mat4 main_object_matrix = glm::mat4(1.0);
 bool mouserotation = false;
 bool mousechangesize = false;
 bool mostrarInstrucciones = true;
+float posicionInstrucciones = 0;
 
 #define wglewGetContext() (&_wglewctx)
 
@@ -87,23 +85,6 @@ glm::mat4 View;
 int camara_mode = 1;
 int mouse_last_x = 0;
 int mouse_last_y = 0;
-
-void update_view_matrix2() {
-
-	glm::vec3 look_at = glm::vec3(
-			posicion_peaton_camara2[0]+cos(fp_angle_camera)*cos(fp_angle_camera2),
-			posicion_peaton_camara2[1]+sin(fp_angle_camera)*cos(fp_angle_camera2),
-			posicion_peaton_camara2[2]+sin(fp_angle_camera2));
-
-	View       = glm::lookAt(
-		posicion_peaton_camara2, // Camera is at (4,3,3), in World Space
-		look_at,
-		glm::vec3(0,0,1)  // Head is up (set to 0,-1,0 to look upside-down)
-	);
-
-	Shader::cameraDirection = glm::normalize(look_at - posicion_peaton_camara2 );
-	Shader::cameraPosition = posicion_peaton_camara2;
-}
 
 void update_view_matrix() {
 
@@ -224,6 +205,7 @@ void keyboardUp(unsigned char key, int x, int y)
 #include "cubo_texturado.h" 
 #include "prisma.h"
 #include "bitmap_texture.h"
+#include "material_textura.h"
 
 std::vector<Texture*> textureVector;
 int currentTextureIndex = 0;
@@ -397,9 +379,19 @@ void glut_display() {
 	main_object->dibujar(main_object_matrix);
 
 	if (mostrarInstrucciones) {
-	Shader::projectionMatrix = glm::mat4(1.0);
-	instrucciones->dibujar(glm::mat4(1.0));
+		if (posicionInstrucciones > 0) {
+			posicionInstrucciones -= 0.2;
+			if (posicionInstrucciones < 0.0) posicionInstrucciones = 0.0;
+		}
+	} else {
+		if (posicionInstrucciones < 2.0) {
+			posicionInstrucciones += 0.2;
+		}
 	}
+	Shader::projectionMatrix = glm::mat4(1.0);
+	instrucciones->dibujar(
+		glm::translate(glm::mat4(1.0), glm::vec3(0.0,posicionInstrucciones,0.0))
+		);
 	//textureShader->use();
   //  glUniform1i(loc, 1);
 //	glDrawArrays( GL_TRIANGLES, 0, 36);
