@@ -63,10 +63,12 @@ MaterialObject* cubo;
 MaterialObject* toroide;
 MaterialObject* esfera;
 MaterialObject* cilindro;
+Dibujable* instrucciones;
 
 glm::mat4 main_object_matrix = glm::mat4(1.0);
 bool mouserotation = false;
 bool mousechangesize = false;
+bool mostrarInstrucciones = true;
 
 #define wglewGetContext() (&_wglewctx)
 
@@ -227,11 +229,18 @@ std::vector<Texture*> textureVector;
 int currentTextureIndex = 0;
 TextureSwitch* textureSwitch;
 
+void glut_special_process_keys(int key, int x, int y) {
+	if (key == 1) {
+		mostrarInstrucciones = true;
+	}
+}
 void glut_process_keys(unsigned char key, int x, int y) {    
     if (key == 27) 
     {
         exit(0);
+
     }
+	mostrarInstrucciones = false;
 
 	MaterialTP2* material = (MaterialTP2*)main_object->material;
 	tope_maximo = 1.0;
@@ -291,6 +300,16 @@ static CuboTexturado::Cara caras[] = {
 	CuboTexturado::Cara(cara1)
 };
 
+static float cara2[] = {0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0};
+static CuboTexturado::Cara caras2[] = {
+	CuboTexturado::Cara(cara2),
+	CuboTexturado::Cara(cara2),
+	CuboTexturado::Cara(cara2),
+	CuboTexturado::Cara(cara2),
+	CuboTexturado::Cara(cara2),
+	CuboTexturado::Cara(cara2)
+};
+
 void init() {
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glShadeModel(GL_SMOOTH);
@@ -301,12 +320,19 @@ void init() {
 	Texture* brickmap = new BitmapTexture("ladrillos_normal.bmp");
 	Texture* brick = new BitmapTexture("brick.bmp");
 	Texture* normaldonut = new BitmapTexture("normal-donut.bmp");
+	Texture* textura_instrucciones = new BitmapTexture("instrucciones.bmp");
 
 	textureVector.push_back(new BitmapTexture("Milkyway_BG.bmp"));
 	textureVector.push_back(new BitmapTexture("chateau_TM.bmp"));
 	textureVector.push_back(new BitmapTexture("Road_to_MonumentValley_8k.bmp"));
 	textureVector.push_back(new BitmapTexture("Zion_7_Sunsetpeek_8k_Bg.bmp"));
 	Material* material;
+	Material* materialTexturaSimple = new MaterialTextura(textura_instrucciones);
+
+	instrucciones = new ModelObject(
+		new CuboTexturado(materialTexturaSimple, caras2),
+		glm::scale(glm::mat4(1.0), glm::vec3(2.0, 2.0, 2.0))
+		);
 	
 	textureSwitch = new TextureSwitch(textureVector.at(0));
 
@@ -349,6 +375,8 @@ void glut_animate() {
 	Sleep(25);
 }
 int loc;
+
+#include "cubo_texturado.h"
 void glut_display() {
 
   // do display
@@ -368,6 +396,10 @@ void glut_display() {
 
 	main_object->dibujar(main_object_matrix);
 
+	if (mostrarInstrucciones) {
+	Shader::projectionMatrix = glm::mat4(1.0);
+	instrucciones->dibujar(glm::mat4(1.0));
+	}
 	//textureShader->use();
   //  glUniform1i(loc, 1);
 //	glDrawArrays( GL_TRIANGLES, 0, 36);
@@ -470,6 +502,7 @@ int _tmain(int argc, char* argv[])
   glutDisplayFunc(glut_display);
   glutReshapeFunc(glut_reshape);
   glutKeyboardFunc(glut_process_keys);
+  glutSpecialFunc(glut_special_process_keys);
   glutIdleFunc(glut_animate);
   glutMotionFunc(glut_process_mouse_motion);
   glutMouseFunc(glut_process_mouse);
