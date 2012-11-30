@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="tp1grua.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="prisma.cpp">
       <Filter>primitivas</Filter>
@@ -60,6 +59,7 @@
     <ClCompile Include="bitmap_texture.cpp">
       <Filter>utils</Filter>
     </ClCompile>
+    <ClCompile Include="tp2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -179,9 +179,6 @@
     </Filter>
     <Filter Include="shadersglsl">
       <UniqueIdentifier>{f3bf97ab-ee85-4026-905c-8204925cb6a0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="escena">
-      <UniqueIdentifier>{25dd6178-cd37-4efe-89ac-c35cfe8407b9}</UniqueIdentifier>
     </Filter>
     <Filter Include="modelobjects">
       <UniqueIdentifier>{b769a66a-d6a9-4188-9b5c-2f971ae5c372}</UniqueIdentifier>

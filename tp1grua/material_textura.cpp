@@ -2,7 +2,7 @@
 #include "material_textura.h"
 #include "texture.h"
 
-MaterialTextura::MaterialTextura(Texture* texture, float ka, float kd, float ks) :
+MaterialTextura::MaterialTextura(Texture* texture) :
 	texture(texture) {
 	shader = new Shader("TextureFShader.frag", "TextureVShader.vert");
 
@@ -11,9 +11,6 @@ MaterialTextura::MaterialTextura(Texture* texture, float ka, float kd, float ks)
 	shader->bindAttribLocation(2, "VertexTexCoord" );
 	shader->link();
 
-	shader->setter<float>("ka")->set(ka);
-	shader->setter<float>("kd")->set(kd);
-	shader->setter<float>("ks")->set(ks);
 	shader->setter<int>("texture1")->set(0);
 	transformMatrixSetter = shader->setter<glm::mat4>("TransformMatrix");
 	normalMatrixSetter = shader->setter<glm::mat4>("NormalMatrix");

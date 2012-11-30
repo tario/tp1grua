@@ -7,9 +7,7 @@
 
 class MaterialTextura : public Material {
 	public:
-		MaterialTextura(Texture* texture,
-			float ka=1.0, float kd=0.0, float ks=0.0
-			);
+		MaterialTextura(Texture* texture);
 		void use(const glm::mat4& m);
 
 	private:

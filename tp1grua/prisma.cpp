@@ -32,7 +32,7 @@ static GLuint construirPoligono(float z, int caras) {
 
 	normaldata[0] = 0.0;
 	normaldata[1] = 0.0;
-	normaldata[2] = z>0.0 ?-1.0 : 1.0;
+	normaldata[2] = z>0.0 ? 1.0 : -1.0;
 
 	normalxdata[0] = z>0.0 ? 1.0 : -1.0;
 	normalxdata[1] = 0.0;
@@ -46,7 +46,7 @@ static GLuint construirPoligono(float z, int caras) {
 
 		normaldata[i*3] = 0.0;
 		normaldata[i*3+1] = 0.0;
-		normaldata[i*3+2] = z>0.0 ? -1.0 : 1.0;
+		normaldata[i*3+2] = z>0.0 ? 1.0 : -1.0;
 
 		if (z>0.0) {
 			texcoord_data[i*2] = esquina[0] * 0.5 + 0.25;
