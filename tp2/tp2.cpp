@@ -232,7 +232,7 @@ void glut_process_keys(unsigned char key, int x, int y) {
 	if (key == 'c')	currentSetter = material->ksSetter;
 	if (key == 'v') {
 		currentSetter = material->glossinessSetter;
-		tope_maximo = 10.0;
+		tope_maximo = 100.0;
 		tope_minimo = 1.0;
 	}
 	if (key == 'b') currentSetter = material->intensidadGrisSetter;
