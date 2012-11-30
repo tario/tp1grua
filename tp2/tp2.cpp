@@ -61,6 +61,7 @@ MaterialObject* toroide;
 MaterialObject* esfera;
 MaterialObject* cilindro;
 Dibujable* instrucciones;
+Dibujable* esfera_del_cielo;
 
 glm::mat4 main_object_matrix = glm::mat4(1.0);
 bool mouserotation = false;
@@ -339,6 +340,14 @@ void init() {
 
 	main_object = cubo;
 
+	esfera_del_cielo = new ModelObject(
+		new Esfera(new MaterialTextura(textureSwitch), 50, false),
+		glm::rotate(
+			glm::scale(glm::mat4(1.0),glm::vec3(100.0,100.0,100.0)),
+			90.0f, glm::vec3(0.0,0.0,1.0)
+			)
+		);
+
 	Material* material_color_blanco = new MaterialColorSolido(glm::vec3(1.0,1.0,1.0));
 	ModelObject* light_sphere = new ModelObject(new Esfera(material_color_blanco, 10));
 	light_sphere->set_model_matrix(
@@ -367,7 +376,8 @@ void glut_display() {
 //    glLoadIdentity();
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
 	// Camera matrix
-	Shader::projectionMatrix = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f) * View;
+	glm::mat4 prMatrix = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+	Shader::projectionMatrix = prMatrix * View;
 	//glm::mat4 Projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
 
 	Dibujable* dibujable;
@@ -388,10 +398,22 @@ void glut_display() {
 			posicionInstrucciones += 0.2;
 		}
 	}
+	
+	glm::mat4 centerView       = glm::lookAt(
+		glm::vec3(0.0,0.0,0.0), // La camara siempre en el origen
+		Shader::cameraDirection, // mirar a la direccion de la camara
+		glm::vec3(0,0,1)  // Head is up (set to 0,-1,0 to look upside-down)
+	);
+
+	Shader::projectionMatrix = prMatrix * centerView;
+	esfera_del_cielo->dibujar(glm::mat4(1.0));
+
 	Shader::projectionMatrix = glm::mat4(1.0);
 	instrucciones->dibujar(
 		glm::translate(glm::mat4(1.0), glm::vec3(0.0,posicionInstrucciones,0.0))
 		);
+
+
 	//textureShader->use();
   //  glUniform1i(loc, 1);
 //	glDrawArrays( GL_TRIANGLES, 0, 36);

@@ -9,7 +9,7 @@
 
 class Esfera : public Dibujable {
 	public:
-		Esfera(Material* material, int geometric_detail = 20);
+		Esfera(Material* material, int geometric_detail = 20, bool mirrorTexture = false);
 		void dibujar(const glm::mat4& m);
 	protected:
 		

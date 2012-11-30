@@ -19,7 +19,7 @@ static glm::vec4 getvec4(float* data) {
 	return glm::vec4(data[0],data[1],data[2],1.0);
 }
 
-Esfera::Esfera(Material* material, int geometric_detail) : material(material) {
+Esfera::Esfera(Material* material, int geometric_detail, bool mirrorTexture) : material(material) {
 	GLuint vboHandles[3];
     glGenBuffers(2, vboHandles);
 
@@ -105,6 +105,12 @@ Esfera::Esfera(Material* material, int geometric_detail) : material(material) {
 			texcoord_data[j*cantidadVerticesMeridiano*2+i*12+6] = j * 1.0 / geometric_detail;
 			texcoord_data[j*cantidadVerticesMeridiano*2+i*12+8] = (j+1) * 1.0 / geometric_detail;
 			texcoord_data[j*cantidadVerticesMeridiano*2+i*12+10] = (j+1) * 1.0 / geometric_detail;
+		}
+	}
+
+	if (mirrorTexture) {
+		for (int i=0; i<this->cantidadVertices; i++) {
+			texcoord_data[i*2] = 1.0f - texcoord_data[i*2];
 		}
 	}
 
