@@ -63,6 +63,7 @@ MaterialObject* cilindro;
 Dibujable* instrucciones;
 Dibujable* esfera_del_cielo;
 Dibujable* planeta;
+Dibujable* basuraEspacial;
 
 glm::mat4 main_object_matrix = glm::mat4(1.0);
 bool mouserotation = false;
@@ -382,6 +383,9 @@ void init() {
 				glm::vec3(0.2,0.2,0.2)
 				)
 		);
+
+	Material* material_color_gris_oscuro = new MaterialColorSolido(glm::vec3(0.2,0.2,0.2));
+	basuraEspacial = new Esfera(material_color_gris_oscuro, 5);
 	objects.push_front(light_sphere);
 
 	update_view_matrix();
@@ -399,22 +403,8 @@ void glut_display() {
   // do display
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	update_view_matrix();
-	nave.processFrame();
-//    glMatrixMode(GL_MODELVIEW);
-//    glLoadIdentity();
-	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
-	// Camera matrix
-	glm::mat4 prMatrix = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
-	Shader::projectionMatrix = prMatrix * View;
-	//glm::mat4 Projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
-
-	Dibujable* dibujable;
-	for (std::list<Dibujable*>::iterator it = objects.begin(); it!=objects.end();it++) {
-		dibujable = (*it);
-		dibujable->dibujar(glm::mat4(1.0));
-	}
-
+	glm::mat4 prMatrix;
+	prMatrix = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
 
 	glm::mat4 centerView       = glm::lookAt(
 		glm::vec3(0.0,0.0,0.0), 
@@ -425,6 +415,38 @@ void glut_display() {
 	Shader::projectionMatrix = prMatrix * centerView;
 	esfera_del_cielo->dibujar(glm::mat4(1.0));
 	planeta->dibujar(glm::mat4(1.0));
+
+    glClear(GL_DEPTH_BUFFER_BIT);
+
+	nave.processFrame();
+	update_view_matrix();
+
+//    glMatrixMode(GL_MODELVIEW);
+//    glLoadIdentity();
+	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
+	// Camera matrix
+
+	Shader::projectionMatrix = prMatrix * View;
+	//glm::mat4 Projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+
+	Dibujable* dibujable;
+	for (std::list<Dibujable*>::iterator it = objects.begin(); it!=objects.end();it++) {
+		dibujable = (*it);
+		dibujable->dibujar(glm::mat4(1.0));
+	}
+
+	glm::mat4 matriz_scala = glm::scale(glm::mat4(1.0), glm::vec3(0.02,0.02,0.02));
+	
+	glm::vec3 origin = glm::vec3(nave.position) + glm::vec3(nave.front) * 1.0f;
+	origin = glm::vec3(floor(origin[0]),floor(origin[1]), floor(origin[2]));
+
+	for (int i=-1; i<1; i++) {
+	for (int j=-1; j<1; j++) {
+	for (int k=-1; k<1; k++) {
+	basuraEspacial->dibujar(glm::translate(glm::mat4(1.0),origin + glm::vec3(i,j,k)) * matriz_scala);
+	}
+	}
+	}
 
 	//textureShader->use();
   //  glUniform1i(loc, 1);
