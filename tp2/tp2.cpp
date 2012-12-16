@@ -108,28 +108,28 @@ class Nave {
 			}
 
 			if (control_giroderecho){ 
-				giro = glm::rotate(giro, 1.0f, glm::vec3(up));
+				giro = glm::rotate(giro, 2.0f, glm::vec3(up));
 			}
 
 			if (control_giroizquierdo){ 
-				giro = glm::rotate(giro, -1.0f, glm::vec3(up));
+				giro = glm::rotate(giro, -2.0f, glm::vec3(up));
 			}
 
 			glm::vec3 left = glm::cross(glm::vec3(up), glm::vec3(front));
 			if (control_giroarriba){ 
-				giro = glm::rotate(giro, -1.0f, left);
+				giro = glm::rotate(giro, -2.0f, left);
 			}
 
 			if (control_giroabajo){ 
-				giro = glm::rotate(giro, 1.0f, left);
+				giro = glm::rotate(giro, 2.0f, left);
 			}
 
 			if (control_girobarril1){ 
-				giro = glm::rotate(giro, -1.0f, glm::vec3(front));
+				giro = glm::rotate(giro, -2.0f, glm::vec3(front));
 			}
 
 			if (control_girobarril2){ 
-				giro = glm::rotate(giro, 1.0f, glm::vec3(front));
+				giro = glm::rotate(giro, 2.0f, glm::vec3(front));
 			}
 			position = position + glm::vec4(desplazamiento,0.0);
 			up = giro * up;
@@ -161,14 +161,27 @@ class Nave {
 Nave nave;
 
 void update_view_matrix() {
+	
+	posicion_camara = glm::vec3(
+			camara_dist*cos(angle_camera)*cos(angle_camera2),
+			camara_dist*sin(angle_camera)*cos(angle_camera2),
+			camara_dist*sin(angle_camera2));
+
+	glm::vec3 left = glm::cross(glm::vec3(nave.front),glm::vec3(nave.up));
+	glm::mat3 rotacion_nave(
+		nave.front[0], nave.front[1], nave.front[2],
+		left[0], left[1], left[2],
+		nave.up[0], nave.up[1], nave.up[2]);
+
+	posicion_camara = glm::vec3(nave.position) + rotacion_nave * posicion_camara;
 
 	View       = glm::lookAt(
-		glm::vec3(nave.position) - glm::vec3(nave.front) * 2.0f, 
-		glm::vec3(nave.position) + glm::vec3(nave.front), 
+		posicion_camara, 
+		glm::vec3(nave.position), 
 		glm::vec3(nave.up)
 	);
 
-	Shader::cameraDirection = glm::normalize(glm::vec3(nave.front) );
+	Shader::cameraDirection = glm::normalize(glm::vec3(nave.position) - posicion_camara );
 	Shader::cameraPosition = posicion_camara;
 }
 
@@ -391,7 +404,7 @@ void glut_display() {
 
 	glm::mat4 centerView       = glm::lookAt(
 		glm::vec3(0.0,0.0,0.0), 
-		glm::vec3(0.0,0.0,0.0) + glm::vec3(nave.front), 
+		glm::vec3(0.0,0.0,0.0) + Shader::cameraDirection, 
 		glm::vec3(nave.up)
 	);
 
@@ -433,7 +446,7 @@ void glut_display() {
 
 	glm::mat4 matriz_scala = glm::scale(glm::mat4(1.0), glm::vec3(0.02,0.02,0.02));
 	
-	glm::vec3 origin = glm::vec3(nave.position) - glm::vec3(nave.front) * 1.0f;
+	glm::vec3 origin = posicion_camara + Shader::cameraDirection * 1.0f;
 	origin = glm::vec3(floor(origin[0]),floor(origin[1]), floor(origin[2]));
 
 	for (int i=-1; i<1; i++) {
