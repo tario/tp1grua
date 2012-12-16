@@ -50,7 +50,7 @@ Esfera::Esfera(Material* material, int geometric_detail, bool mirrorTexture) : m
 	assignvec3(indiceMeridiano+15, glm::vec4(0.0,0.0,-0.5,1.0));
 
 	texcoord_data[0] = 0.0;
-	texcoord_data[0] = 0.0;
+	texcoord_data[1] = 0.0;
 	texcoord_data[2] = 0.0;
 	texcoord_data[3] = 1.0 / geometric_detail;
 	texcoord_data[4] = 1.0 / geometric_detail;
