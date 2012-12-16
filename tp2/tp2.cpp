@@ -62,6 +62,7 @@ MaterialObject* esfera;
 MaterialObject* cilindro;
 Dibujable* instrucciones;
 Dibujable* esfera_del_cielo;
+Dibujable* planeta;
 
 glm::mat4 main_object_matrix = glm::mat4(1.0);
 bool mouserotation = false;
@@ -358,9 +359,19 @@ void init() {
 	esfera_del_cielo = new ModelObject(
 		new Esfera(new MaterialTextura(textureSwitch), 50, false),
 		glm::rotate(
-			glm::scale(glm::mat4(1.0),glm::vec3(100.0,100.0,100.0)),
-			90.0f, glm::vec3(0.0,0.0,1.0)
-			)
+				glm::scale(glm::mat4(1.0),glm::vec3(100.0,100.0,100.0)),
+				90.0f, 
+				glm::vec3(0.0,0.0,1.0)
+				)
+		);
+
+	material = new MaterialTextura(new BitmapTexture("planeta.bmp"));
+	planeta = new ModelObject(
+		new Esfera(material, 200, false),
+			glm::scale(
+				glm::translate(glm::mat4(1.0), glm::vec3(-40.0, 40.0, 0.0)),
+				glm::vec3(39.8,39.8,39.8)
+				)
 		);
 
 	Material* material_color_blanco = new MaterialColorSolido(glm::vec3(1.0,1.0,1.0));
@@ -413,6 +424,7 @@ void glut_display() {
 
 	Shader::projectionMatrix = prMatrix * centerView;
 	esfera_del_cielo->dibujar(glm::mat4(1.0));
+	planeta->dibujar(glm::mat4(1.0));
 
 	//textureShader->use();
   //  glUniform1i(loc, 1);
