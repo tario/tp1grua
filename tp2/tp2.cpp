@@ -17,6 +17,7 @@
 #include "prisma.h"
 #include "windows.h"
 #include "shader.h"
+#include "nave_combate.h"
 
 // elementos necesarios para la escena
 #include "model_object.h"
@@ -64,6 +65,7 @@ Dibujable* instrucciones;
 Dibujable* esfera_del_cielo;
 Dibujable* planeta;
 Dibujable* basuraEspacial;
+ModelObject* nave_combate;
 
 glm::mat4 main_object_matrix = glm::mat4(1.0);
 bool mouserotation = false;
@@ -133,7 +135,7 @@ class Nave {
 			up = giro * up;
 			front = giro * front;
 
-			giro = 0.8 * giro + 0.2 * glm::mat4(1.0);
+			giro = glm::mat4(1.0);
 			glm::vec3 d = desplazamiento; 
 			desplazamiento = glm::vec3(d[0]*0.8,d[1]*0.8, d[2]*0.8);
 			//giro = glm::mat4(1.0);
@@ -161,7 +163,7 @@ Nave nave;
 void update_view_matrix() {
 
 	View       = glm::lookAt(
-		glm::vec3(nave.position), 
+		glm::vec3(nave.position) - glm::vec3(nave.front) * 2.0f, 
 		glm::vec3(nave.position) + glm::vec3(nave.front), 
 		glm::vec3(nave.up)
 	);
@@ -367,6 +369,8 @@ void init() {
 	basuraEspacial = new Esfera(material_color_gris_oscuro, 5);
 	objects.push_front(light_sphere);
 
+	nave_combate = new ModelObject(new NaveCombate());
+
 	update_view_matrix();
 }
 
@@ -398,6 +402,19 @@ void glut_display() {
     glClear(GL_DEPTH_BUFFER_BIT);
 
 	nave.processFrame();
+	
+	glm::vec3 left = glm::cross(glm::vec3(nave.up), glm::vec3(nave.front));
+	glm::mat3 idd(
+		nave.front[0], nave.front[1], nave.front[2],
+		left[0], left[1], left[2],
+		nave.up[0], nave.up[1], nave.up[2]);
+
+	glm::mat4 rotacion_nave(idd);
+	glm::mat4 escalado_nave = glm::scale(glm::mat4(1.0), glm::vec3(0.2,0.2,0.2));
+	nave_combate->set_model_matrix(
+		glm::translate(glm::mat4(1.0), glm::vec3(nave.position)) * rotacion_nave * escalado_nave
+		);
+
 	update_view_matrix();
 
 //    glMatrixMode(GL_MODELVIEW);
@@ -416,7 +433,7 @@ void glut_display() {
 
 	glm::mat4 matriz_scala = glm::scale(glm::mat4(1.0), glm::vec3(0.02,0.02,0.02));
 	
-	glm::vec3 origin = glm::vec3(nave.position) + glm::vec3(nave.front) * 1.0f;
+	glm::vec3 origin = glm::vec3(nave.position) - glm::vec3(nave.front) * 1.0f;
 	origin = glm::vec3(floor(origin[0]),floor(origin[1]), floor(origin[2]));
 
 	for (int i=-1; i<1; i++) {
@@ -426,6 +443,10 @@ void glut_display() {
 	}
 	}
 	}
+
+	nave_combate->dibujar(
+ 	    glm::mat4(1.0)
+		);
 
 	//textureShader->use();
   //  glUniform1i(loc, 1);

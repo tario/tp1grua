@@ -60,6 +60,9 @@
       <Filter>utils</Filter>
     </ClCompile>
     <ClCompile Include="tp2.cpp" />
+    <ClCompile Include="nave_combate.cpp">
+      <Filter>modelobjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -129,6 +132,9 @@
     </ClInclude>
     <ClInclude Include="bitmap_texture.h">
       <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="nave_combate.h">
+      <Filter>modelobjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

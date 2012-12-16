@@ -108,6 +108,7 @@
     <ClInclude Include="material_textura_suciedad_specular.h" />
     <ClInclude Include="material_tp2.h" />
     <ClInclude Include="model_object.h" />
+    <ClInclude Include="nave_combate.h" />
     <ClInclude Include="prisma.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="solid_color_shader.h" />
@@ -132,6 +133,7 @@
     <ClCompile Include="material_textura_suciedad_specular.cpp" />
     <ClCompile Include="material_tp2.cpp" />
     <ClCompile Include="model_object.cpp" />
+    <ClCompile Include="nave_combate.cpp" />
     <ClCompile Include="prisma.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="solid_color_shader.cpp" />
