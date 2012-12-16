@@ -336,27 +336,6 @@ void init() {
 	
 	textureSwitch = new TextureSwitch(textureVector.at(0));
 
-	material = new MaterialTP2(donut, normaldonut, textureSwitch);
-	toroide = new MaterialObject(
-		material,
-		new Toroide(material, 0.7, 50));
-
-	material = new MaterialTP2(brick, brickmap, textureSwitch);
-	cubo = new MaterialObject(
-		material,
-		new CuboTexturado(material, caras));
-
-	material = new MaterialTP2(tierra, brickmap, textureSwitch);
-	esfera = new MaterialObject(
-		material,
-		new Esfera(material, 50));
-
-	material = new MaterialTP2(brick, brickmap, textureSwitch);
-	cilindro = new MaterialObject(material,
-		new Prisma(material, 100));
-
-	main_object = cubo;
-
 	esfera_del_cielo = new ModelObject(
 		new Esfera(new MaterialTextura(textureSwitch), 50, false),
 		glm::rotate(
@@ -371,7 +350,7 @@ void init() {
 		new Esfera(material, 200, false),
 			glm::scale(
 				glm::translate(glm::mat4(1.0), glm::vec3(-40.0, 40.0, 0.0)),
-				glm::vec3(39.8,39.8,39.8)
+				glm::vec3(55,55,55)
 				)
 		);
 
