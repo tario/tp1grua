@@ -87,21 +87,84 @@ int camara_mode = 1;
 int mouse_last_x = 0;
 int mouse_last_y = 0;
 
+class Nave {
+	public:
+		Nave() : front(1.0,0.0,0.0,1.0), up(0.0,0.0,1.0,1.0), position(0.0,0.0,0.0,1.0), giro(1.0),
+			desplazamiento(0.0,0.0,0.0) {
+
+		}
+
+		void processFrame() {
+			if (control_avanzar)	{
+				desplazamiento = desplazamiento + glm::vec3(front[0] * 0.1, front[1] * 0.1, front[2] * 0.1);
+			}
+
+			if (control_retroceder)	{
+				desplazamiento = desplazamiento - glm::vec3(front[0] * 0.1, front[1] * 0.1, front[2] * 0.1);
+			}
+
+			if (control_giroderecho){ 
+				giro = glm::rotate(giro, 1.0f, glm::vec3(up));
+			}
+
+			if (control_giroizquierdo){ 
+				giro = glm::rotate(giro, -1.0f, glm::vec3(up));
+			}
+
+			glm::vec3 left = glm::cross(glm::vec3(up), glm::vec3(front));
+			if (control_giroarriba){ 
+				giro = glm::rotate(giro, -1.0f, left);
+			}
+
+			if (control_giroabajo){ 
+				giro = glm::rotate(giro, 1.0f, left);
+			}
+
+			if (control_girobarril1){ 
+				giro = glm::rotate(giro, -1.0f, glm::vec3(front));
+			}
+
+			if (control_girobarril2){ 
+				giro = glm::rotate(giro, 1.0f, glm::vec3(front));
+			}
+			position = position + glm::vec4(desplazamiento,0.0);
+			up = giro * up;
+			front = giro * front;
+
+			giro = 0.8 * giro + 0.2 * glm::mat4(1.0);
+			glm::vec3 d = desplazamiento; 
+			desplazamiento = glm::vec3(d[0]*0.8,d[1]*0.8, d[2]*0.8);
+			//giro = glm::mat4(1.0);
+		}
+
+		bool control_avanzar;
+		bool control_retroceder;
+		bool control_giroizquierdo;
+		bool control_giroderecho;
+		bool control_giroarriba;
+		bool control_giroabajo;
+		bool control_girobarril1;
+		bool control_girobarril2;
+
+		glm::vec4 position;
+		glm::vec4 up;
+		glm::vec4 front;
+
+		glm::vec3 desplazamiento;
+		glm::mat4 giro;
+};
+
+Nave nave;
+
 void update_view_matrix() {
 
-	posicion_camara = glm::vec3(
-			camara_dist*cos(angle_camera)*cos(angle_camera2),
-			camara_dist*sin(angle_camera)*cos(angle_camera2),
-			camara_dist*sin(angle_camera2));
-
-	glm::vec3 look_at(0.0,0.0,0.0); 
 	View       = glm::lookAt(
-		posicion_camara, // Camera is at (4,3,3), in World Space
-		look_at, // mirar a la cabina de la grua
-		glm::vec3(0,0,1)  // Head is up (set to 0,-1,0 to look upside-down)
+		glm::vec3(nave.position), 
+		glm::vec3(nave.position) + glm::vec3(nave.front), 
+		glm::vec3(nave.up)
 	);
 
-	Shader::cameraDirection = glm::normalize(look_at - posicion_camara );
+	Shader::cameraDirection = glm::normalize(glm::vec3(nave.front) );
 	Shader::cameraPosition = posicion_camara;
 }
 
@@ -135,32 +198,10 @@ void glut_process_passive_mouse_motion(int x, int y) {
 		return;
 	}
 
-	if (mouserotation) {
-		glm::vec3 yaxis = glm::normalize(glm::cross(glm::vec3(0.0,0.0,1.0), Shader::cameraDirection));
-		glm::vec3 xaxis = glm::normalize(glm::cross(yaxis, Shader::cameraDirection));
-
-		main_object_matrix = glm::rotate(glm::mat4(1.0), (mouse_last_y - y)*0.5f, yaxis) * main_object_matrix;
-		main_object_matrix = glm::rotate(glm::mat4(1.0), (mouse_last_x - x)*0.5f, xaxis) * main_object_matrix;
-		mouse_last_x = x;
-		mouse_last_y = y;
-
-		return;
-	}
-
-	if (mousechangesize) {
-		float scalefactor = exp((mouse_last_y - y)*0.01f);
-		main_object_matrix = glm::scale(glm::mat4(1.0), glm::vec3(scalefactor,scalefactor,scalefactor)) * main_object_matrix;
-
-		mouse_last_x = x;
-		mouse_last_y = y;
-	}
-
-	float current_value = currentSetter->get();
-	current_value = current_value + (float(mouse_last_y) - float(y)) * 0.01;
-	if (current_value > tope_maximo) current_value = tope_maximo;
-	if (current_value < tope_minimo) current_value = tope_minimo;
-
-	currentSetter->set(current_value);
+//	nave.front = glm::rotate(nave.front, float((x - mouse_last_x)*0.5), nave.up);
+//	glm::vec3 left = glm::cross(nave.front, nave.up);
+//	nave.up = glm::rotate(nave.up, float((mouse_last_y - y)*0.5), left);
+//	nave.front = glm::rotate(nave.front, float((mouse_last_y - y)*0.5), left);
 
 	mouse_last_x = x;
 	mouse_last_y = y;
@@ -194,8 +235,14 @@ void glut_process_mouse_motion(int x, int y) {
 void keyboardUp(unsigned char key, int x, int y)
 {
     currentSetter = nullSetter;
-	mouserotation = false;
-	mousechangesize = false;
+	if (key == 'i')	nave.control_avanzar = false;
+	if (key == 'k')	nave.control_retroceder = false;
+	if (key == 'a') nave.control_giroderecho = false;
+	if (key == 'd') nave.control_giroizquierdo = false;
+	if (key == 'w') nave.control_giroarriba = false;
+	if (key == 's') nave.control_giroabajo = false;
+	if (key == 'q') nave.control_girobarril1 = false;
+	if (key == 'e') nave.control_girobarril2 = false;
 }
 
 #include "bump_mapping_material.h"
@@ -223,47 +270,15 @@ void glut_process_keys(unsigned char key, int x, int y) {
         exit(0);
 
     }
-	mostrarInstrucciones = false;
+	if (key == 'i')	nave.control_avanzar = true;
+	if (key == 'k')	nave.control_retroceder = true;
+	if (key == 'a') nave.control_giroderecho = true;
+	if (key == 'd') nave.control_giroizquierdo = true;
+	if (key == 'w') nave.control_giroarriba = true;
+	if (key == 's') nave.control_giroabajo = true;
+	if (key == 'q') nave.control_girobarril1 = true;
+	if (key == 'e') nave.control_girobarril2 = true;
 
-	MaterialTP2* material = (MaterialTP2*)main_object->material;
-	tope_maximo = 1.0;
-	tope_minimo = 0.0;
-	if (key == 'z')	currentSetter = material->kaSetter;
-	if (key == 'x')	currentSetter = material->kdSetter;
-	if (key == 'c')	currentSetter = material->ksSetter;
-	if (key == 'v') {
-		currentSetter = material->glossinessSetter;
-		tope_maximo = 100.0;
-		tope_minimo = 1.0;
-	}
-	if (key == 'b') currentSetter = material->intensidadGrisSetter;
-	if (key == 'n') currentSetter = material->intensidadDifusoSetter;
-	if (key == 'm') currentSetter = material->intensidadRelieveSetter;
-	if (key == 'k') currentSetter = material->intensidadReflexionSetter;
-	if (key == 9) {
-		currentTextureIndex++;
-		if (currentTextureIndex > textureVector.size() - 1) {
-			currentTextureIndex=0;
-		}
-
-		textureSwitch->set(textureVector.at(currentTextureIndex));
-	}
-
-	if (key == 'r') mouserotation = true;
-	if (key == 't') mousechangesize = true;
-
-	if (key == '1') {
-		main_object = toroide;
-	}
-	if (key == '2')	{
-		main_object = cubo;
-	}
-	if (key == '3')	{
-		main_object = esfera;
-	}
-	if (key == '4')	{
-		main_object = cilindro;
-	}
 }
 
 void glut_reshape(int w, int h) {
@@ -352,7 +367,7 @@ void init() {
 	ModelObject* light_sphere = new ModelObject(new Esfera(material_color_blanco, 10));
 	light_sphere->set_model_matrix(
 			glm::scale(
-				glm::translate(glm::mat4(1.0), glm::vec3(-1.0, 1.0, 1.0)),
+				glm::translate(glm::mat4(1.0), glm::vec3(-1.0, 1.0, 0.0)),
 				glm::vec3(0.2,0.2,0.2)
 				)
 		);
@@ -372,6 +387,9 @@ void glut_display() {
 
   // do display
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	update_view_matrix();
+	nave.processFrame();
 //    glMatrixMode(GL_MODELVIEW);
 //    glLoadIdentity();
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
@@ -386,33 +404,15 @@ void glut_display() {
 		dibujable->dibujar(glm::mat4(1.0));
 	}
 
-	main_object->dibujar(main_object_matrix);
 
-	if (mostrarInstrucciones) {
-		if (posicionInstrucciones > 0) {
-			posicionInstrucciones -= 0.2;
-			if (posicionInstrucciones < 0.0) posicionInstrucciones = 0.0;
-		}
-	} else {
-		if (posicionInstrucciones < 2.0) {
-			posicionInstrucciones += 0.2;
-		}
-	}
-	
 	glm::mat4 centerView       = glm::lookAt(
-		glm::vec3(0.0,0.0,0.0), // La camara siempre en el origen
-		Shader::cameraDirection, // mirar a la direccion de la camara
-		glm::vec3(0,0,1)  // Head is up (set to 0,-1,0 to look upside-down)
+		glm::vec3(0.0,0.0,0.0), 
+		glm::vec3(0.0,0.0,0.0) + glm::vec3(nave.front), 
+		glm::vec3(nave.up)
 	);
 
 	Shader::projectionMatrix = prMatrix * centerView;
 	esfera_del_cielo->dibujar(glm::mat4(1.0));
-
-	Shader::projectionMatrix = glm::mat4(1.0);
-	instrucciones->dibujar(
-		glm::translate(glm::mat4(1.0), glm::vec3(0.0,posicionInstrucciones,0.0))
-		);
-
 
 	//textureShader->use();
   //  glUniform1i(loc, 1);
