@@ -1,6 +1,7 @@
 #include "stdafx.h" 
 #include "barrido.h"
 #include <list>
+#include <map>
 
 static void insert_vertex(float* p, glm::vec3 p0) {
 	p[0] = p0[0];
@@ -16,21 +17,33 @@ static void insert_triangle(float* p, glm::vec3 p0, glm::vec3 p1, glm::vec3 p2) 
 class VertexRegister {
 	public:
 		VertexRegister(int levels, int points) : v(levels) {
-			for (int i=0; i<levels; i++) {
-				v[i] = std::vector<std::list<float*>>(points);
-			}
 		}
 
 		void addNormal(int level, int index, float* normal){
 			v[level][index].push_back(normal);
 		}
 
-		std::list<float*> normals(int level, int index) {
-			return v[level][index];
+
+		std::vector<std::list<float*>> normal_groups() {
+			std::vector<std::list<float*>> ret;
+			for (
+				std::vector<std::map<int,std::list<float*>>>::iterator it1 = v.begin();
+				it1 != v.end();
+				it1++){
+
+				for (std::map<int,std::list<float*>>::iterator it2 = it1->begin();
+					it2 != it1->end();
+					it2++) {
+
+						ret.push_back(it2->second);
+				}
+			}
+
+			return ret;
 		}
 
 	private:
-		std::vector<std::vector<std::list<float*>>> v;
+		std::vector<std::map<int,std::list<float*>>> v;
 };
 
 Barrido::Barrido(
@@ -44,7 +57,8 @@ Barrido::Barrido(
 	glm::vec3 punto_central0, punto_central1;
 	std::vector<FuncionConjuntoPuntos::Punto> puntos0, puntos1;
 
-	this->cantidadVertices = funcionConjuntoPuntos->conjunto(0).size() * 6 * (1.0/h + 1);
+	int cantPuntos = funcionConjuntoPuntos->conjunto(0).size();
+	this->cantidadVertices = cantPuntos * 6 * (1.0/h + 1);
 	float* vertex_data = (float*)malloc(sizeof(float)*(this->cantidadVertices * 3));
 	float* normal_data = (float*)malloc(sizeof(float)*(this->cantidadVertices * 3));
 	float* normalx_data = (float*)malloc(sizeof(float)*(this->cantidadVertices * 3));
@@ -55,7 +69,7 @@ Barrido::Barrido(
 	float* current_normalx_pointer = normalx_data;
 	float* current_texcoord_pointer = texcoord_data;
 
-	VertexRegister vertexRegister(1.0/h + 2, funcionConjuntoPuntos->conjunto(0).size());
+	VertexRegister vertexRegister(1.0/h + 2, cantPuntos);
 
 	int level=0;
 	float t, t0, t1;
@@ -87,23 +101,23 @@ Barrido::Barrido(
 
 			glm::vec3 normal, normalx;
 
-			normal = glm::normalize(glm::cross(p01-p00,p11-p00));
+			normal = -glm::normalize(glm::cross(p01-p00,p11-p00));
 			normalx = glm::normalize(glm::cross(normal, glm::vec3(0.0,0.0,1.0)));
 			insert_triangle(current_normal_pointer, normal, normal, normal);
 			insert_triangle(current_normalx_pointer, normalx, normalx, normalx);
 
-			vertexRegister.addNormal(level, i, current_normal_pointer);
-			vertexRegister.addNormal(level, nextindex, current_normal_pointer+3);
-			vertexRegister.addNormal(level+1, nextindex, current_normal_pointer+6);
+			vertexRegister.addNormal(level, i + i*cantPuntos, current_normal_pointer);
+			vertexRegister.addNormal(level, nextindex + i*cantPuntos, current_normal_pointer+3);
+			vertexRegister.addNormal(level+1, nextindex + i*cantPuntos, current_normal_pointer+6);
 
-			normal = glm::normalize(glm::cross(p00-p10,p11-p10));
+			normal = -glm::normalize(glm::cross(p00-p10,p11-p10));
 			normalx = glm::normalize(glm::cross(normal, glm::vec3(0.0,0.0,1.0)));
 			insert_triangle(current_normal_pointer+9, normal, normal, normal);
 			insert_triangle(current_normalx_pointer+9, normalx, normalx, normalx);
 
-			vertexRegister.addNormal(level+1, i, current_normal_pointer+9);
-			vertexRegister.addNormal(level+1, nextindex, current_normal_pointer+12);
-			vertexRegister.addNormal(level, i, current_normal_pointer+15);
+			vertexRegister.addNormal(level+1, i + i*cantPuntos, current_normal_pointer+9);
+			vertexRegister.addNormal(level+1, nextindex + i*cantPuntos, current_normal_pointer+12);
+			vertexRegister.addNormal(level, i + i*cantPuntos, current_normal_pointer+15);
 
 			current_normal_pointer = current_normal_pointer + 18;
 			current_normalx_pointer = current_normalx_pointer + 18;
@@ -113,12 +127,13 @@ Barrido::Barrido(
 	}
 
 	// suavizar normales
-	level = 0;
-	for (t=0.0; t<1.0; t+=h) {
-		puntos0 = funcionConjuntoPuntos->conjunto(t);
-		for (int i=0; i<puntos0.size(); i++){
-			std::list<float*> normals = vertexRegister.normals(level,i);
 
+	std::vector<std::list<float*>> groups = vertexRegister.normal_groups();
+	for (std::vector<std::list<float*>>::iterator it = groups.begin();
+		it != groups.end();
+		it++) {
+
+		std::list<float*> normals = *it;
 			if (normals.size() > 1 ) {
 				glm::vec3 suma_normal;
 
@@ -139,9 +154,6 @@ Barrido::Barrido(
 					(*it)[2] = suma_normal[2];
 				}
 			}
-		}
-
-		level++;
 	}
 
 	this->cantidadVertices = (current_position_pointer - vertex_data) / 3;
