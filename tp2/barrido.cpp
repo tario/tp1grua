@@ -26,8 +26,13 @@ Barrido::Barrido(
 	this->cantidadVertices = funcionConjuntoPuntos->conjunto(0).size() * 6 * (1.0/h + 1);
 	float* vertex_data = (float*)malloc(sizeof(float)*(this->cantidadVertices * 3));
 	float* normal_data = (float*)malloc(sizeof(float)*(this->cantidadVertices * 3));
+	float* normalx_data = (float*)malloc(sizeof(float)*(this->cantidadVertices * 3));
+	float* texcoord_data = (float*)malloc(sizeof(float)*(this->cantidadVertices * 2));
+
 	float* current_position_pointer = vertex_data;
 	float* current_normal_pointer = normal_data;
+	float* current_normalx_pointer = normalx_data;
+	float* current_texcoord_pointer = texcoord_data;
 
 	float t, t0, t1;
 	for (t=0.0; t<1.0; t+=h) {
@@ -52,26 +57,37 @@ Barrido::Barrido(
 			p10 = glm::vec3(puntos1.at(i).punto,0.0) + punto_central1;
 			p11 = glm::vec3(puntos1.at(nextindex).punto,0.0) + punto_central1;
 
-			glm::vec3 dummy_normal(1.0,0.0,0.0);
-
 			insert_triangle(current_position_pointer, p00, p01, p11);
 			insert_triangle(current_position_pointer+9, p10, p11, p00);
 			current_position_pointer = current_position_pointer + 18;
 
-			insert_triangle(current_normal_pointer, dummy_normal, dummy_normal, dummy_normal);
-			insert_triangle(current_normal_pointer+9, dummy_normal, dummy_normal, dummy_normal);
+			glm::vec3 normal, normalx;
+
+			normal = glm::normalize(glm::cross(p01-p00,p11-p00));
+			normalx = glm::normalize(glm::cross(normal, glm::vec3(0.0,0.0,1.0)));
+			insert_triangle(current_normal_pointer, normal, normal, normal);
+			insert_triangle(current_normalx_pointer, normalx, normalx, normalx);
+
+			normal = glm::normalize(glm::cross(p00-p10,p11-p10));
+			normalx = glm::normalize(glm::cross(normal, glm::vec3(0.0,0.0,1.0)));
+			insert_triangle(current_normal_pointer+9, normal, normal, normal);
+			insert_triangle(current_normalx_pointer+9, normalx, normalx, normalx);
+
 			current_normal_pointer = current_normal_pointer + 18;
+			current_normalx_pointer = current_normalx_pointer + 18;
 		}
 
 	}
 
 	this->cantidadVertices = (current_position_pointer - vertex_data) / 3;
 
-	GLuint vboHandles[3];
-    glGenBuffers(2, vboHandles);
+	GLuint vboHandles[5];
+    glGenBuffers(4, vboHandles);
 
     GLuint positionBufferHandle = vboHandles[0];
     GLuint normalBufferHandle = vboHandles[1];
+    GLuint textureCoordBufferHandle = vboHandles[2];
+    GLuint normalxBufferHandle = vboHandles[3];
 
     glBindBuffer( GL_ARRAY_BUFFER, positionBufferHandle );
     glBufferData( GL_ARRAY_BUFFER, cantidadVertices*3 * sizeof (float), vertex_data, GL_STATIC_DRAW );
@@ -90,8 +106,27 @@ Barrido::Barrido(
 	glBindBuffer( GL_ARRAY_BUFFER, normalBufferHandle);
     glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 
+    glEnableVertexAttribArray(2);
+	
+	glBindBuffer( GL_ARRAY_BUFFER, textureCoordBufferHandle );
+	glBufferData( GL_ARRAY_BUFFER, cantidadVertices*2 * sizeof (float), texcoord_data, GL_STATIC_DRAW );
+
+	glBindBuffer( GL_ARRAY_BUFFER, textureCoordBufferHandle);
+    glVertexAttribPointer( 2, 2, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+
+    glEnableVertexAttribArray(3);
+
+	glBindBuffer( GL_ARRAY_BUFFER, normalxBufferHandle );
+	glBufferData( GL_ARRAY_BUFFER, cantidadVertices*3 * sizeof (float), normalx_data, GL_STATIC_DRAW );
+
+    // Map index 1 to the texture coord buffer
+    glBindBuffer( GL_ARRAY_BUFFER, normalxBufferHandle );
+    glVertexAttribPointer( 3, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
+
 	free(vertex_data);
 	free(normal_data);
+	free(normalx_data);
+	free(texcoord_data);
 }
 
 void Barrido::dibujar(const glm::mat4& m) {

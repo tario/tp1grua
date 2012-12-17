@@ -86,7 +86,6 @@ void main()
 		1.0);
 
 	//FragColor = vec4(normalize(vec3(textureNormal[0],textureNormal[1],textureNormal[2])),1.0);
-    //FragColor = vec4(light_direction, 1.0);
-	//FragColor = vec4(normalz, 1.0);
+    //FragColor = vec4(light_direction, 1.0)
 
 }

@@ -16,9 +16,8 @@ class ConjuntoPuntos : public FuncionConjuntoPuntos {
 	public:
 	std::vector<Punto> conjunto(float t) {
 		std::vector<Punto> ret;
-		ret.push_back(Punto(0.0,1.0));
-		ret.push_back(Punto(1.0,1.0));
-		ret.push_back(Punto(1.0,0.0));
+		ret.push_back(Punto(0.0,1.0*t + 0.2));
+		ret.push_back(Punto(1.0*t + 0.2,0.0));
 		ret.push_back(Punto(0.0,-1.0));
 		ret.push_back(Punto(-1.0,0.0));
 		return ret;
@@ -36,7 +35,7 @@ NaveCombate::NaveCombate(Texture* mapa_reflexion_universo) :
 		material_cubo.intensidadReflexionSetter->set(0.3);
 		material_cubo.intensidadGrisSetter->set(0.0);
 		material_cubo.intensidadRelieveSetter->set(0.0);
-		material_cubo.kaSetter->set(1.0);
+		material_cubo.kaSetter->set(0.1);
 
 	SegmentoRecta curva(glm::vec3(0.0,0.0,0.0), glm::vec3(0.0,0.0,2.0));
 	ConjuntoPuntos funcionConjuntoPuntos;
