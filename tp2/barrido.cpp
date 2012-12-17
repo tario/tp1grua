@@ -121,6 +121,20 @@ Barrido::Barrido(
 
 			current_normal_pointer = current_normal_pointer + 18;
 			current_normalx_pointer = current_normalx_pointer + 18;
+
+			current_texcoord_pointer[0] = float(i)/float(cantPuntos);
+			current_texcoord_pointer[1] = t;
+			current_texcoord_pointer[2] = float(nextindex)/float(cantPuntos);
+			current_texcoord_pointer[3] = t;
+			current_texcoord_pointer[4] = float(nextindex)/float(cantPuntos);
+			current_texcoord_pointer[5] = t1;
+			current_texcoord_pointer[6] = float(i)/float(cantPuntos);
+			current_texcoord_pointer[7] = t1;
+			current_texcoord_pointer[8] = float(nextindex)/float(cantPuntos);
+			current_texcoord_pointer[9] = t1;
+			current_texcoord_pointer[10] = float(i)/float(cantPuntos);
+			current_texcoord_pointer[11] = t;
+			current_texcoord_pointer = current_texcoord_pointer + 12;
 		}
 
 		level++;
