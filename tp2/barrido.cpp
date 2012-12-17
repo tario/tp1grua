@@ -1,5 +1,6 @@
 #include "stdafx.h" 
 #include "barrido.h"
+#include <list>
 
 static void insert_vertex(float* p, glm::vec3 p0) {
 	p[0] = p0[0];
@@ -11,6 +12,26 @@ static void insert_triangle(float* p, glm::vec3 p0, glm::vec3 p1, glm::vec3 p2) 
 	insert_vertex(p+3,p1);
 	insert_vertex(p+6,p2);
 }
+
+class VertexRegister {
+	public:
+		VertexRegister(int levels, int points) : v(levels) {
+			for (int i=0; i<levels; i++) {
+				v[i] = std::vector<std::list<float*>>(points);
+			}
+		}
+
+		void addNormal(int level, int index, float* normal){
+			v[level][index].push_back(normal);
+		}
+
+		std::list<float*> normals(int level, int index) {
+			return v[level][index];
+		}
+
+	private:
+		std::vector<std::vector<std::list<float*>>> v;
+};
 
 Barrido::Barrido(
 		FuncionConjuntoPuntos* funcionConjuntoPuntos,
@@ -34,6 +55,9 @@ Barrido::Barrido(
 	float* current_normalx_pointer = normalx_data;
 	float* current_texcoord_pointer = texcoord_data;
 
+	VertexRegister vertexRegister(1.0/h + 2, funcionConjuntoPuntos->conjunto(0).size());
+
+	int level=0;
 	float t, t0, t1;
 	for (t=0.0; t<1.0; t+=h) {
 		t0 = t;
@@ -68,15 +92,56 @@ Barrido::Barrido(
 			insert_triangle(current_normal_pointer, normal, normal, normal);
 			insert_triangle(current_normalx_pointer, normalx, normalx, normalx);
 
+			vertexRegister.addNormal(level, i, current_normal_pointer);
+			vertexRegister.addNormal(level, nextindex, current_normal_pointer+3);
+			vertexRegister.addNormal(level+1, nextindex, current_normal_pointer+6);
+
 			normal = glm::normalize(glm::cross(p00-p10,p11-p10));
 			normalx = glm::normalize(glm::cross(normal, glm::vec3(0.0,0.0,1.0)));
 			insert_triangle(current_normal_pointer+9, normal, normal, normal);
 			insert_triangle(current_normalx_pointer+9, normalx, normalx, normalx);
 
+			vertexRegister.addNormal(level+1, i, current_normal_pointer+9);
+			vertexRegister.addNormal(level+1, nextindex, current_normal_pointer+12);
+			vertexRegister.addNormal(level, i, current_normal_pointer+15);
+
 			current_normal_pointer = current_normal_pointer + 18;
 			current_normalx_pointer = current_normalx_pointer + 18;
 		}
 
+		level++;
+	}
+
+	// suavizar normales
+	level = 0;
+	for (t=0.0; t<1.0; t+=h) {
+		puntos0 = funcionConjuntoPuntos->conjunto(t);
+		for (int i=0; i<puntos0.size(); i++){
+			std::list<float*> normals = vertexRegister.normals(level,i);
+
+			if (normals.size() > 1 ) {
+				glm::vec3 suma_normal;
+
+				for (std::list<float*>::iterator it = normals.begin();
+					it != normals.end();
+					it++){
+
+					suma_normal = suma_normal + glm::vec3((*it)[0],(*it)[1],(*it)[2]);
+				}
+
+				suma_normal = glm::normalize(suma_normal);
+				for (std::list<float*>::iterator it = normals.begin();
+					it != normals.end();
+					it++){
+
+					(*it)[0] = suma_normal[0];
+					(*it)[1] = suma_normal[1];
+					(*it)[2] = suma_normal[2];
+				}
+			}
+		}
+
+		level++;
 	}
 
 	this->cantidadVertices = (current_position_pointer - vertex_data) / 3;
