@@ -7,6 +7,8 @@
 #include "null_texture.h"
 #include "bitmap_texture.h"
 
+#include "barrido.h"
+
 class NaveCombate : public Dibujable {
 	public:
 
@@ -18,6 +20,7 @@ class NaveCombate : public Dibujable {
 		MaterialTP3 material_cubo;
 
 		BitmapTexture mapa_difuso_nave;
+		Barrido* superficie_barrido;
 };
 
 #endif

@@ -66,6 +66,12 @@
     <ClCompile Include="material_tp3.cpp">
       <Filter>material</Filter>
     </ClCompile>
+    <ClCompile Include="segmento_recta.cpp">
+      <Filter>primitivas\curvas</Filter>
+    </ClCompile>
+    <ClCompile Include="barrido.cpp">
+      <Filter>primitivas\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -145,6 +151,18 @@
     <ClInclude Include="null_texture.h">
       <Filter>utils</Filter>
     </ClInclude>
+    <ClInclude Include="barrido.h">
+      <Filter>primitivas\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="curva.h">
+      <Filter>primitivas\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="segmento_recta.h">
+      <Filter>primitivas\curvas</Filter>
+    </ClInclude>
+    <ClInclude Include="funcion_conjunto_puntos.h">
+      <Filter>primitivas\utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -206,6 +224,12 @@
     </Filter>
     <Filter Include="material">
       <UniqueIdentifier>{5ec625d2-fab9-4fbc-a8f6-9ae158bd0611}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="primitivas\utils">
+      <UniqueIdentifier>{a4561850-ae0a-4a3b-af6b-7e1da47951d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="primitivas\curvas">
+      <UniqueIdentifier>{cadfd213-020a-4bd1-9a54-e2a8ff158536}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
