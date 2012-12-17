@@ -76,8 +76,8 @@ float posicionInstrucciones = 0;
 #define wglewGetContext() (&_wglewctx)
 
 float camara_dist = 10;
-float angle_camera = 1.0;
-float angle_camera2 = 0.1;
+float angle_camera = 0.0;
+float angle_camera2 = 0.0;
 
 // angulos para camara de vista en primera persona
 float fp_angle_camera = 1.0;
@@ -162,7 +162,7 @@ Nave nave;
 
 void update_view_matrix() {
 	
-	posicion_camara = glm::vec3(
+	posicion_camara = -glm::vec3(
 			camara_dist*cos(angle_camera)*cos(angle_camera2),
 			camara_dist*sin(angle_camera)*cos(angle_camera2),
 			camara_dist*sin(angle_camera2));

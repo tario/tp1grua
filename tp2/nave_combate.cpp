@@ -16,6 +16,8 @@ NaveCombate::NaveCombate(Texture* mapa_reflexion_universo) :
 	material_cubo(&mapa_difuso_nave, NullTexture::instance(), mapa_reflexion_universo),
 	cubo(&material_cubo, caras2) {
 
+		material_cubo.ksSetter->set(0.7);
+		material_cubo.kdSetter->set(0.5);
 		material_cubo.intensidadDifusoSetter->set(0.7);
 		material_cubo.intensidadReflexionSetter->set(0.3);
 		material_cubo.intensidadGrisSetter->set(0.0);
