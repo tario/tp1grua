@@ -102,6 +102,7 @@
     <ClInclude Include="cubo.h" />
     <ClInclude Include="cubo_texturado.h" />
     <ClInclude Include="curva.h" />
+    <ClInclude Include="curva_constante.h" />
     <ClInclude Include="dibujable.h" />
     <ClInclude Include="dirtness_shader.h" />
     <ClInclude Include="esfera.h" />
@@ -134,6 +135,7 @@
     <ClCompile Include="bump_mapping_shader.cpp" />
     <ClCompile Include="cubo.cpp" />
     <ClCompile Include="cubo_texturado.cpp" />
+    <ClCompile Include="curva_constante.cpp" />
     <ClCompile Include="dirtness_shader.cpp" />
     <ClCompile Include="esfera.cpp" />
     <ClCompile Include="material_color_solido.cpp" />

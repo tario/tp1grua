@@ -21,6 +21,8 @@ class NaveCombate : public Dibujable {
 
 		BitmapTexture mapa_difuso_nave;
 		Barrido* superficie_barrido;
+		Barrido* alas;
+		Barrido* base;
 };
 
 #endif

@@ -49,6 +49,7 @@ class VertexRegister {
 Barrido::Barrido(
 		FuncionConjuntoPuntos* funcionConjuntoPuntos,
 		Curva* trayectoria,
+		Curva* derivada,
 		Curva* torcion,
 		float h,
 		Material* material
@@ -90,10 +91,17 @@ Barrido::Barrido(
 
 			glm::vec3 p00, p01, p10, p11;
 
-			p00 = glm::vec3(puntos0.at(i).punto,0.0)  + punto_central0;
-			p01 = glm::vec3(puntos0.at(nextindex).punto,0.0)  + punto_central0;
-			p10 = glm::vec3(puntos1.at(i).punto,0.0) + punto_central1;
-			p11 = glm::vec3(puntos1.at(nextindex).punto,0.0) + punto_central1;
+			glm::vec3 vector_derivado = glm::normalize(derivada->punto(t));
+			glm::vec3 vector_torcion = glm::normalize(torcion->punto(t));
+			glm::vec3 vector_cross = glm::cross(vector_derivado, vector_torcion);
+			glm::mat3 giro(vector_torcion[0], vector_torcion[1], vector_torcion[2],
+				vector_cross[0], vector_cross[1], vector_cross[2],
+				vector_derivado[0], vector_derivado[1], vector_derivado[2]);
+
+			p00 = giro * glm::vec3(puntos0.at(i).punto,0.0)  + punto_central0;
+			p01 = giro * glm::vec3(puntos0.at(nextindex).punto,0.0)  + punto_central0;
+			p10 = giro * glm::vec3(puntos1.at(i).punto,0.0) + punto_central1;
+			p11 = giro * glm::vec3(puntos1.at(nextindex).punto,0.0) + punto_central1;
 
 			insert_triangle(current_position_pointer, p00, p01, p11);
 			insert_triangle(current_position_pointer+9, p10, p11, p00);
@@ -101,8 +109,8 @@ Barrido::Barrido(
 
 			glm::vec3 normal, normalx;
 
-			normal = -glm::normalize(glm::cross(p01-p00,p11-p00));
-			normalx = glm::normalize(glm::cross(normal, glm::vec3(0.0,0.0,1.0)));
+			normal = glm::normalize(glm::cross(p01-p00,p11-p00));
+			normalx = glm::normalize(glm::cross(normal, vector_derivado));
 			insert_triangle(current_normal_pointer, normal, normal, normal);
 			insert_triangle(current_normalx_pointer, normalx, normalx, normalx);
 
@@ -110,8 +118,8 @@ Barrido::Barrido(
 			vertexRegister.addNormal(level, nextindex + i*cantPuntos, current_normal_pointer+3);
 			vertexRegister.addNormal(level+1, nextindex + i*cantPuntos, current_normal_pointer+6);
 
-			normal = -glm::normalize(glm::cross(p00-p10,p11-p10));
-			normalx = glm::normalize(glm::cross(normal, glm::vec3(0.0,0.0,1.0)));
+			normal = glm::normalize(glm::cross(p00-p10,p11-p10));
+			normalx = glm::normalize(glm::cross(normal, vector_derivado));
 			insert_triangle(current_normal_pointer+9, normal, normal, normal);
 			insert_triangle(current_normalx_pointer+9, normalx, normalx, normalx);
 

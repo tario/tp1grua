@@ -72,6 +72,9 @@
     <ClCompile Include="barrido.cpp">
       <Filter>primitivas\utils</Filter>
     </ClCompile>
+    <ClCompile Include="curva_constante.cpp">
+      <Filter>primitivas\curvas</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -162,6 +165,9 @@
     </ClInclude>
     <ClInclude Include="funcion_conjunto_puntos.h">
       <Filter>primitivas\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="curva_constante.h">
+      <Filter>primitivas\curvas</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

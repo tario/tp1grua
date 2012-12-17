@@ -24,6 +24,7 @@ class Barrido : public Dibujable {
 		Barrido(
 				FuncionConjuntoPuntos* funcionConjuntoPuntos,
 				Curva* trayectoria,
+				Curva* derivada,
 				Curva* torcion,
 				float h,
 				Material* material

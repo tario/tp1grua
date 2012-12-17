@@ -196,7 +196,7 @@ void glut_process_mouse(int button, int state, int x, int y) {
 				}
 			}
 
-			if (camara_dist < 1.0) camara_dist = 1.0;
+			if (camara_dist < 0.1) camara_dist = 0.1;
 
 			update_view_matrix();
 		}
