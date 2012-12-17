@@ -100,11 +100,11 @@ class Nave {
 
 		void processFrame() {
 			if (control_avanzar)	{
-				desplazamiento = desplazamiento + glm::vec3(front[0] * 0.1, front[1] * 0.1, front[2] * 0.1);
+				desplazamiento = desplazamiento + glm::vec3(front[0] * 0.025, front[1] * 0.025, front[2] * 0.025);
 			}
 
 			if (control_retroceder)	{
-				desplazamiento = desplazamiento - glm::vec3(front[0] * 0.1, front[1] * 0.1, front[2] * 0.1);
+				desplazamiento = desplazamiento - glm::vec3(front[0] * 0.01, front[1] * 0.01, front[2] * 0.01);
 			}
 
 			if (control_giroderecho){ 
@@ -135,7 +135,21 @@ class Nave {
 			up = giro * up;
 			front = giro * front;
 
-			giro = glm::mat4(1.0);
+			glm::mat3 giro2 = glm::mat3(glm::mat4(1.0) * 0.2 + giro * 0.8);
+			
+			glm::vec3 v1 = glm::normalize(glm::vec3(giro2[0][0], giro2[0][1], giro2[0][2]));
+			glm::vec3 v2 = glm::normalize(glm::vec3(giro2[1][0], giro2[1][1], giro2[1][2]));
+			glm::vec3 v3 = glm::normalize(glm::vec3(giro2[2][0], giro2[2][1], giro2[2][2]));
+			giro = glm::mat4(glm::mat3(
+				v1[0],v1[1],v1[2],
+				v2[0],v2[1],v2[2],
+				v3[0],v3[1],v3[2]
+				));
+
+				left = glm::normalize(glm::cross(glm::vec3(up),glm::vec3(front)));
+				up = -glm::vec4(glm::normalize(glm::cross(left,glm::vec3(front))), 1.0);
+				front = glm::vec4(glm::normalize(glm::vec3(front)),1.0);
+				//up = glm::vec4(glm::normalize(glm::vec3(up)),1.0);
 			glm::vec3 d = desplazamiento; 
 			desplazamiento = glm::vec3(d[0]*0.8,d[1]*0.8, d[2]*0.8);
 			//giro = glm::mat4(1.0);
