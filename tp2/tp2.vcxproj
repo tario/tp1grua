@@ -91,6 +91,8 @@
     <None Include="TextureWavesVShader.vert" />
     <None Include="tp2Shader.frag" />
     <None Include="tp2Shader.vert" />
+    <None Include="tp3Shader.frag" />
+    <None Include="tp3Shader.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bitmap_texture.h" />
@@ -107,8 +109,10 @@
     <ClInclude Include="material_textura_suciedad.h" />
     <ClInclude Include="material_textura_suciedad_specular.h" />
     <ClInclude Include="material_tp2.h" />
+    <ClInclude Include="material_tp3.h" />
     <ClInclude Include="model_object.h" />
     <ClInclude Include="nave_combate.h" />
+    <ClInclude Include="null_texture.h" />
     <ClInclude Include="prisma.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="solid_color_shader.h" />
@@ -132,6 +136,7 @@
     <ClCompile Include="material_textura_suciedad.cpp" />
     <ClCompile Include="material_textura_suciedad_specular.cpp" />
     <ClCompile Include="material_tp2.cpp" />
+    <ClCompile Include="material_tp3.cpp" />
     <ClCompile Include="model_object.cpp" />
     <ClCompile Include="nave_combate.cpp" />
     <ClCompile Include="prisma.cpp" />

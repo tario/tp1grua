@@ -2,18 +2,22 @@
 #define __NAVE_COMBATE_H
 
 #include "dibujable.h"
-#include "material_color_solido.h"
+#include "material_tp3.h"
 #include "cubo_texturado.h"
+#include "null_texture.h"
+#include "bitmap_texture.h"
 
 class NaveCombate : public Dibujable {
 	public:
 
-		NaveCombate();
+		NaveCombate(Texture* mapa_reflexion_universo = NullTexture::instance());
 		void dibujar(const glm::mat4&);
 
 	private:
 		CuboTexturado cubo;
-		MaterialColorSolido material_cubo;
+		MaterialTP3 material_cubo;
+
+		BitmapTexture mapa_difuso_nave;
 };
 
 #endif

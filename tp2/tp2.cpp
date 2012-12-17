@@ -337,10 +337,7 @@ void init() {
 	Texture* normaldonut = new BitmapTexture("normal-donut.bmp");
 	Texture* textura_instrucciones = new BitmapTexture("instrucciones.bmp");
 
-	textureVector.push_back(new BitmapTexture("Milkyway_BG.bmp"));
-	textureVector.push_back(new BitmapTexture("chateau_TM.bmp"));
-	textureVector.push_back(new BitmapTexture("Road_to_MonumentValley_8k.bmp"));
-	textureVector.push_back(new BitmapTexture("Zion_7_Sunsetpeek_8k_Bg.bmp"));
+	Texture* background = new BitmapTexture("Milkyway_BG.bmp");
 	Material* material;
 	Material* materialTexturaSimple = new MaterialTextura(textura_instrucciones);
 
@@ -349,10 +346,9 @@ void init() {
 		glm::scale(glm::mat4(1.0), glm::vec3(2.0, 2.0, 2.0))
 		);
 	
-	textureSwitch = new TextureSwitch(textureVector.at(0));
 
 	esfera_del_cielo = new ModelObject(
-		new Esfera(new MaterialTextura(textureSwitch), 50, false),
+		new Esfera(new MaterialTextura(background), 50, false),
 		glm::rotate(
 				glm::scale(glm::mat4(1.0),glm::vec3(100.0,100.0,100.0)),
 				90.0f, 
@@ -382,7 +378,7 @@ void init() {
 	basuraEspacial = new Esfera(material_color_gris_oscuro, 5);
 	objects.push_front(light_sphere);
 
-	nave_combate = new ModelObject(new NaveCombate());
+	nave_combate = new ModelObject(new NaveCombate(background));
 
 	update_view_matrix();
 }

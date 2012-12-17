@@ -63,6 +63,9 @@
     <ClCompile Include="nave_combate.cpp">
       <Filter>modelobjects</Filter>
     </ClCompile>
+    <ClCompile Include="material_tp3.cpp">
+      <Filter>material</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -136,6 +139,12 @@
     <ClInclude Include="nave_combate.h">
       <Filter>modelobjects</Filter>
     </ClInclude>
+    <ClInclude Include="material_tp3.h">
+      <Filter>material</Filter>
+    </ClInclude>
+    <ClInclude Include="null_texture.h">
+      <Filter>utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -170,6 +179,12 @@
       <Filter>shadersglsl</Filter>
     </None>
     <None Include="tp2Shader.vert">
+      <Filter>shadersglsl</Filter>
+    </None>
+    <None Include="tp3Shader.frag">
+      <Filter>shadersglsl</Filter>
+    </None>
+    <None Include="tp3Shader.vert">
       <Filter>shadersglsl</Filter>
     </None>
   </ItemGroup>

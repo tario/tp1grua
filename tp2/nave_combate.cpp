@@ -11,10 +11,16 @@ static CuboTexturado::Cara caras2[] = {
 	CuboTexturado::Cara(cara2)
 };
 
-NaveCombate::NaveCombate() : 
-	material_cubo(glm::vec3(0.4,0.4,0.4)),
-	cubo(&material_cubo, caras2, false) {
+NaveCombate::NaveCombate(Texture* mapa_reflexion_universo) : 
+	mapa_difuso_nave("nave.bmp"),
+	material_cubo(&mapa_difuso_nave, NullTexture::instance(), mapa_reflexion_universo),
+	cubo(&material_cubo, caras2) {
 
+		material_cubo.intensidadDifusoSetter->set(0.7);
+		material_cubo.intensidadReflexionSetter->set(0.3);
+		material_cubo.intensidadGrisSetter->set(0.0);
+		material_cubo.intensidadRelieveSetter->set(0.0);
+		material_cubo.kaSetter->set(0.1);
 }
 
 void NaveCombate::dibujar(const glm::mat4& m) {
