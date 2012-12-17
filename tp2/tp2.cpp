@@ -161,7 +161,7 @@ class Nave {
 Nave nave;
 
 void update_view_matrix() {
-	
+
 	posicion_camara = -glm::vec3(
 			camara_dist*cos(angle_camera)*cos(angle_camera2),
 			camara_dist*sin(angle_camera)*cos(angle_camera2),
@@ -337,7 +337,7 @@ void init() {
 	Texture* normaldonut = new BitmapTexture("normal-donut.bmp");
 	Texture* textura_instrucciones = new BitmapTexture("instrucciones.bmp");
 
-	Texture* background = new BitmapTexture("Milkyway_BG.bmp");
+	Texture* background = new BitmapTexture("background.bmp");
 	Material* material;
 	Material* materialTexturaSimple = new MaterialTextura(textura_instrucciones);
 
@@ -369,7 +369,7 @@ void init() {
 	planeta = new ModelObject(
 		new Esfera(materialtp3, 200, false),
 			glm::scale(
-				glm::translate(glm::mat4(1.0), glm::vec3(-40.0, 40.0, 0.0)),
+				glm::translate(glm::mat4(1.0), glm::vec3(40.0, 40.0, 0.0)),
 				glm::vec3(55,55,55)
 				)
 		);
