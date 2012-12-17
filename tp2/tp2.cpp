@@ -381,7 +381,7 @@ void init() {
 	materialtp3->intensidadReflexionSetter->set(0.0);
 
 	planeta = new ModelObject(
-		new Esfera(materialtp3, 200, false),
+		new Esfera(materialtp3, 20, false),
 			glm::scale(
 				glm::translate(glm::mat4(1.0), glm::vec3(40.0, 40.0, 0.0)),
 				glm::vec3(55,55,55)
