@@ -52,7 +52,9 @@ Barrido::Barrido(
 		Curva* derivada,
 		Curva* torcion,
 		float h,
-		Material* material
+		Material* material,
+		float t_inicial,
+		float t_final
 ) : material(material) {
 
 	glm::vec3 punto_central0, punto_central1;
@@ -74,10 +76,10 @@ Barrido::Barrido(
 
 	int level=0;
 	float t, t0, t1;
-	for (t=0.0; t<1.0; t+=h) {
+	for (t=t_inicial; t<t_final; t+=h) {
 		t0 = t;
 		t1 = t + h;
-		if (t1 > 1.0) t1 = 1.0;
+		if (t1 > t_final) t1 = t_final;
 
 		puntos0 = funcionConjuntoPuntos->conjunto(t0);
 		puntos1 = funcionConjuntoPuntos->conjunto(t1);
