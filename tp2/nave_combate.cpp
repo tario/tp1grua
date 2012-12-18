@@ -80,16 +80,16 @@ class ConjuntoPuntosTecho : public FuncionConjuntoPuntos {
 	public:
 	std::vector<Punto> conjunto(float t) {
 		std::vector<Punto> ret;
-		if (t<0.8) {
-		ret.push_back(Punto(-0.25,-0.2-t*0.09/0.6));
-		ret.push_back(Punto(-0.22,-0.225-t*0.09/0.6));
-		ret.push_back(Punto(0.22,-0.225-t*0.09/0.6));
-		ret.push_back(Punto(0.25,-0.2-t*0.09/0.6));
+		if (t<0.4) {
+		ret.push_back(Punto(-0.25,-0.2-t*0.1));
+		ret.push_back(Punto(-0.22,-0.225-t*0.1));
+		ret.push_back(Punto(0.22,-0.225-t*0.1));
+		ret.push_back(Punto(0.25,-0.2-t*0.1));
 		} else {
-		ret.push_back(Punto(-0.25,-0.3+(t-0.8)*0.2));
-		ret.push_back(Punto(-0.22,-0.325+(t-0.8)*0.325));
-		ret.push_back(Punto(0.22,-0.325+(t-0.8)*0.325));
-		ret.push_back(Punto(0.25,-0.3+(t-0.8)*0.2));
+		ret.push_back(Punto(-0.25,-0.24+(t-0.4)*0.1));
+		ret.push_back(Punto(-0.22,-0.265+(t-0.4)*0.225));
+		ret.push_back(Punto(0.22,-0.265+(t-0.4)*0.225));
+		ret.push_back(Punto(0.25,-0.24+(t-0.4)*0.1));
 		}
 		return ret;
 	};
@@ -98,11 +98,18 @@ class ConjuntoPuntosVidrio : public FuncionConjuntoPuntos {
 	public:
 	std::vector<Punto> conjunto(float t) {
 		std::vector<Punto> ret;
-
-		ret.push_back(Punto(-0.4+t*0.4/5,-0.1+t/30.0));
-		ret.push_back(Punto(-0.25,-0.3+t*0.04));
-		ret.push_back(Punto(0.25,-0.3+t*0.04));
-		ret.push_back(Punto(0.4-t*0.4/5,-0.1+t/30.0));
+		
+		if (t<0.6) {
+		ret.push_back(Punto(-0.4+(t-0.4)*0.4,-0.1+(t-0.4)*0.1/0.6));
+		ret.push_back(Punto(-0.25,-0.24+(t-0.4)*0.1));
+		ret.push_back(Punto(0.25,-0.24+(t-0.4)*0.1));
+		ret.push_back(Punto(0.4-(t-0.4)*0.4,-0.1+(t-0.4)*0.1/0.6));
+		} else {
+		ret.push_back(Punto(-0.4+(t-0.4)*0.4,-0.1+(t-0.4)*0.1/0.6));
+		ret.push_back(Punto(-0.25,-0.22+(t-0.6)*1.5333));
+		ret.push_back(Punto(0.25,-0.22+(t-0.6)*1.5333));
+		ret.push_back(Punto(0.4-(t-0.4)*0.4,-0.1+(t-0.4)*0.1/0.6));
+		}
 		return ret;
 	};
 };
@@ -138,29 +145,30 @@ NaveCombate::NaveCombate(Texture* mapa_reflexion_universo) :
 
 	cabina = new Barrido(
 		&ConjuntoPuntosCabina(), 
-		&SegmentoRecta(glm::vec3(0.0,0.0,0.0),glm::vec3(0.6,0.0,0.0)),
+		&SegmentoRecta(glm::vec3(0.0,0.0,0.0),glm::vec3(1.5,0.0,0.0)),
 		&derivada_base,
 		&torcion_alas,
 		1.0,
-		&material_cubo);
+		&material_cubo,
+		0.0,0.4);
 
 	techo = new Barrido(
 		&ConjuntoPuntosTecho(),
-		&SegmentoRecta(glm::vec3(0.0,0.0,0.0), glm::vec3(0.9,0.0,0.0)),
+		&SegmentoRecta(glm::vec3(0.0,0.0,0.0), glm::vec3(1.5,0.0,0.0)),
 		&derivada_base,
 		&torcion_alas,
 		0.1,
-		&material_cubo
-		);
+		&material_cubo,
+		0.0,0.6);
 
 	vidrio = new Barrido(
 		&ConjuntoPuntosVidrio(),
-		&SegmentoRecta(glm::vec3(0.6,0.0,0.0), glm::vec3(0.9,0.0,0.0)),
+		&SegmentoRecta(glm::vec3(0.0,0.0,0.0), glm::vec3(1.5,0.0,0.0)),
 		&derivada_base,
 		&torcion_alas,
 		0.1,
-		&material_color
-		);
+		&material_color,
+		0.4,0.7);
 }
 
 void NaveCombate::dibujar(const glm::mat4& m) {

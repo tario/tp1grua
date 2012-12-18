@@ -27,6 +27,7 @@ class NaveCombate : public Dibujable {
 		Barrido* cabina;
 		Barrido* techo;
 		Barrido* vidrio;
+
 };
 
 #endif
