@@ -83,11 +83,11 @@ float angle_camera2 = 0.0;
 float fp_angle_camera = 1.0;
 float fp_angle_camera2 = 0.1;
 
-glm::vec3 posicion_camara = glm::vec3(camara_dist*cos(angle_camera),camara_dist*sin(angle_camera),3);
+glm::vec3 posicion_camara;
 glm::vec3 posicion_peaton_camara2 = glm::vec3(-1.5, 0.0, 0.65);
 glm::mat4 View;
 
-int camara_mode = 1;
+int camara_mode = 2;
 int mouse_last_x = 0;
 int mouse_last_y = 0;
 
@@ -175,42 +175,56 @@ class Nave {
 Nave nave;
 
 void update_view_matrix() {
+	glm::vec3 look_at, up;
 
-	posicion_camara = -glm::vec3(
-			camara_dist*cos(angle_camera)*cos(angle_camera2),
-			camara_dist*sin(angle_camera)*cos(angle_camera2),
-			camara_dist*sin(angle_camera2));
+	if (camara_mode == 2) {
+		up = glm::vec3(nave.up);
 
-	glm::vec3 left = glm::cross(glm::vec3(nave.front),glm::vec3(nave.up));
-	glm::mat3 rotacion_nave(
-		nave.front[0], nave.front[1], nave.front[2],
-		left[0], left[1], left[2],
-		nave.up[0], nave.up[1], nave.up[2]);
+		if (camara_dist<=0.0) {
+			look_at = glm::vec3(nave.position) + glm::vec3(nave.front);
+			posicion_camara = glm::vec3(nave.position);
+		} else {
+			float f = camara_dist * 0.9;
+			look_at = glm::vec3(nave.position) + glm::vec3(nave.front[0]*f,nave.front[1]*f,nave.front[2]*f);
+			posicion_camara = -glm::vec3(
+					camara_dist*cos(angle_camera)*cos(angle_camera2),
+					camara_dist*sin(angle_camera)*cos(angle_camera2),
+					camara_dist*sin(angle_camera2));
+			glm::vec3 left = glm::cross(glm::vec3(nave.front),glm::vec3(nave.up));
+			glm::mat3 rotacion_nave(
+				nave.front[0], nave.front[1], nave.front[2],
+				left[0], left[1], left[2],
+				nave.up[0], nave.up[1], nave.up[2]);
 
-	posicion_camara = glm::vec3(nave.position) + rotacion_nave * posicion_camara;
+			posicion_camara = glm::vec3(nave.position) + rotacion_nave * posicion_camara;
+		}
+
+	} else {
+		look_at = glm::vec3(nave.position);
+	}
 
 	View       = glm::lookAt(
 		posicion_camara, 
-		glm::vec3(nave.position), 
-		glm::vec3(nave.up)
+		look_at, 
+		up
 	);
 
-	Shader::cameraDirection = glm::normalize(glm::vec3(nave.position) - posicion_camara );
+	Shader::cameraDirection = glm::normalize(look_at - posicion_camara );
 	Shader::cameraPosition = posicion_camara;
 }
 
 void glut_process_mouse(int button, int state, int x, int y) {
-	if (camara_mode == 1) {
+	if (camara_mode == 2) {
 		if (button == 3 || button == 4) {
 			if (state == GLUT_UP) {
 				if (button == 3) {
-					camara_dist -= 0.5;
+					camara_dist -= 0.3;
 				} else {
-					camara_dist += 0.5;
+					camara_dist += 0.3;
 				}
 			}
 
-			if (camara_dist < 0.1) camara_dist = 0.1;
+			if (camara_dist < 0.0) camara_dist = 0.0;
 
 			update_view_matrix();
 		}
@@ -239,7 +253,7 @@ void glut_process_passive_mouse_motion(int x, int y) {
 }
 
 void glut_process_mouse_motion(int x, int y) {
-	if (camara_mode == 1) {
+	if (camara_mode == 2) {
 		if (abs(mouse_last_x - x) > 100 || abs(mouse_last_y - y) > 100) {
 			mouse_last_x = x;
 			mouse_last_y = y;
@@ -257,8 +271,6 @@ void glut_process_mouse_motion(int x, int y) {
 
 		if (angle_camera < 0.0) angle_camera += M_PI*2;
 		if (angle_camera > M_PI*2) angle_camera -= M_PI*2;
-
-		update_view_matrix();
 	}	
 }
 
@@ -476,9 +488,11 @@ void glut_display() {
 	}
 	}
 
-	nave_combate->dibujar(
+	if (camara_mode != 2 || camara_dist > 0.0) {
+		nave_combate->dibujar(
  	    glm::mat4(1.0)
 		);
+	}
 
 	//textureShader->use();
   //  glUniform1i(loc, 1);
