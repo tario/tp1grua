@@ -6,7 +6,7 @@
 #include "cubo_texturado.h"
 #include "null_texture.h"
 #include "bitmap_texture.h"
-
+#include "material_color_solido.h"
 #include "barrido.h"
 
 class NaveCombate : public Dibujable {
@@ -18,11 +18,15 @@ class NaveCombate : public Dibujable {
 	private:
 		CuboTexturado cubo;
 		MaterialTP3 material_cubo;
+		MaterialColorSolido material_color;
 
 		BitmapTexture mapa_difuso_nave;
 		Barrido* superficie_barrido;
 		Barrido* alas;
 		Barrido* base;
+		Barrido* cabina;
+		Barrido* techo;
+		Barrido* vidrio;
 };
 
 #endif
