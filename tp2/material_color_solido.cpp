@@ -10,6 +10,6 @@ void MaterialColorSolido::use(const glm::mat4& m) {
 
 	solidColorShader->setTransformMatrix(m);
 	solidColorShader->setProjectionMatrix(Shader::projectionMatrix);
-	solidColorShader->setCameraDirection(Shader::cameraDirection);
+	solidColorShader->setCameraPosition(Shader::cameraPosition);
 	solidColorShader->setColor(color);
 }

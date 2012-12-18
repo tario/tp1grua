@@ -8,14 +8,19 @@ SolidColorShader::SolidColorShader() : Shader("BasicColorFShader.frag", "BasicCo
 	this->link();
 
 	this->transform_matrix_index = this->getUniformLocation("TransformMatrix");
-	this->projection_matrix_index = this->getUniformLocation("ProjectionMatrix");
-	this->camera_direction_index = this->getUniformLocation("camera_direction");
 	this->normal_matrix_index = this->getUniformLocation("NormalMatrix");
+	this->projection_matrix_index = this->getUniformLocation("ProjectionMatrix");
+
+	this->camera_position_index = this->getUniformLocation("camera_position");
 	this->color_index = this->getUniformLocation("Color");
 }
 
 void SolidColorShader::setCameraDirection(const glm::vec3& v) {
 	glUniform3f(this->camera_direction_index, v[0], v[1], v[2]);
+}
+
+void SolidColorShader::setCameraPosition(const glm::vec3& v) {
+	glUniform3f(this->camera_position_index, v[0], v[1], v[2]);
 }
 
 void SolidColorShader::setProjectionMatrix(const glm::mat4& m) {
@@ -34,6 +39,6 @@ void SolidColorShader::setColor(const glm::vec3& color) {
 void SolidColorShader::setTransformMatrix(const glm::mat4& m) {
 	glUniformMatrix4fv(this->transform_matrix_index, 1, 0, glm::value_ptr(m));
 	glm::mat4 normal_matrix = compute_normal_matrix(m);
-	glUniformMatrix3fv(this->normal_matrix_index, 1, 0, glm::value_ptr(normal_matrix));
+	glUniformMatrix4fv(this->normal_matrix_index, 1, 0, glm::value_ptr(normal_matrix));
 }
 

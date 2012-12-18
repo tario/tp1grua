@@ -11,6 +11,7 @@ public:
 	void setTransformMatrix(const glm::mat4& m);
 	void setProjectionMatrix(const glm::mat4& m);
 	void setCameraDirection(const glm::vec3& v);
+	void setCameraPosition(const glm::vec3& v);
 	void setColor(const glm::vec3& color);
 
 	static SolidColorShader* instance();
@@ -20,6 +21,7 @@ private:
 	int projection_matrix_index;
 	int camera_direction_index;
 	int normal_matrix_index;
+	int camera_position_index;
 	int color_index;
 };
 
