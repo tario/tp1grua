@@ -91,6 +91,7 @@ int camara_mode = 2;
 int mouse_last_x = 0;
 int mouse_last_y = 0;
 
+const float velocidadGiro = 0.5;
 class Nave {
 	public:
 		Nave() : front(1.0,0.0,0.0,1.0), up(0.0,0.0,1.0,1.0), position(0.0,0.0,0.0,1.0), giro(1.0),
@@ -98,44 +99,45 @@ class Nave {
 
 		}
 
+
 		void processFrame() {
 			if (control_avanzar)	{
-				desplazamiento = desplazamiento + glm::vec3(front[0] * 0.025, front[1] * 0.025, front[2] * 0.025);
+				desplazamiento = desplazamiento + glm::vec3(front[0] * 0.0025, front[1] * 0.0025, front[2] * 0.0025);
 			}
 
 			if (control_retroceder)	{
-				desplazamiento = desplazamiento - glm::vec3(front[0] * 0.01, front[1] * 0.01, front[2] * 0.01);
+				desplazamiento = desplazamiento - glm::vec3(front[0] * 0.001, front[1] * 0.001, front[2] * 0.001);
 			}
 
 			if (control_giroderecho){ 
-				giro = glm::rotate(giro, 2.0f, glm::vec3(up));
+				giro = glm::rotate(giro, velocidadGiro, glm::vec3(up));
 			}
 
 			if (control_giroizquierdo){ 
-				giro = glm::rotate(giro, -2.0f, glm::vec3(up));
+				giro = glm::rotate(giro, -velocidadGiro, glm::vec3(up));
 			}
 
 			glm::vec3 left = glm::cross(glm::vec3(up), glm::vec3(front));
 			if (control_giroarriba){ 
-				giro = glm::rotate(giro, -2.0f, left);
+				giro = glm::rotate(giro, -velocidadGiro, left);
 			}
 
 			if (control_giroabajo){ 
-				giro = glm::rotate(giro, 2.0f, left);
+				giro = glm::rotate(giro,velocidadGiro, left);
 			}
 
 			if (control_girobarril1){ 
-				giro = glm::rotate(giro, -2.0f, glm::vec3(front));
+				giro = glm::rotate(giro, -velocidadGiro, glm::vec3(front));
 			}
 
 			if (control_girobarril2){ 
-				giro = glm::rotate(giro, 2.0f, glm::vec3(front));
+				giro = glm::rotate(giro, velocidadGiro, glm::vec3(front));
 			}
 			position = position + glm::vec4(desplazamiento,0.0);
 			up = giro * up;
 			front = giro * front;
 
-			glm::mat3 giro2 = glm::mat3(glm::mat4(1.0) * 0.2 + giro * 0.8);
+			glm::mat3 giro2 = glm::mat3(glm::mat4(1.0) * 0.1 + giro * 0.9);
 			
 			glm::vec3 v1 = glm::normalize(glm::vec3(giro2[0][0], giro2[0][1], giro2[0][2]));
 			glm::vec3 v2 = glm::normalize(glm::vec3(giro2[1][0], giro2[1][1], giro2[1][2]));
@@ -151,8 +153,8 @@ class Nave {
 				front = glm::vec4(glm::normalize(glm::vec3(front)),1.0);
 				//up = glm::vec4(glm::normalize(glm::vec3(up)),1.0);
 			glm::vec3 d = desplazamiento; 
-			desplazamiento = glm::vec3(d[0]*0.8,d[1]*0.8, d[2]*0.8);
-			//giro = glm::mat4(1.0);
+			desplazamiento = glm::vec3(d[0]*0.99,d[1]*0.99, d[2]*0.99);
+			//giro = glm::mat4(1.0)
 		}
 
 		bool control_avanzar;
