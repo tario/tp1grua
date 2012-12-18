@@ -69,10 +69,10 @@ class ConjuntoPuntosCabina : public FuncionConjuntoPuntos {
 	public:
 	std::vector<Punto> conjunto(float t) {
 		std::vector<Punto> ret;
-		ret.push_back(Punto(-0.4,-0.1));
-		ret.push_back(Punto(-0.25,-0.2-t*0.1));
-		ret.push_back(Punto(0.25,-0.2-t*0.1));
 		ret.push_back(Punto(0.4,-0.1));
+		ret.push_back(Punto(0.25,-0.2-t*0.1));
+		ret.push_back(Punto(-0.25,-0.2-t*0.1));
+		ret.push_back(Punto(-0.4,-0.1));
 		return ret;
 	};
 };
@@ -81,15 +81,15 @@ class ConjuntoPuntosTecho : public FuncionConjuntoPuntos {
 	std::vector<Punto> conjunto(float t) {
 		std::vector<Punto> ret;
 		if (t<0.4) {
-		ret.push_back(Punto(-0.25,-0.2-t*0.1));
-		ret.push_back(Punto(-0.22,-0.225-t*0.1));
-		ret.push_back(Punto(0.22,-0.225-t*0.1));
 		ret.push_back(Punto(0.25,-0.2-t*0.1));
+		ret.push_back(Punto(0.22,-0.225-t*0.1));
+		ret.push_back(Punto(-0.22,-0.225-t*0.1));
+		ret.push_back(Punto(-0.25,-0.2-t*0.1));
 		} else {
-		ret.push_back(Punto(-0.25,-0.24+(t-0.4)*0.1));
-		ret.push_back(Punto(-0.22,-0.265+(t-0.4)*0.225));
-		ret.push_back(Punto(0.22,-0.265+(t-0.4)*0.225));
 		ret.push_back(Punto(0.25,-0.24+(t-0.4)*0.1));
+		ret.push_back(Punto(0.22,-0.265+(t-0.4)*0.225));
+		ret.push_back(Punto(-0.22,-0.265+(t-0.4)*0.225));
+		ret.push_back(Punto(-0.25,-0.24+(t-0.4)*0.1));
 		}
 		return ret;
 	};
@@ -100,15 +100,15 @@ class ConjuntoPuntosVidrio : public FuncionConjuntoPuntos {
 		std::vector<Punto> ret;
 		
 		if (t<0.6) {
-		ret.push_back(Punto(-0.4+(t-0.4)*0.4,-0.1+(t-0.4)*0.1/0.6));
-		ret.push_back(Punto(-0.25,-0.24+(t-0.4)*0.1));
+		ret.push_back(Punto(0.4-(t-0.4)*0.4,-0.1+(t-0.4)*0.1/0.6));
 		ret.push_back(Punto(0.25,-0.24+(t-0.4)*0.1));
-		ret.push_back(Punto(0.4-(t-0.4)*0.4,-0.1+(t-0.4)*0.1/0.6));
-		} else {
+		ret.push_back(Punto(-0.25,-0.24+(t-0.4)*0.1));
 		ret.push_back(Punto(-0.4+(t-0.4)*0.4,-0.1+(t-0.4)*0.1/0.6));
-		ret.push_back(Punto(-0.25,-0.22+(t-0.6)*1.5333));
-		ret.push_back(Punto(0.25,-0.22+(t-0.6)*1.5333));
+		} else {
 		ret.push_back(Punto(0.4-(t-0.4)*0.4,-0.1+(t-0.4)*0.1/0.6));
+		ret.push_back(Punto(0.25,-0.22+(t-0.6)*1.5333));
+		ret.push_back(Punto(-0.25,-0.22+(t-0.6)*1.5333));
+		ret.push_back(Punto(-0.4+(t-0.4)*0.4,-0.1+(t-0.4)*0.1/0.6));
 		}
 		return ret;
 	};
