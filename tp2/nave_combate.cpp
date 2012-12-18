@@ -124,7 +124,7 @@ NaveCombate::NaveCombate(Texture* mapa_reflexion_universo) :
 		material_cubo.ksSetter->set(0.2);
 		material_cubo.kdSetter->set(1.0);
 		material_cubo.intensidadDifusoSetter->set(0.6);
-		material_cubo.intensidadReflexionSetter->set(0.4);
+		material_cubo.intensidadReflexionSetter->set(0.2);
 		material_cubo.intensidadGrisSetter->set(0.0);
 		material_cubo.intensidadRelieveSetter->set(0.0);
 		material_cubo.kaSetter->set(0.1);

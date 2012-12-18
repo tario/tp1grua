@@ -136,7 +136,7 @@ class Nave {
 			position = position + glm::vec4(desplazamiento,0.0);
 			up = giro * up;
 			front = giro * front;
-
+			
 			glm::mat3 giro2 = glm::mat3(glm::mat4(1.0) * 0.1 + giro * 0.9);
 			
 			glm::vec3 v1 = glm::normalize(glm::vec3(giro2[0][0], giro2[0][1], giro2[0][2]));
@@ -174,35 +174,37 @@ class Nave {
 		glm::mat4 giro;
 };
 
-Nave nave;
+#define NAVES_EN_ESCUADRON 3
+Nave escuadron[NAVES_EN_ESCUADRON];
+Nave* nave_seleccionada = escuadron+0;
 
 void update_view_matrix() {
 	glm::vec3 look_at, up;
 
 	if (camara_mode == 2) {
-		up = glm::vec3(nave.up);
+		up = glm::vec3(nave_seleccionada->up);
 
 		if (camara_dist<=0.0) {
-			look_at = glm::vec3(nave.position) + glm::vec3(nave.front);
-			posicion_camara = glm::vec3(nave.position);
+			look_at = glm::vec3(nave_seleccionada->position) + glm::vec3(nave_seleccionada->front);
+			posicion_camara = glm::vec3(nave_seleccionada->position);
 		} else {
 			float f = camara_dist * 0.9;
-			look_at = glm::vec3(nave.position) + glm::vec3(nave.front[0]*f,nave.front[1]*f,nave.front[2]*f);
+			look_at = glm::vec3(nave_seleccionada->position) + glm::vec3(nave_seleccionada->front[0]*f,nave_seleccionada->front[1]*f,nave_seleccionada->front[2]*f);
 			posicion_camara = -glm::vec3(
 					camara_dist*cos(angle_camera)*cos(angle_camera2),
 					camara_dist*sin(angle_camera)*cos(angle_camera2),
 					camara_dist*sin(angle_camera2));
-			glm::vec3 left = glm::cross(glm::vec3(nave.front),glm::vec3(nave.up));
+			glm::vec3 left = glm::cross(glm::vec3(nave_seleccionada->front),glm::vec3(nave_seleccionada->up));
 			glm::mat3 rotacion_nave(
-				nave.front[0], nave.front[1], nave.front[2],
+				nave_seleccionada->front[0], nave_seleccionada->front[1], nave_seleccionada->front[2],
 				left[0], left[1], left[2],
-				nave.up[0], nave.up[1], nave.up[2]);
+				nave_seleccionada->up[0], nave_seleccionada->up[1], nave_seleccionada->up[2]);
 
-			posicion_camara = glm::vec3(nave.position) + rotacion_nave * posicion_camara;
+			posicion_camara = glm::vec3(nave_seleccionada->position) + rotacion_nave * posicion_camara;
 		}
 
 	} else {
-		look_at = glm::vec3(nave.position);
+		look_at = glm::vec3(nave_seleccionada->position);
 	}
 
 	View       = glm::lookAt(
@@ -280,14 +282,14 @@ void glut_process_mouse_motion(int x, int y) {
 void keyboardUp(unsigned char key, int x, int y)
 {
     currentSetter = nullSetter;
-	if (key == 'i')	nave.control_avanzar = false;
-	if (key == 'k')	nave.control_retroceder = false;
-	if (key == 'a') nave.control_giroderecho = false;
-	if (key == 'd') nave.control_giroizquierdo = false;
-	if (key == 'w') nave.control_giroarriba = false;
-	if (key == 's') nave.control_giroabajo = false;
-	if (key == 'q') nave.control_girobarril1 = false;
-	if (key == 'e') nave.control_girobarril2 = false;
+	if (key == 'i')	nave_seleccionada->control_avanzar = false;
+	if (key == 'k')	nave_seleccionada->control_retroceder = false;
+	if (key == 'a') nave_seleccionada->control_giroderecho = false;
+	if (key == 'd') nave_seleccionada->control_giroizquierdo = false;
+	if (key == 'w') nave_seleccionada->control_giroarriba = false;
+	if (key == 's') nave_seleccionada->control_giroabajo = false;
+	if (key == 'q') nave_seleccionada->control_girobarril1 = false;
+	if (key == 'e') nave_seleccionada->control_girobarril2 = false;
 }
 
 #include "bump_mapping_material.h"
@@ -309,20 +311,24 @@ void glut_special_process_keys(int key, int x, int y) {
 		mostrarInstrucciones = true;
 	}
 }
-void glut_process_keys(unsigned char key, int x, int y) {    
+void glut_process_keys(unsigned char key, int x, int y) {
+	if (key == 9) {
+		nave_seleccionada++;
+		if (nave_seleccionada-escuadron > 2) nave_seleccionada = escuadron;
+	}
     if (key == 27) 
     {
         exit(0);
 
     }
-	if (key == 'i')	nave.control_avanzar = true;
-	if (key == 'k')	nave.control_retroceder = true;
-	if (key == 'a') nave.control_giroderecho = true;
-	if (key == 'd') nave.control_giroizquierdo = true;
-	if (key == 'w') nave.control_giroarriba = true;
-	if (key == 's') nave.control_giroabajo = true;
-	if (key == 'q') nave.control_girobarril1 = true;
-	if (key == 'e') nave.control_girobarril2 = true;
+	if (key == 'i')	nave_seleccionada->control_avanzar = true;
+	if (key == 'k')	nave_seleccionada->control_retroceder = true;
+	if (key == 'a') nave_seleccionada->control_giroderecho = true;
+	if (key == 'd') nave_seleccionada->control_giroizquierdo = true;
+	if (key == 'w') nave_seleccionada->control_giroarriba = true;
+	if (key == 's') nave_seleccionada->control_giroabajo = true;
+	if (key == 'q') nave_seleccionada->control_girobarril1 = true;
+	if (key == 'e') nave_seleccionada->control_girobarril2 = true;
 
 }
 
@@ -417,6 +423,9 @@ void init() {
 
 	nave_combate = new ModelObject(new NaveCombate(background));
 
+	escuadron[1].position = glm::vec4(-1.0,-1.0,0.0,1.0);
+	escuadron[2].position = glm::vec4(-1.0,1.0,0.0,1.0);
+
 	update_view_matrix();
 }
 
@@ -438,7 +447,7 @@ void glut_display() {
 	glm::mat4 centerView       = glm::lookAt(
 		glm::vec3(0.0,0.0,0.0), 
 		glm::vec3(0.0,0.0,0.0) + Shader::cameraDirection, 
-		glm::vec3(nave.up)
+		glm::vec3(nave_seleccionada->up)
 	);
 
 	Shader::projectionMatrix = prMatrix * centerView;
@@ -447,19 +456,10 @@ void glut_display() {
 
     glClear(GL_DEPTH_BUFFER_BIT);
 
-	nave.processFrame();
+	for (int i=0; i<NAVES_EN_ESCUADRON; i++) {
+	escuadron[i].processFrame();
+	}
 	
-	glm::vec3 left = glm::cross(glm::vec3(nave.up), glm::vec3(nave.front));
-	glm::mat3 idd(
-		nave.front[0], nave.front[1], nave.front[2],
-		left[0], left[1], left[2],
-		nave.up[0], nave.up[1], nave.up[2]);
-
-	glm::mat4 rotacion_nave(idd);
-	glm::mat4 escalado_nave = glm::scale(glm::mat4(1.0), glm::vec3(0.2,0.2,0.2));
-	nave_combate->set_model_matrix(
-		glm::translate(glm::mat4(1.0), glm::vec3(nave.position)) * rotacion_nave * escalado_nave
-		);
 
 	update_view_matrix();
 
@@ -490,10 +490,24 @@ void glut_display() {
 	}
 	}
 
-	if (camara_mode != 2 || camara_dist > 0.0) {
-		nave_combate->dibujar(
- 	    glm::mat4(1.0)
-		);
+	for (int i=0; i<NAVES_EN_ESCUADRON; i++) {
+		glm::vec3 left = glm::cross(glm::vec3(escuadron[i].up), glm::vec3(escuadron[i].front));
+		glm::mat3 idd(
+			escuadron[i].front[0], escuadron[i].front[1], escuadron[i].front[2],
+			left[0], left[1], left[2],
+			escuadron[i].up[0], escuadron[i].up[1], escuadron[i].up[2]);
+
+		glm::mat4 rotacion_nave(idd);
+		glm::mat4 escalado_nave = glm::scale(glm::mat4(1.0), glm::vec3(0.2,0.2,0.2));
+		glm::mat4 transform_matrix =
+			glm::translate(glm::mat4(1.0), glm::vec3(escuadron[i].position)) * rotacion_nave * escalado_nave
+			;
+
+		if (camara_mode != 2 || camara_dist > 0.0 || nave_seleccionada != escuadron+i) {
+			nave_combate->dibujar(
+		 		 transform_matrix
+			);
+		}
 	}
 
 	//textureShader->use();
