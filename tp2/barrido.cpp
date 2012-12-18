@@ -61,7 +61,7 @@ Barrido::Barrido(
 	std::vector<FuncionConjuntoPuntos::Punto> puntos0, puntos1;
 
 	int cantPuntos = funcionConjuntoPuntos->conjunto(0).size();
-	this->cantidadVertices = cantPuntos * 6 * (1.0/h + 1);
+	this->cantidadVertices = cantPuntos * 6 * (1.0/h + 1) + cantPuntos*12;
 	float* vertex_data = (float*)malloc(sizeof(float)*(this->cantidadVertices * 3));
 	float* normal_data = (float*)malloc(sizeof(float)*(this->cantidadVertices * 3));
 	float* normalx_data = (float*)malloc(sizeof(float)*(this->cantidadVertices * 3));
@@ -180,7 +180,74 @@ Barrido::Barrido(
 			}
 	}
 
+	glm::vec2 centro;
+	glm::vec3 centrovec3;
+	glm::vec3 normal;
+
+	puntos0 = funcionConjuntoPuntos->conjunto(t_inicial);
+	centro = glm::vec2(0.0,0.0);
+	for (int i=0; i<puntos0.size(); i++){
+		centro = centro + puntos0.at(i).punto;
+	}
+	centro = glm::vec2(centro[0] / puntos0.size(), centro[1] / puntos0.size());
+
+	normal = -derivada->punto(t_inicial);
+	for (int i=0; i<puntos0.size(); i++){
+		glm::vec3 p0, p1;
+		int nextindex = i + 1;
+		if (nextindex > puntos0.size()-1) nextindex = 0;
+
+		glm::vec3 vector_derivado = glm::normalize(derivada->punto(t_inicial));
+		glm::vec3 vector_torcion = glm::normalize(torcion->punto(t_inicial));
+		glm::vec3 vector_cross = glm::cross(vector_derivado, vector_torcion);
+		glm::mat3 giro(vector_torcion[0], vector_torcion[1], vector_torcion[2],
+				vector_cross[0], vector_cross[1], vector_cross[2],
+				vector_derivado[0], vector_derivado[1], vector_derivado[2]);
+
+		p0 = trayectoria->punto(t_inicial) + giro * glm::vec3(puntos0.at(i).punto,0.0);
+		p1 = trayectoria->punto(t_inicial) + giro * glm::vec3(puntos0.at(nextindex).punto,0.0);
+		centrovec3 = trayectoria->punto(t_inicial) + giro * glm::vec3(centro,0.0);
+
+		insert_triangle(current_position_pointer, p0, p1, centrovec3);
+		current_position_pointer = current_position_pointer + 9;
+		insert_triangle(current_normal_pointer, normal, normal, normal);
+		current_normal_pointer = current_normal_pointer + 9;
+	}
+
+	puntos0 = funcionConjuntoPuntos->conjunto(t_final);
+	centro = glm::vec2(0.0,0.0);
+	for (int i=0; i<puntos1.size(); i++){
+		centro = centro + puntos0.at(i).punto;
+	}
+	centro = glm::vec2(centro[0] / puntos0.size(), centro[1] / puntos0.size());
+
+	normal = derivada->punto(t_final);
+	for (int i=0; i<puntos0.size(); i++){
+		glm::vec3 p0, p1;
+		int nextindex = i + 1;
+		if (nextindex > puntos0.size()-1) nextindex = 0;
+
+		glm::vec3 vector_derivado = glm::normalize(derivada->punto(t_final));
+		glm::vec3 vector_torcion = glm::normalize(torcion->punto(t_final));
+		glm::vec3 vector_cross = glm::cross(vector_derivado, vector_torcion);
+		glm::mat3 giro(vector_torcion[0], vector_torcion[1], vector_torcion[2],
+				vector_cross[0], vector_cross[1], vector_cross[2],
+				vector_derivado[0], vector_derivado[1], vector_derivado[2]);
+
+		p0 = trayectoria->punto(t_final) + giro * glm::vec3(puntos0.at(i).punto,0.0);
+		p1 = trayectoria->punto(t_final) + giro * glm::vec3(puntos0.at(nextindex).punto,0.0);
+		centrovec3 = trayectoria->punto(t_final) + giro * glm::vec3(centro,0.0);
+
+		insert_triangle(current_position_pointer, p0, p1, centrovec3);
+		current_position_pointer = current_position_pointer + 9;
+		insert_triangle(current_normal_pointer, normal, normal, normal);
+		current_normal_pointer = current_normal_pointer + 9;
+	}
+
+
+
 	this->cantidadVertices = (current_position_pointer - vertex_data) / 3;
+
 
 	GLuint vboHandles[5];
     glGenBuffers(4, vboHandles);
