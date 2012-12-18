@@ -76,13 +76,11 @@ void main()
 
 	vec4 ColorReflexion = texture( reflection_map, reflection_coord);
 
-	vec4 TextureColor = texture( diffuse_map, TexCoord ) * intensidad_difuso + 
-						vec4(0.5,0.5,0.5,1.0) * intensidad_gris +
-						ColorReflexion * intensidad_reflexion;
+	vec4 TextureColor = texture( diffuse_map, TexCoord ) * intensidad_difuso;
 	FragColor = vec4(
-		(ka + kd * id) * TextureColor[0] + ks * is,
-		(ka + kd * id) * TextureColor[1] + ks * is,
-		(ka + kd * id) * TextureColor[2] + ks * is,
+		(ka + kd * id) * TextureColor[0] + ks * is + ColorReflexion[0] * intensidad_reflexion,
+		(ka + kd * id) * TextureColor[1] + ks * is + ColorReflexion[1] * intensidad_reflexion,
+		(ka + kd * id) * TextureColor[2] + ks * is + ColorReflexion[2] * intensidad_reflexion,
 		1.0);
 
 	//FragColor = vec4(normalize(vec3(textureNormal[0],textureNormal[1],textureNormal[2])),1.0);
