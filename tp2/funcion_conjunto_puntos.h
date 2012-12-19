@@ -11,9 +11,15 @@ class FuncionConjuntoPuntos {
 	public:
 		class Punto{
 		public:
-			Punto(float x, float y) : punto(x,y){
+			typedef enum {
+				NOSMOOTH,
+				SMOOTH
+			} NormalMode ;
+
+			Punto(float x, float y, NormalMode normalMode = NOSMOOTH) : punto(x,y), normalMode(normalMode) {
 			}
 			glm::vec2 punto;
+			NormalMode normalMode;
 		};
 
 		virtual std::vector<Punto> conjunto(float t)=0;

@@ -81,6 +81,9 @@
     <ClCompile Include="misil.cpp">
       <Filter>modelobjects</Filter>
     </ClCompile>
+    <ClCompile Include="asteroide.cpp">
+      <Filter>modelobjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -179,6 +182,9 @@
       <Filter>modelobjects</Filter>
     </ClInclude>
     <ClInclude Include="misil.h">
+      <Filter>modelobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="asteroide.h">
       <Filter>modelobjects</Filter>
     </ClInclude>
   </ItemGroup>

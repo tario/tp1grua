@@ -96,6 +96,7 @@
     <None Include="tp3Shader.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="asteroide.h" />
     <ClInclude Include="barrido.h" />
     <ClInclude Include="bitmap_texture.h" />
     <ClInclude Include="bump_mapping_material.h" />
@@ -132,6 +133,7 @@
     <ClInclude Include="toroide.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="asteroide.cpp" />
     <ClCompile Include="barrido.cpp" />
     <ClCompile Include="bitmap_texture.cpp" />
     <ClCompile Include="bump_mapping_material.cpp" />

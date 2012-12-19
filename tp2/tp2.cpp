@@ -304,6 +304,7 @@ void keyboardUp(unsigned char key, int x, int y)
 #include "prisma.h"
 #include "bitmap_texture.h"
 #include "material_textura.h"
+#include "asteroide.h"
 
 std::vector<Texture*> textureVector;
 int currentTextureIndex = 0;
@@ -434,6 +435,11 @@ void init() {
 	Material* material_color_gris_oscuro = new MaterialColorSolido(glm::vec3(0.2,0.2,0.2));
 	basuraEspacial = new Esfera(material_color_gris_oscuro, 5);
 	objects.push_front(light_sphere);
+
+	objects.push_front(new ModelObject(new Asteroide(), glm::translate(glm::mat4(1.0), glm::vec3(2.3,1.0,4.0))));
+	objects.push_front(new ModelObject(new Asteroide(), glm::translate(glm::mat4(1.0), glm::vec3(-2.3,1.0,4.0))));
+	objects.push_front(new ModelObject(new Asteroide(), glm::translate(glm::mat4(1.0), glm::vec3(-2.3,1.0,-4.0))));
+
 
 	nave_combate = new ModelObject(new NaveCombate(background));
 
