@@ -6,7 +6,6 @@
 #include "GL/glew.h"
 #include "GL/wglew.h"
 #include "GL/freeglut.h"
-#include "cubo_texturado.h"
 
 class TargetQuad : public Dibujable  {
 	public:
@@ -15,7 +14,6 @@ class TargetQuad : public Dibujable  {
 	private:
 		MaterialColorSolido material;
 		GLuint vaoHandle;
-		CuboTexturado cuboTexturado;
 };
 
 #endif

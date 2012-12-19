@@ -6,17 +6,8 @@ static void assignvec3(float* data, float x, float y, float z) {
 	data[1] = y;
 	data[2] = z;
 }
-static float cara2[] = {0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0};
-static CuboTexturado::Cara caras2[] = {
-	CuboTexturado::Cara(cara2),
-	CuboTexturado::Cara(cara2),
-	CuboTexturado::Cara(cara2),
-	CuboTexturado::Cara(cara2),
-	CuboTexturado::Cara(cara2),
-	CuboTexturado::Cara(cara2)
-};
 
-TargetQuad::TargetQuad() : material(glm::vec3(1.0,0.0,0.0)), cuboTexturado(&material, caras2) {
+TargetQuad::TargetQuad() : material(glm::vec3(0.0,1.0,0.0), false) {
     glGenVertexArrays( 1, &this->vaoHandle );
     glBindVertexArray( this->vaoHandle );
 

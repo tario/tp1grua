@@ -217,6 +217,9 @@
     <None Include="tp3Shader.vert">
       <Filter>shadersglsl</Filter>
     </None>
+    <None Include="ColorShader.frag">
+      <Filter>shadersglsl</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="primitivas">
