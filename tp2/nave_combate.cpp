@@ -120,13 +120,13 @@ NaveCombate::NaveCombate(Texture* mapa_reflexion_universo) :
 		material_cubo.glossinessSetter->set(9.0);
 
 
-	SegmentoRecta curva_alas(glm::vec3(0.5,0.0,0.0), glm::vec3(0.0,0.0,0.0));
+	SegmentoRecta curva_alas(glm::vec3(0.525,0.0,0.0), glm::vec3(0.025,0.0,0.0));
 	CurvaConstante derivada_alas(glm::vec3(-1.0,0.0,0.0));
 	CurvaConstante torcion_alas(glm::vec3(0.0,1.0,0.0));
 	ConjuntoPuntosAlas funcionConjuntoAlas;
 	alas = new Barrido(&funcionConjuntoAlas, &curva_alas, &derivada_alas, &torcion_alas, 0.1, &material_cubo);
 
-	SegmentoRecta curva_base(glm::vec3(-0.025,0.0,0.0), glm::vec3(1.5,0.0,0.0));
+	SegmentoRecta curva_base(glm::vec3(0.0,0.0,0.0), glm::vec3(1.5,0.0,0.0));
 	CurvaConstante derivada_base(glm::vec3(1.0,0.0,0.0));
 	ConjuntoPuntosBase funcionConjuntoBase;
 
@@ -139,7 +139,7 @@ NaveCombate::NaveCombate(Texture* mapa_reflexion_universo) :
 		&torcion_alas,
 		1.0,
 		&material_cubo,
-		-0.025,0.4);
+		0.0,0.4);
 
 	techo = new Barrido(
 		&ConjuntoPuntosTecho(),
@@ -148,7 +148,7 @@ NaveCombate::NaveCombate(Texture* mapa_reflexion_universo) :
 		&torcion_alas,
 		0.1,
 		&material_cubo,
-		-0.025,0.6);
+		0.0,0.6);
 
 	vidrio = new Barrido(
 		&ConjuntoPuntosVidrio(),
