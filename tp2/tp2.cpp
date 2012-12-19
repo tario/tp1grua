@@ -13,6 +13,7 @@
 #include "glm/ext.hpp"
 #include "glm/gtx/transform.hpp"
 #include <glm/gtc/type_ptr.hpp>
+#include "target_quad.h"
 
 #include "prisma.h"
 #include "windows.h"
@@ -66,6 +67,7 @@ Dibujable* esfera_del_cielo;
 Dibujable* planeta;
 Dibujable* basuraEspacial;
 ModelObject* nave_combate;
+TargetQuad* targetQuad;
 
 glm::mat4 main_object_matrix = glm::mat4(1.0);
 bool mouserotation = false;
@@ -301,7 +303,6 @@ void keyboardUp(unsigned char key, int x, int y)
 #include "prisma.h"
 #include "bitmap_texture.h"
 #include "material_textura.h"
-#include "target_quad.h"
 
 std::vector<Texture*> textureVector;
 int currentTextureIndex = 0;
@@ -427,8 +428,7 @@ void init() {
 	escuadron[1].position = glm::vec4(-1.0,-1.0,0.0,1.0);
 	escuadron[2].position = glm::vec4(-1.0,1.0,0.0,1.0);
 
-	static TargetQuad targetQuad;
-	objects.push_back(&targetQuad);
+	targetQuad = new TargetQuad();
 
 	update_view_matrix();
 }
@@ -509,6 +509,32 @@ void glut_display() {
 
 		if (camara_mode != 2 || camara_dist > 0.0 || nave_seleccionada != escuadron+i) {
 			nave_combate->dibujar(
+		 		 transform_matrix
+			);
+		}
+	}
+
+	// esto asegura de que lo que se dibuje se haga encima de todo sin importar su distancia
+	glClear(GL_DEPTH_BUFFER_BIT);
+	for (int i=0; i<NAVES_EN_ESCUADRON; i++) {
+		if (nave_seleccionada != escuadron+i) {
+			glm::vec3 left = glm::normalize(glm::cross(glm::vec3(nave_seleccionada->up), Shader::cameraDirection));
+			glm::vec3 front = glm::normalize(Shader::cameraDirection);
+			glm::vec3 up = glm::vec3(nave_seleccionada->up);
+			glm::mat3 idd(
+				front[0], front[1], front[2],
+				left[0], left[1], left[2],
+				up[0], up[1], up[2]);
+
+			glm::mat4 rotacion_hacia_camara(idd);
+			float f = glm::distance(posicion_camara, glm::vec3(escuadron[i].position))*0.05;
+			if (f < 1.0) f = 1.0;
+			glm::mat4 escalado = glm::scale(glm::mat4(1.0), glm::vec3(f,f,f));
+			glm::mat4 transform_matrix =
+				glm::translate(glm::mat4(1.0), glm::vec3(escuadron[i].position)) * rotacion_hacia_camara * escalado
+				;
+
+			targetQuad->dibujar(
 		 		 transform_matrix
 			);
 		}

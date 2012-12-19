@@ -16,7 +16,7 @@ static CuboTexturado::Cara caras2[] = {
 	CuboTexturado::Cara(cara2)
 };
 
-TargetQuad::TargetQuad() : material(glm::vec3(1.0,0.0,0.0), false), cuboTexturado(&material, caras2) {
+TargetQuad::TargetQuad() : material(glm::vec3(1.0,0.0,0.0)), cuboTexturado(&material, caras2) {
     glGenVertexArrays( 1, &this->vaoHandle );
     glBindVertexArray( this->vaoHandle );
 
