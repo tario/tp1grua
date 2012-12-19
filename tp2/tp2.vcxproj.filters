@@ -75,6 +75,9 @@
     <ClCompile Include="curva_constante.cpp">
       <Filter>primitivas\curvas</Filter>
     </ClCompile>
+    <ClCompile Include="target_quad.cpp">
+      <Filter>modelobjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -169,6 +172,9 @@
     <ClInclude Include="curva_constante.h">
       <Filter>primitivas\curvas</Filter>
     </ClInclude>
+    <ClInclude Include="target_quad.h">
+      <Filter>modelobjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -209,6 +215,9 @@
       <Filter>shadersglsl</Filter>
     </None>
     <None Include="tp3Shader.vert">
+      <Filter>shadersglsl</Filter>
+    </None>
+    <None Include="ColorShader.frag">
       <Filter>shadersglsl</Filter>
     </None>
   </ItemGroup>

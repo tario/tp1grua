@@ -301,6 +301,7 @@ void keyboardUp(unsigned char key, int x, int y)
 #include "prisma.h"
 #include "bitmap_texture.h"
 #include "material_textura.h"
+#include "target_quad.h"
 
 std::vector<Texture*> textureVector;
 int currentTextureIndex = 0;
@@ -425,6 +426,9 @@ void init() {
 
 	escuadron[1].position = glm::vec4(-1.0,-1.0,0.0,1.0);
 	escuadron[2].position = glm::vec4(-1.0,1.0,0.0,1.0);
+
+	static TargetQuad targetQuad;
+	objects.push_back(&targetQuad);
 
 	update_view_matrix();
 }
