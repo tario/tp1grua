@@ -3,16 +3,6 @@
 #include "segmento_recta.h"
 #include "curva_constante.h" 
 
-static float cara2[] = {0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0};
-static CuboTexturado::Cara caras2[] = {
-	CuboTexturado::Cara(cara2),
-	CuboTexturado::Cara(cara2),
-	CuboTexturado::Cara(cara2),
-	CuboTexturado::Cara(cara2),
-	CuboTexturado::Cara(cara2),
-	CuboTexturado::Cara(cara2)
-};
-
 class ConjuntoPuntos : public FuncionConjuntoPuntos {
 	public:
 	std::vector<Punto> conjunto(float t) {
@@ -118,7 +108,6 @@ class ConjuntoPuntosVidrio : public FuncionConjuntoPuntos {
 NaveCombate::NaveCombate(Texture* mapa_reflexion_universo) : 
 	mapa_difuso_nave("nave.bmp"),
 	material_cubo(&mapa_difuso_nave, NullTexture::instance(), mapa_reflexion_universo),
-	cubo(&material_cubo, caras2),
 	material_color(glm::vec3(0.0,0.0,0.0)) {
 
 		material_cubo.ksSetter->set(0.2);
@@ -172,8 +161,6 @@ NaveCombate::NaveCombate(Texture* mapa_reflexion_universo) :
 }
 
 void NaveCombate::dibujar(const glm::mat4& m) {
-	//superficie_barrido->dibujar(m);
-	//cubo.dibujar(m);
 	alas->dibujar(m);
 	base->dibujar(m);
 	cabina->dibujar(m);

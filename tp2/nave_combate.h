@@ -3,7 +3,6 @@
 
 #include "dibujable.h"
 #include "material_tp3.h"
-#include "cubo_texturado.h"
 #include "null_texture.h"
 #include "bitmap_texture.h"
 #include "material_color_solido.h"
@@ -16,7 +15,6 @@ class NaveCombate : public Dibujable {
 		void dibujar(const glm::mat4&);
 
 	private:
-		CuboTexturado cubo;
 		MaterialTP3 material_cubo;
 		MaterialColorSolido material_color;
 
