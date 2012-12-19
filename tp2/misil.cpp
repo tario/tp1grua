@@ -14,7 +14,7 @@ class ConjuntoPuntosCuerpo : public FuncionConjuntoPuntos {
 		}
 
 		for (t=0.0; t<6.14; t+=0.614){
-			ret.push_back(Punto(cos(t)*d,sin(t)*d));
+			ret.push_back(Punto(cos(t)*d,sin(t)*d, Punto::SMOOTH));
 		}
 		return ret;
 	};

@@ -81,8 +81,13 @@ Barrido::Barrido(
 		t1 = t + h;
 		if (t1 > t_final) t1 = t_final;
 
+		if (t == t_inicial) {
 		puntos0 = funcionConjuntoPuntos->conjunto(t0);
 		puntos1 = funcionConjuntoPuntos->conjunto(t1);
+		} else {
+		puntos0 = puntos1;
+		puntos1 = funcionConjuntoPuntos->conjunto(t1);
+		}
 
 		punto_central0 = trayectoria->punto(t0);
 		punto_central1 = trayectoria->punto(t1);
@@ -111,23 +116,30 @@ Barrido::Barrido(
 
 			glm::vec3 normal, normalx;
 
+			int p00ns, p01ns, p11ns, p10ns;
+
+			p00ns = puntos0.at(i).normalMode == FuncionConjuntoPuntos::Punto::NOSMOOTH;
+			p01ns = puntos0.at(nextindex).normalMode == FuncionConjuntoPuntos::Punto::NOSMOOTH;
+			p10ns = puntos1.at(i).normalMode == FuncionConjuntoPuntos::Punto::NOSMOOTH;
+			p11ns = puntos1.at(nextindex).normalMode == FuncionConjuntoPuntos::Punto::NOSMOOTH;
+
 			normal = glm::normalize(glm::cross(p01-p00,p11-p00));
 			normalx = glm::normalize(glm::cross(normal, vector_derivado));
 			insert_triangle(current_normal_pointer, normal, normal, normal);
 			insert_triangle(current_normalx_pointer, normalx, normalx, normalx);
 
-			vertexRegister.addNormal(level, i + i*cantPuntos, current_normal_pointer);
-			vertexRegister.addNormal(level, nextindex + i*cantPuntos, current_normal_pointer+3);
-			vertexRegister.addNormal(level+1, nextindex + i*cantPuntos, current_normal_pointer+6);
+			vertexRegister.addNormal(level, i + p00ns * i*cantPuntos, current_normal_pointer);
+			vertexRegister.addNormal(level, nextindex + p01ns * i*cantPuntos, current_normal_pointer+3);
+			vertexRegister.addNormal(level+1, nextindex + p11ns * i*cantPuntos, current_normal_pointer+6);
 
 			normal = glm::normalize(glm::cross(p00-p10,p11-p10));
 			normalx = glm::normalize(glm::cross(normal, vector_derivado));
 			insert_triangle(current_normal_pointer+9, normal, normal, normal);
 			insert_triangle(current_normalx_pointer+9, normalx, normalx, normalx);
 
-			vertexRegister.addNormal(level+1, i + i*cantPuntos, current_normal_pointer+9);
-			vertexRegister.addNormal(level+1, nextindex + i*cantPuntos, current_normal_pointer+12);
-			vertexRegister.addNormal(level, i + i*cantPuntos, current_normal_pointer+15);
+			vertexRegister.addNormal(level+1, i + p10ns * i*cantPuntos, current_normal_pointer+9);
+			vertexRegister.addNormal(level+1, nextindex + p11ns * i*cantPuntos, current_normal_pointer+12);
+			vertexRegister.addNormal(level, i + p00ns * i*cantPuntos, current_normal_pointer+15);
 
 			current_normal_pointer = current_normal_pointer + 18;
 			current_normalx_pointer = current_normalx_pointer + 18;
