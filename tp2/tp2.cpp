@@ -315,6 +315,11 @@ void glut_special_process_keys(int key, int x, int y) {
 	}
 }
 void glut_process_keys(unsigned char key, int x, int y) {
+
+	if (key == 't') {
+		nave_seleccionada++;
+		if (nave_seleccionada-escuadron > 2) nave_seleccionada = escuadron;
+	}
 	if (key == 9) {
 		if (nave_objetivo == 0) {
 			nave_objetivo = escuadron;
