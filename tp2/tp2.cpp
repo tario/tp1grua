@@ -179,6 +179,7 @@ class Nave {
 #define NAVES_EN_ESCUADRON 3
 Nave escuadron[NAVES_EN_ESCUADRON];
 Nave* nave_seleccionada = escuadron+0;
+Nave* nave_objetivo = 0;
 
 void update_view_matrix() {
 	glm::vec3 look_at, up;
@@ -315,8 +316,14 @@ void glut_special_process_keys(int key, int x, int y) {
 }
 void glut_process_keys(unsigned char key, int x, int y) {
 	if (key == 9) {
-		nave_seleccionada++;
-		if (nave_seleccionada-escuadron > 2) nave_seleccionada = escuadron;
+		if (nave_objetivo == 0) {
+			nave_objetivo = escuadron;
+		} else {
+			nave_objetivo++;
+		}
+		if (nave_objetivo-escuadron > 2) nave_objetivo = escuadron;
+		if (nave_objetivo == nave_seleccionada) nave_objetivo++;
+		if (nave_objetivo-escuadron > 2) nave_objetivo = escuadron;
 	}
     if (key == 27) 
     {
@@ -516,8 +523,8 @@ void glut_display() {
 
 	// esto asegura de que lo que se dibuje se haga encima de todo sin importar su distancia
 	glClear(GL_DEPTH_BUFFER_BIT);
-	for (int i=0; i<NAVES_EN_ESCUADRON; i++) {
-		if (nave_seleccionada != escuadron+i) {
+
+	if (nave_objetivo != 0) {
 			glm::vec3 left = glm::normalize(glm::cross(glm::vec3(nave_seleccionada->up), Shader::cameraDirection));
 			glm::vec3 front = glm::normalize(Shader::cameraDirection);
 			glm::vec3 up = glm::vec3(nave_seleccionada->up);
@@ -527,19 +534,17 @@ void glut_display() {
 				up[0], up[1], up[2]);
 
 			glm::mat4 rotacion_hacia_camara(idd);
-			float f = glm::distance(posicion_camara, glm::vec3(escuadron[i].position))*0.05;
+			float f = glm::distance(posicion_camara, glm::vec3(nave_objetivo->position))*0.05;
 			if (f < 1.0) f = 1.0;
 			glm::mat4 escalado = glm::scale(glm::mat4(1.0), glm::vec3(f,f,f));
 			glm::mat4 transform_matrix =
-				glm::translate(glm::mat4(1.0), glm::vec3(escuadron[i].position)) * rotacion_hacia_camara * escalado
+				glm::translate(glm::mat4(1.0), glm::vec3(nave_objetivo->position)) * rotacion_hacia_camara * escalado
 				;
 
 			targetQuad->dibujar(
 		 		 transform_matrix
 			);
-		}
 	}
-
 	//textureShader->use();
   //  glUniform1i(loc, 1);
 //	glDrawArrays( GL_TRIANGLES, 0, 36);
