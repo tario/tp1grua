@@ -426,7 +426,7 @@ void init() {
 	ModelObject* light_sphere = new ModelObject(new Esfera(material_color_blanco, 10));
 	light_sphere->set_model_matrix(
 			glm::scale(
-				glm::translate(glm::mat4(1.0), glm::vec3(-1.0, 1.0, 0.0)),
+				glm::translate(glm::mat4(1.0), glm::vec3(-10.0, 10.0, 0.0)),
 				glm::vec3(0.2,0.2,0.2)
 				)
 		);

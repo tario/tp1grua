@@ -158,6 +158,8 @@ NaveCombate::NaveCombate(Texture* mapa_reflexion_universo) :
 		0.1,
 		&material_color,
 		0.4,0.7);
+
+	misil = Misil::instance();
 }
 
 void NaveCombate::dibujar(const glm::mat4& m) {
@@ -166,4 +168,7 @@ void NaveCombate::dibujar(const glm::mat4& m) {
 	cabina->dibujar(m);
 	techo->dibujar(m);
 	vidrio->dibujar(m);
+
+	misil->dibujar(glm::translate(m, glm::vec3(0.2, 0.6, -0.02)));
+	misil->dibujar(glm::translate(m, glm::vec3(0.2, -0.6, -0.02)));
 }

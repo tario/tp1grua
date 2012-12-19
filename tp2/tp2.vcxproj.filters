@@ -78,6 +78,9 @@
     <ClCompile Include="target_quad.cpp">
       <Filter>modelobjects</Filter>
     </ClCompile>
+    <ClCompile Include="misil.cpp">
+      <Filter>modelobjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -173,6 +176,9 @@
       <Filter>primitivas\curvas</Filter>
     </ClInclude>
     <ClInclude Include="target_quad.h">
+      <Filter>modelobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="misil.h">
       <Filter>modelobjects</Filter>
     </ClInclude>
   </ItemGroup>

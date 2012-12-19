@@ -7,6 +7,7 @@
 #include "bitmap_texture.h"
 #include "material_color_solido.h"
 #include "barrido.h"
+#include "misil.h"
 
 class NaveCombate : public Dibujable {
 	public:
@@ -25,6 +26,8 @@ class NaveCombate : public Dibujable {
 		Barrido* cabina;
 		Barrido* techo;
 		Barrido* vidrio;
+
+		Misil* misil;
 
 };
 
