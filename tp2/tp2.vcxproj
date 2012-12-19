@@ -143,6 +143,7 @@
     <ClCompile Include="curva_constante.cpp" />
     <ClCompile Include="dirtness_shader.cpp" />
     <ClCompile Include="esfera.cpp" />
+    <ClCompile Include="funcion_conjunto_puntos.cpp" />
     <ClCompile Include="material_color_solido.cpp" />
     <ClCompile Include="material_textura.cpp" />
     <ClCompile Include="material_textura_suciedad.cpp" />

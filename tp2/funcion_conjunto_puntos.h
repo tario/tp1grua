@@ -22,6 +22,8 @@ class FuncionConjuntoPuntos {
 			NormalMode normalMode;
 		};
 
+		std::vector<Punto> bezier(const std::vector<Punto>& v, int n);
+
 		virtual std::vector<Punto> conjunto(float t)=0;
 		virtual ~FuncionConjuntoPuntos() {
 		}

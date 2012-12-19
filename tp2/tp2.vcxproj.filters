@@ -84,6 +84,9 @@
     <ClCompile Include="asteroide.cpp">
       <Filter>modelobjects</Filter>
     </ClCompile>
+    <ClCompile Include="funcion_conjunto_puntos.cpp">
+      <Filter>primitivas\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
