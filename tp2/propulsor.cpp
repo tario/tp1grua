@@ -17,19 +17,6 @@ class ConjuntoPuntosPropulsorPrisma1 : public FuncionConjuntoPuntos {
 	}
 };
 
-class ConjuntoPuntosPropulsorPrisma2 : public FuncionConjuntoPuntos {
-	public:
-	std::vector<Punto> conjunto(float t) {
-		std::vector<Punto> ret;
-		for (int i=0;i<16;i++) {
-			float angle = float(i)*6.28/16;
-			float r=0.12;
-			ret.push_back(Punto(cos(angle)*r,sin(angle)*r, Punto::SMOOTH));
-		}
-		return ret;
-	}
-};
-
 class ConjuntoPuntosPropulsorCoberturaPrisma : public FuncionConjuntoPuntos {
 	public:
 	std::vector<Punto> conjunto(float t) {
@@ -43,7 +30,7 @@ class ConjuntoPuntosPropulsorCoberturaPrisma : public FuncionConjuntoPuntos {
 	}
 };
 
-Propulsor::Propulsor(Material* material) : material(material), materialColorSolido(glm::vec3(0.0,1.0,1.0),true) {
+Propulsor::Propulsor(Material* material) : material(material), materialColorSolido(glm::vec3(0.0,1.0,1.0),false) {
 	propulsorPrisma2 = new Barrido(
 		&ConjuntoPuntosPropulsorPrisma1(), 
 		&SegmentoRecta(glm::vec3(0.0,0.0,0.0),glm::vec3(-0.1,0.0,0.0)),
@@ -53,16 +40,7 @@ Propulsor::Propulsor(Material* material) : material(material), materialColorSoli
 		&materialColorSolido,
 		0.0,0.4,true);
 
-	/*coberturaPrisma =new Barrido(
-		&ConjuntoPuntosPropulsorCoberturaPrisma(), 
-		&Circunferencia(glm::vec3(0.0,0.0,0.0),glm::vec3(1.0,0.0,0.0),glm::vec3(0.0,1.0,0.0)),
-		&Circunferencia(glm::vec3(0.0,0.0,0.0),glm::vec3(1.0,0.0,0.0),glm::vec3(0.0,0.0,1.0)),
-		&CurvaConstante(glm::vec3(0.0,1.0,0.0)),
-		1.0,
-		&materialColorSolido,
-		0.0,1.0,false);*/
-
-propulsorPrisma1 =new Barrido(
+	propulsorPrisma1 =new Barrido(
 		&ConjuntoPuntosPropulsorCoberturaPrisma(), 
 		&Circunferencia(glm::vec3(0.0,0.0,0.0),glm::vec3(1.0,0.0,0.0),glm::vec3(0.0,0.11,0.0)),
 		&Circunferencia(glm::vec3(0.0,0.0,0.0),glm::vec3(1.0,0.0,0.0),glm::vec3(0.0,0.0,-1.0)),
