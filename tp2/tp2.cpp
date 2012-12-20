@@ -546,12 +546,19 @@ void glut_display() {
 				left[0], left[1], left[2],
 				up[0], up[1], up[2]);
 
+			glm::vec3 objetivo_cercano;
+
 			glm::mat4 rotacion_hacia_camara(idd);
-			float f = glm::distance(posicion_camara, glm::vec3(nave_objetivo->position))*0.05;
-			if (f < 1.0) f = 1.0;
+			float f = glm::distance(posicion_camara, glm::vec3(nave_objetivo->position));
+			if (f>20.0) {
+				objetivo_cercano = posicion_camara + 
+					glm::normalize(glm::vec3(nave_objetivo->position) - posicion_camara) * 20.0f;
+			} else {
+				objetivo_cercano = glm::vec3(nave_objetivo->position);
+			}
 			glm::mat4 escalado = glm::scale(glm::mat4(1.0), glm::vec3(f,f,f));
 			glm::mat4 transform_matrix =
-				glm::translate(glm::mat4(1.0), glm::vec3(nave_objetivo->position)) * rotacion_hacia_camara * escalado
+				glm::translate(glm::mat4(1.0), glm::vec3(objetivo_cercano)) * rotacion_hacia_camara
 				;
 
 			targetQuad->dibujar(
