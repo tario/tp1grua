@@ -60,7 +60,7 @@ Asteroide::Asteroide() {
 	if (Asteroide::materialAsteroide==0) {
 		MaterialTP3* materialtp3 = new MaterialTP3(new BitmapTexture("lunar.bmp"), NullTexture::instance(),NullTexture::instance());
 		materialtp3->kaSetter->set(0.05);
-		materialtp3->kdSetter->set(0.9);
+		materialtp3->kdSetter->set(1.5);
 		materialtp3->ksSetter->set(0.05);
 		materialtp3->intensidadDifusoSetter->set(1.0);
 		materialtp3->intensidadGrisSetter->set(0.0);

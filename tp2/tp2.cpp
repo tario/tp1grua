@@ -77,7 +77,7 @@ float posicionInstrucciones = 0;
 
 #define wglewGetContext() (&_wglewctx)
 
-float camara_dist = 10;
+float camara_dist = 0.0;
 float angle_camera = 0.0;
 float angle_camera2 = 0.0;
 

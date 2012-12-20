@@ -111,7 +111,7 @@ NaveCombate::NaveCombate(Texture* mapa_reflexion_universo) :
 	material_color(glm::vec3(0.0,0.0,0.0)) {
 
 		material_cubo.ksSetter->set(0.2);
-		material_cubo.kdSetter->set(1.0);
+		material_cubo.kdSetter->set(1.5);
 		material_cubo.intensidadDifusoSetter->set(0.6);
 		material_cubo.intensidadReflexionSetter->set(0.2);
 		material_cubo.intensidadGrisSetter->set(0.0);
