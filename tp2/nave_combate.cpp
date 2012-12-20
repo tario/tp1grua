@@ -59,6 +59,8 @@ class ConjuntoPuntosBase : public FuncionConjuntoPuntos {
 		} else {
 			ret.push_back(Punto(0.4-(t-0.4)*0.4,-(-0.1+(t-0.4)*0.1/0.6)));
 		}
+
+		ret.at(0).normalMode = Punto::NOSMOOTH;
 		return ret;
 	};
 };
