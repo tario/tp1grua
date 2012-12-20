@@ -13,7 +13,7 @@ std::vector<FuncionConjuntoPuntos::Punto> FuncionConjuntoPuntos::bezier(const st
 	float x, y;
 	int n = v.size();
 	std::vector<FuncionConjuntoPuntos::Punto> ret;
-	for (int j=0; j<cant_puntos+1; j++) {
+	for (int j=0; j<cant_puntos; j++) {
 		x = 0; y = 0;
 		float t = float(j)/cant_puntos;
 		for (int i=0; i<n; i++) {
@@ -30,9 +30,7 @@ std::vector<FuncionConjuntoPuntos::Punto> FuncionConjuntoPuntos::bezier(const st
 				y = y + punto.y * factor * pow(1.0-t,n-i-1) * pow(t,i);
 			}
 		}
-		if (t!=1.0) {
 		ret.push_back(FuncionConjuntoPuntos::Punto(x,y,FuncionConjuntoPuntos::Punto::SMOOTH));
-		}
 	}
 	return ret;
 }

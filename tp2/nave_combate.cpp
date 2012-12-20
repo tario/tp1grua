@@ -31,6 +31,7 @@ class ConjuntoPuntosAlas : public FuncionConjuntoPuntos {
 		ret.push_back(Punto(1.0-(t-0.1)*0.2,-0.05));
 		ret.push_back(Punto(0.0,0.0));
 		}
+
 		return ret;
 	};
 };
@@ -52,6 +53,12 @@ class ConjuntoPuntosBase : public FuncionConjuntoPuntos {
 		ret.push_back(Punto(0.25-(t-0.4)*0.09/0.6,-(0.1-(t-0.4)*0.1/0.6)));
 		ret.push_back(Punto(0.4-(t-0.4)*0.4,-(-0.1+(t-0.4)*0.1/0.6)));
 		}
+		ret = bezier(ret,8);
+		if (t<0.4) {
+			ret.push_back(Punto(0.4,0.1));
+		} else {
+			ret.push_back(Punto(0.4-(t-0.4)*0.4,-(-0.1+(t-0.4)*0.1/0.6)));
+		}
 		return ret;
 	};
 };
@@ -63,6 +70,7 @@ class ConjuntoPuntosCabina : public FuncionConjuntoPuntos {
 		ret.push_back(Punto(0.25,0.2+t*0.1));
 		ret.push_back(Punto(-0.25,0.2+t*0.1));
 		ret.push_back(Punto(-0.4,0.1));
+
 		return ret;
 	};
 };
