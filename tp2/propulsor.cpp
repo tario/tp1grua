@@ -21,7 +21,7 @@ class ConjuntoPuntosPropulsorCoberturaPrisma : public FuncionConjuntoPuntos {
 	public:
 	std::vector<Punto> conjunto(float t) {
 		std::vector<Punto> ret;
-		float l = 0.1;
+		float l = 0.15;
 		ret.push_back(Punto(-0.01,0.0));
 		ret.push_back(Punto(0.01,0.0));
 		ret.push_back(Punto(0.01,-l));

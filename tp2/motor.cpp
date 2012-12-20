@@ -8,7 +8,7 @@ class ConjuntoPuntosMotor : public FuncionConjuntoPuntos {
 	std::vector<Punto> conjunto(float t) {
 		std::vector<Punto> curva1, curva2, bezier1, bezier2, ret;
 
-		float size = 2.0 * t * (1.0 -t) + 1.6;
+		float size = 3.0 * t * (1.0 -t) + 1.6;
 
 		curva1.push_back(Punto(-0.3*size,0.0));
 		curva1.push_back(Punto(-0.35*size,-0.25*size));
