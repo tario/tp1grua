@@ -13,7 +13,6 @@ class Propulsor : public Dibujable {
 	private:
 		Barrido* propulsorPrisma1;
 		Barrido* propulsorPrisma2;
-		Barrido* propulsorPrisma3;
 		Material* material;
 		MaterialColorSolido materialColorSolido;
 };
