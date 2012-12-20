@@ -13,12 +13,13 @@
 #include "glm/ext.hpp"
 #include "glm/gtx/transform.hpp"
 #include <glm/gtc/type_ptr.hpp>
-#include "target_quad.h"
 
 #include "prisma.h"
 #include "windows.h"
 #include "shader.h"
 #include "nave_combate.h"
+#include "nave_nodriza.h"
+#include "target_quad.h"
 
 // elementos necesarios para la escena
 #include "model_object.h"
@@ -436,6 +437,7 @@ void init() {
 	basuraEspacial = new Esfera(material_color_gris_oscuro, 5);
 	objects.push_front(light_sphere);
 
+	objects.push_front(new ModelObject(new NaveNodriza(), glm::translate(glm::mat4(1.0), glm::vec3(5.0,0.0,0.0))));
 	objects.push_front(new ModelObject(new Asteroide(), glm::translate(glm::mat4(1.0), glm::vec3(2.3,1.0,4.0))));
 	objects.push_front(new ModelObject(new Asteroide(), glm::translate(glm::mat4(1.0), glm::vec3(-2.3,1.0,4.0))));
 	objects.push_front(new ModelObject(new Asteroide(), glm::translate(glm::mat4(1.0), glm::vec3(-2.3,1.0,-4.0))));
@@ -507,7 +509,7 @@ void glut_display() {
 	for (int i=-1; i<1; i++) {
 	for (int j=-1; j<1; j++) {
 	for (int k=-1; k<1; k++) {
-	basuraEspacial->dibujar(glm::translate(glm::mat4(1.0),origin + glm::vec3(i,j,k)) * matriz_scala);
+	//basuraEspacial->dibujar(glm::translate(glm::mat4(1.0),origin + glm::vec3(i,j,k)) * matriz_scala);
 	}
 	}
 	}

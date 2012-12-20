@@ -28,7 +28,7 @@ class Barrido : public Dibujable {
 				Curva* torcion,
 				float h,
 				Material* material,
-				float t_inicial=0.0, float t_final=1.0
+				float t_inicial=0.0, float t_final=1.0, bool tapa=true
 			);
 
 		void dibujar(const glm::mat4& m);

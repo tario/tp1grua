@@ -87,6 +87,15 @@
     <ClCompile Include="funcion_conjunto_puntos.cpp">
       <Filter>primitivas\utils</Filter>
     </ClCompile>
+    <ClCompile Include="nave_nodriza.cpp">
+      <Filter>modelobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="motor.cpp">
+      <Filter>modelobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="propulsor.cpp">
+      <Filter>modelobjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -188,6 +197,15 @@
       <Filter>modelobjects</Filter>
     </ClInclude>
     <ClInclude Include="asteroide.h">
+      <Filter>modelobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="nave_nodriza.h">
+      <Filter>modelobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="motor.h">
+      <Filter>modelobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="propulsor.h">
       <Filter>modelobjects</Filter>
     </ClInclude>
   </ItemGroup>

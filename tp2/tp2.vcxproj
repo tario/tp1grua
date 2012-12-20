@@ -118,9 +118,12 @@
     <ClInclude Include="material_tp3.h" />
     <ClInclude Include="misil.h" />
     <ClInclude Include="model_object.h" />
+    <ClInclude Include="motor.h" />
     <ClInclude Include="nave_combate.h" />
+    <ClInclude Include="nave_nodriza.h" />
     <ClInclude Include="null_texture.h" />
     <ClInclude Include="prisma.h" />
+    <ClInclude Include="propulsor.h" />
     <ClInclude Include="segmento_recta.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="solid_color_shader.h" />
@@ -152,8 +155,11 @@
     <ClCompile Include="material_tp3.cpp" />
     <ClCompile Include="misil.cpp" />
     <ClCompile Include="model_object.cpp" />
+    <ClCompile Include="motor.cpp" />
     <ClCompile Include="nave_combate.cpp" />
+    <ClCompile Include="nave_nodriza.cpp" />
     <ClCompile Include="prisma.cpp" />
+    <ClCompile Include="propulsor.cpp" />
     <ClCompile Include="segmento_recta.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="solid_color_shader.cpp" />
