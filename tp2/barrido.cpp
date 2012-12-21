@@ -128,10 +128,12 @@ Barrido::Barrido(
 			p10ns = puntos1.at(i).normalMode == FuncionConjuntoPuntos::Punto::NOSMOOTH;
 			p11ns = puntos1.at(nextindex).normalMode == FuncionConjuntoPuntos::Punto::NOSMOOTH;
 
+			normal = glm::normalize(glm::cross(p01-p00,p11-p00));
+			if (normal[0] == normal[0]) {
+
 			insert_triangle(current_position_pointer, p00, p01, p11);
 			current_position_pointer = current_position_pointer + 9;
 
-			normal = glm::normalize(glm::cross(p01-p00,p11-p00));
 			normalx0 = glm::normalize(glm::cross(normal, vector_derivado0));
 			normalx1 = glm::normalize(glm::cross(normal, vector_derivado1));
 			insert_triangle(current_normal_pointer, normal, normal, normal);
@@ -151,14 +153,14 @@ Barrido::Barrido(
 			current_texcoord_pointer[4] = float(nextindex)/float(cantPuntos);
 			current_texcoord_pointer[5] = t1;
 			current_texcoord_pointer = current_texcoord_pointer + 6;
+			}
 
-
-
+			normal = glm::normalize(glm::cross(p00-p10,p11-p10));
+			if (normal[0] == normal[0]) {
 
 			insert_triangle(current_position_pointer, p10, p11, p00);
 			current_position_pointer = current_position_pointer + 9;
 
-			normal = glm::normalize(glm::cross(p00-p10,p11-p10));
 			insert_triangle(current_normal_pointer, normal, normal, normal);
 			insert_triangle(current_normalx_pointer, normalx1, normalx1, normalx0);
 
@@ -176,7 +178,7 @@ Barrido::Barrido(
 			current_texcoord_pointer[4] = float(i)/float(cantPuntos);
 			current_texcoord_pointer[5] = t;
 			current_texcoord_pointer = current_texcoord_pointer + 6;
-
+			}
 		}
 
 		level++;
