@@ -299,7 +299,6 @@ void keyboardUp(unsigned char key, int x, int y)
 #include "bump_mapping_material.h"
 #include "toroide.h"
 #include "material_color_solido.h"
-#include "material_tp2.h"
 #include "esfera.h" 
 #include "cubo_texturado.h" 
 #include "prisma.h"
@@ -398,7 +397,7 @@ void init() {
 	
 
 	esfera_del_cielo = new ModelObject(
-		new Esfera(new MaterialTextura(background), 50, false),
+		new Esfera(new MaterialTextura(background), 20, false),
 		glm::rotate(
 				glm::scale(glm::mat4(1.0),glm::vec3(100.0,100.0,100.0)),
 				90.0f, 
@@ -440,16 +439,27 @@ void init() {
 	objects.push_front(new ModelObject(new NaveNodriza(background), 
 		
 		glm::rotate(
-			glm::translate(glm::mat4(1.0), glm::vec3(5.0,0.0,0.0)),
-			90.0f,
+			glm::translate(glm::mat4(1.0), glm::vec3(15.0,0.0,0.0)),
+			32.0f,
 			glm::vec3(0.0,0.0,1.0)
 			)
 		
 		));
-	objects.push_front(new ModelObject(new Asteroide(), glm::translate(glm::mat4(1.0), glm::vec3(2.3,1.0,4.0))));
-	objects.push_front(new ModelObject(new Asteroide(), glm::translate(glm::mat4(1.0), glm::vec3(-2.3,1.0,4.0))));
-	objects.push_front(new ModelObject(new Asteroide(), glm::translate(glm::mat4(1.0), glm::vec3(-2.3,1.0,-4.0))));
+	
+	for (int i=0; i<10; i++) {
+		glm::vec3 desplazamiento = glm::normalize(glm::vec3(rand()%10000/1000.0 - 5.0,rand()%10000/1000.0 - 5.0,rand()%10000/1000.0 - 5.0));
+		glm::vec3 eje = glm::normalize(glm::vec3(rand()%10000/1000.0 - 5.0,rand()%10000/1000.0 - 5.0,rand()%10000/1000.0 - 5.0));
+		float angle = rand()%10000 / 1000.0;
 
+		float distancia = rand()%100/100.0 + 2.5;
+		objects.push_front(new ModelObject(new Asteroide(), 
+			glm::rotate(
+				glm::translate(glm::mat4(1.0), glm::vec3(15.0,0.0,0.0) + distancia * desplazamiento),
+				70.0f,
+				eje
+				)
+			));
+	}
 
 	nave_combate = new ModelObject(new NaveCombate(background));
 
