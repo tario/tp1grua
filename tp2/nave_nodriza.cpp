@@ -57,7 +57,7 @@ NaveNodriza::NaveNodriza(Texture* reflectionMap) :
 	material2.ksSetter->set(0.5);
 	material2.kdSetter->set(1.5);
 	material2.intensidadDifusoSetter->set(0.0);
-	material2.intensidadGrisSetter->set(0.4);
+	material2.intensidadGrisSetter->set(0.7);
 	material2.intensidadReflexionSetter->set(0.7);
 
 	motor = Motor::instance(&material1, &material3);
