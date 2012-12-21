@@ -82,12 +82,12 @@ NaveNodriza::NaveNodriza(Texture* reflectionMap) :
 
 	rotacion_anillo = glm::mat4(1.0);
 }
-
+static glm::mat4 desplazamiento = glm::translate(glm::mat4(1.0), glm::vec3(-2.25,0.0,0.0));
 void NaveNodriza::dibujar(const glm::mat4& m) {
-	motor->dibujar(m);
-	cilindroCentral->dibujar(m);
-	puenteCentral->dibujar(m);
+	motor->dibujar(m * desplazamiento);
+	cilindroCentral->dibujar(m * desplazamiento);
+	puenteCentral->dibujar(m * desplazamiento);
 
 	rotacion_anillo = glm::rotate(rotacion_anillo, 0.7f, glm::vec3(1.0,0.0,0.0));
-	anillo.dibujar(m * rotacion_anillo);
+	anillo.dibujar(m * desplazamiento * rotacion_anillo);
 }
