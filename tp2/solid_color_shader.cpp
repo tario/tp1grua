@@ -2,17 +2,20 @@
 #include "solid_color_shader.h"
 #include "glm/ext.hpp"
 
-SolidColorShader::SolidColorShader() : Shader("BasicColorFShader.frag", "BasicColorVShader.vert") { 
-	this->bindAttribLocation(0, "VertexPosition" );
-	this->bindAttribLocation(1, "VertexNormal" );
-	this->link();
+SolidColorShader::SolidColorShader() {
 
-	this->transform_matrix_index = this->getUniformLocation("TransformMatrix");
-	this->normal_matrix_index = this->getUniformLocation("NormalMatrix");
-	this->projection_matrix_index = this->getUniformLocation("ProjectionMatrix");
+	this->shader = new ShaderProgram("BasicColorFShader.frag", "BasicColorVShader.vert"); 
 
-	this->camera_position_index = this->getUniformLocation("camera_position");
-	this->color_index = this->getUniformLocation("Color");
+	this->shader ->bindAttribLocation(0, "VertexPosition" );
+	this->shader ->bindAttribLocation(1, "VertexNormal" );
+	this->shader ->link();
+
+	this->transform_matrix_index = this->shader->getUniformLocation("TransformMatrix");
+	this->normal_matrix_index = this->shader->getUniformLocation("NormalMatrix");
+	this->projection_matrix_index = this->shader->getUniformLocation("ProjectionMatrix");
+
+	this->camera_position_index = this->shader->getUniformLocation("camera_position");
+	this->color_index = this->shader->getUniformLocation("Color");
 }
 
 void SolidColorShader::setCameraDirection(const glm::vec3& v) {
@@ -38,7 +41,7 @@ void SolidColorShader::setColor(const glm::vec3& color) {
 
 void SolidColorShader::setTransformMatrix(const glm::mat4& m) {
 	glUniformMatrix4fv(this->transform_matrix_index, 1, 0, glm::value_ptr(m));
-	glm::mat4 normal_matrix = compute_normal_matrix(m);
+	glm::mat4 normal_matrix = Shader::compute_normal_matrix(m);
 	glUniformMatrix4fv(this->normal_matrix_index, 1, 0, glm::value_ptr(normal_matrix));
 }
 

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "material_tp3.h"
 
+static ShaderProgram* shaderProgram = 0;
 
 MaterialTP3::MaterialTP3(
 	Texture* diffuse_map, 
@@ -10,13 +11,16 @@ MaterialTP3::MaterialTP3(
 	bump_map(bump_map),
 	reflection_map(reflection_map) { 
 
-	this->shader = new Shader("tp3Shader.frag", "tp3Shader.vert");
+	if (shaderProgram == 0) {
+		shaderProgram = new ShaderProgram("tp3Shader.frag", "tp3Shader.vert");
+		shaderProgram->bindAttribLocation(0, "VertexPosition" );
+		shaderProgram->bindAttribLocation(1, "VertexNormal" );
+		shaderProgram->bindAttribLocation(2, "VertexTexCoord" );
+		shaderProgram->bindAttribLocation(3, "VertexNormalX" );
+		shaderProgram->link();
+	}
 
-	shader->bindAttribLocation(0, "VertexPosition" );
-	shader->bindAttribLocation(1, "VertexNormal" );
-	shader->bindAttribLocation(2, "VertexTexCoord" );
-	shader->bindAttribLocation(3, "VertexNormalX" );
-	shader->link();
+	this->shader = new Shader(shaderProgram);
 
 	this->shader->setter<int>("diffuse_map")->set(0);
 	this->shader->setter<int>("bump_map")->set(1);

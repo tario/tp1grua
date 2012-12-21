@@ -1,15 +1,30 @@
 #include "stdafx.h"
 #include "material_color_solido.h"
+#include "shader_program.h"
+
+static ShaderProgram* shaderProgram = 0;
+static ShaderProgram* phongShaderProgram = 0;
 
 MaterialColorSolido::MaterialColorSolido(const glm::vec3& color, bool phong) : color(color) {
 	if (phong) {
-		shader = new Shader("BasicColorFShader.frag", "BasicColorVShader.vert"); 
+		if (shaderProgram == 0) {
+		shaderProgram = new ShaderProgram("BasicColorFShader.frag", "BasicColorVShader.vert"); 
+		shaderProgram->bindAttribLocation(0, "VertexPosition" );
+		shaderProgram->bindAttribLocation(1, "VertexNormal" );
+		shaderProgram->link();
+		}
+
+		shader = new Shader(shaderProgram);
 	} else {
-		shader = new Shader("ColorShader.frag", "BasicColorVShader.vert"); 
+		if (phongShaderProgram == 0) {
+		phongShaderProgram = new ShaderProgram("ColorShader.frag", "BasicColorVShader.vert");
+		phongShaderProgram->bindAttribLocation(0, "VertexPosition" );
+		phongShaderProgram->bindAttribLocation(1, "VertexNormal" );
+		phongShaderProgram->link();
+		}
+
+		shader = new Shader(phongShaderProgram);
 	}
-	shader->bindAttribLocation(0, "VertexPosition" );
-	shader->bindAttribLocation(1, "VertexNormal" );
-	shader->link();
 
 	nMatrixSetter = shader->setter<glm::mat4>("NormalMatrix");
 	prMatrixSetter = shader->setter<glm::mat4>("ProjectionMatrix");

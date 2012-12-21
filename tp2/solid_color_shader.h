@@ -2,9 +2,10 @@
 #define __SOLID_COLOR_SHADER_H
 
 #include "shader.h"
+#include "shader_program.h"
 #include "glm/glm.hpp"
 
-class SolidColorShader : public Shader {
+class SolidColorShader {
 public:
 	SolidColorShader();
 
@@ -17,6 +18,8 @@ public:
 	static SolidColorShader* instance();
 
 private:
+	ShaderProgram* shader;
+
 	int transform_matrix_index;
 	int projection_matrix_index;
 	int camera_direction_index;

@@ -1,15 +1,23 @@
 #include "stdafx.h"
 #include "material_textura.h"
 #include "texture.h"
+#include "shader_program.h"
+
+static ShaderProgram* textureShaderProgram = 0;
 
 MaterialTextura::MaterialTextura(Texture* texture) :
 	texture(texture) {
-	shader = new Shader("TextureFShader.frag", "TextureVShader.vert");
 
-	shader->bindAttribLocation(0, "VertexPosition" );
-	shader->bindAttribLocation(1, "VertexNormal" );
-	shader->bindAttribLocation(2, "VertexTexCoord" );
-	shader->link();
+	if (textureShaderProgram == 0) {
+		textureShaderProgram = new ShaderProgram("TextureFShader.frag", "TextureVShader.vert");
+
+		textureShaderProgram->bindAttribLocation(0, "VertexPosition" );
+		textureShaderProgram->bindAttribLocation(1, "VertexNormal" );
+		textureShaderProgram->bindAttribLocation(2, "VertexTexCoord" );
+		textureShaderProgram->link();
+	}
+
+	shader = new Shader(textureShaderProgram);
 
 	shader->setter<int>("texture1")->set(0);
 	transformMatrixSetter = shader->setter<glm::mat4>("TransformMatrix");

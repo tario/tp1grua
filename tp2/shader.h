@@ -10,6 +10,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <string>
 #include <vector>
+#include "shader_program.h"
 
 class Shader {
 
@@ -35,23 +36,21 @@ public:
 	static glm::vec3 cameraPosition;
 
 	// carga un programa dadas las rutas del shader de fragmento y shader de vertices
-	Shader(std::string fragmentShader, std::string vertexShader);
+	Shader(ShaderProgram* shaderProgram);
 
-	void link();
 	void use();
-	void bindAttribLocation(GLuint location, std::string attrib);
-	int getUniformLocation(const std::string& attrib);
 
 	template<class T>
 	ConcreteSetter<T>* setter(const std::string& attrib) {
-		ConcreteSetter<T>* s = new ConcreteSetter<T>(getUniformLocation(attrib));
+		ConcreteSetter<T>* s = new ConcreteSetter<T>(shaderProgram->getUniformLocation(attrib));
 		setters.push_back(s);
 		return s;
 	}
 
-	glm::mat4 compute_normal_matrix(const glm::mat4& m);
+	static glm::mat4 compute_normal_matrix(const glm::mat4& m);
 private:
-	GLuint programHandle;
+
+	ShaderProgram* shaderProgram;
 	std::vector<Setter*> setters;
 
 };

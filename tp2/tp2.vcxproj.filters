@@ -17,31 +17,10 @@
     <ClCompile Include="model_object.cpp">
       <Filter>utils</Filter>
     </ClCompile>
-    <ClCompile Include="dirtness_shader.cpp">
-      <Filter>shaderscode</Filter>
-    </ClCompile>
-    <ClCompile Include="texture_waves_shader.cpp">
-      <Filter>shaderscode</Filter>
-    </ClCompile>
     <ClCompile Include="material_textura.cpp">
       <Filter>material</Filter>
     </ClCompile>
-    <ClCompile Include="material_textura_suciedad.cpp">
-      <Filter>material</Filter>
-    </ClCompile>
-    <ClCompile Include="specular_dirtness_shader.cpp">
-      <Filter>shaderscode</Filter>
-    </ClCompile>
-    <ClCompile Include="material_textura_suciedad_specular.cpp">
-      <Filter>material</Filter>
-    </ClCompile>
     <ClCompile Include="material_color_solido.cpp">
-      <Filter>material</Filter>
-    </ClCompile>
-    <ClCompile Include="bump_mapping_shader.cpp">
-      <Filter>shaderscode</Filter>
-    </ClCompile>
-    <ClCompile Include="bump_mapping_material.cpp">
       <Filter>material</Filter>
     </ClCompile>
     <ClCompile Include="esfera.cpp">
@@ -52,9 +31,6 @@
     </ClCompile>
     <ClCompile Include="toroide.cpp">
       <Filter>primitivas</Filter>
-    </ClCompile>
-    <ClCompile Include="material_tp2.cpp">
-      <Filter>material</Filter>
     </ClCompile>
     <ClCompile Include="bitmap_texture.cpp">
       <Filter>utils</Filter>
@@ -102,6 +78,9 @@
     <ClCompile Include="anillo.cpp">
       <Filter>modelobjects</Filter>
     </ClCompile>
+    <ClCompile Include="shader_program.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -127,34 +106,13 @@
     <ClInclude Include="model_object.h">
       <Filter>utils</Filter>
     </ClInclude>
-    <ClInclude Include="dirtness_shader.h">
-      <Filter>shaderscode</Filter>
-    </ClInclude>
-    <ClInclude Include="texture_waves_shader.h">
-      <Filter>shaderscode</Filter>
-    </ClInclude>
     <ClInclude Include="material.h">
       <Filter>utils</Filter>
     </ClInclude>
     <ClInclude Include="material_textura.h">
       <Filter>material</Filter>
     </ClInclude>
-    <ClInclude Include="material_textura_suciedad.h">
-      <Filter>material</Filter>
-    </ClInclude>
-    <ClInclude Include="specular_dirtness_shader.h">
-      <Filter>shaderscode</Filter>
-    </ClInclude>
-    <ClInclude Include="material_textura_suciedad_specular.h">
-      <Filter>material</Filter>
-    </ClInclude>
     <ClInclude Include="material_color_solido.h">
-      <Filter>material</Filter>
-    </ClInclude>
-    <ClInclude Include="bump_mapping_shader.h">
-      <Filter>shaderscode</Filter>
-    </ClInclude>
-    <ClInclude Include="bump_mapping_material.h">
       <Filter>material</Filter>
     </ClInclude>
     <ClInclude Include="esfera.h">
@@ -165,9 +123,6 @@
     </ClInclude>
     <ClInclude Include="toroide.h">
       <Filter>primitivas</Filter>
-    </ClInclude>
-    <ClInclude Include="material_tp2.h">
-      <Filter>material</Filter>
     </ClInclude>
     <ClInclude Include="bitmap_texture.h">
       <Filter>utils</Filter>
@@ -219,6 +174,9 @@
     </ClInclude>
     <ClInclude Include="anillo.h">
       <Filter>modelobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="shader_program.h">
+      <Filter>utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
