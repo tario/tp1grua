@@ -1,6 +1,45 @@
 #include "stdafx.h"
 #include "nave_nodriza.h"
 #include "null_texture.h"
+#include "segmento_recta.h"
+#include "curva_constante.h"
+
+class ConjuntoPuntosCilindroCentral : public FuncionConjuntoPuntos {
+	public:
+		std::vector<Punto> conjunto(float t) { 
+			std::vector<Punto> ret;
+			float r = 0.12;
+			for (int i=0;i<32;i++) {
+				float angle = float(i)*6.28/32;
+				ret.push_back(Punto(cos(angle)*r,sin(angle)*r,Punto::SMOOTH));
+			}
+			return ret;
+		}
+};
+
+class ConjuntoPuntosPuenteCentral : public FuncionConjuntoPuntos {
+	public:
+		std::vector<Punto> conjunto(float t) { 
+			std::vector<Punto> curva1, curva2, bezier1, bezier2, ret;
+
+			float size = 3.0 * t * (1.0 -t) + 0.8;
+
+			curva1.push_back(Punto(-0.3*size,0.0));
+			curva1.push_back(Punto(-0.35*size,-0.25*size));
+			curva1.push_back(Punto(0.35*size,-0.25*size));
+			curva1.push_back(Punto(0.3*size,0.0));
+
+			curva2.push_back(Punto(0.3*size,0.0));
+			curva2.push_back(Punto(0.25*size,0.4*size));
+			curva2.push_back(Punto(-0.25*size,0.4*size));
+			curva2.push_back(Punto(-0.3*size,0.0));
+			bezier1 = bezier(curva1,16);
+			bezier2 = bezier(curva2,16);
+			ret.insert(ret.end(),bezier1.begin(),bezier1.end());
+			ret.insert(ret.end(),bezier2.begin(),bezier2.end());
+			return ret;
+		}
+};
 
 NaveNodriza::NaveNodriza() : 
 	textura_nave("nave.bmp"),
@@ -14,8 +53,28 @@ NaveNodriza::NaveNodriza() :
 	material1.intensidadDifusoSetter->set(1.0);	
 
 	motor = Motor::instance(&material1, &material3);
+
+	cilindroCentral = new Barrido(
+		&ConjuntoPuntosCilindroCentral(), 
+		&SegmentoRecta(glm::vec3(1.0,0.0,0.0),glm::vec3(3.0,0.0,0.0)),
+		&CurvaConstante(glm::vec3(1.0,0.0,0.0)),
+		&CurvaConstante(glm::vec3(0.0,1.0,0.0)),
+		1.0,
+		&material1,
+		0.0,1.0);
+
+	puenteCentral = new Barrido(
+		&ConjuntoPuntosPuenteCentral(), 
+		&SegmentoRecta(glm::vec3(3.0,0.0,0.0),glm::vec3(4.5,0.0,0.0)),
+		&CurvaConstante(glm::vec3(1.0,0.0,0.0)),
+		&CurvaConstante(glm::vec3(0.0,1.0,0.0)),
+		0.05,
+		&material1,
+		0.0,1.0);
 }
 
 void NaveNodriza::dibujar(const glm::mat4& m) {
 	motor->dibujar(m);
+	cilindroCentral->dibujar(m);
+	puenteCentral->dibujar(m);
 }
