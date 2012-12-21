@@ -116,24 +116,20 @@ Barrido::Barrido(
 			if (nextindex > puntos0.size()-1) nextindex = 0;
 
 			glm::vec3 p00, p01, p10, p11;
+			glm::vec3 normal, normalx0, normalx1;
+			int p00ns, p01ns, p11ns, p10ns;
 
 			p00 = giro0 * glm::vec3(puntos0.at(i).punto,0.0)  + punto_central0;
 			p01 = giro0 * glm::vec3(puntos0.at(nextindex).punto,0.0)  + punto_central0;
 			p10 = giro1 * glm::vec3(puntos1.at(i).punto,0.0) + punto_central1;
 			p11 = giro1 * glm::vec3(puntos1.at(nextindex).punto,0.0) + punto_central1;
-
-			insert_triangle(current_position_pointer, p00, p01, p11);
-			insert_triangle(current_position_pointer+9, p10, p11, p00);
-			current_position_pointer = current_position_pointer + 18;
-
-			glm::vec3 normal, normalx0, normalx1;
-
-			int p00ns, p01ns, p11ns, p10ns;
-
 			p00ns = puntos0.at(i).normalMode == FuncionConjuntoPuntos::Punto::NOSMOOTH;
 			p01ns = puntos0.at(nextindex).normalMode == FuncionConjuntoPuntos::Punto::NOSMOOTH;
 			p10ns = puntos1.at(i).normalMode == FuncionConjuntoPuntos::Punto::NOSMOOTH;
 			p11ns = puntos1.at(nextindex).normalMode == FuncionConjuntoPuntos::Punto::NOSMOOTH;
+
+			insert_triangle(current_position_pointer, p00, p01, p11);
+			current_position_pointer = current_position_pointer + 9;
 
 			normal = glm::normalize(glm::cross(p01-p00,p11-p00));
 			normalx0 = glm::normalize(glm::cross(normal, vector_derivado0));
@@ -145,16 +141,8 @@ Barrido::Barrido(
 			vertexRegister.addNormal(level, nextindex + p01ns * i*cantPuntos, current_normal_pointer+3);
 			vertexRegister.addNormal(level+1, nextindex + p11ns * i*cantPuntos, current_normal_pointer+6);
 
-			normal = glm::normalize(glm::cross(p00-p10,p11-p10));
-			insert_triangle(current_normal_pointer+9, normal, normal, normal);
-			insert_triangle(current_normalx_pointer+9, normalx1, normalx1, normalx0);
-
-			vertexRegister.addNormal(level+1, i + p10ns * i*cantPuntos, current_normal_pointer+9);
-			vertexRegister.addNormal(level+1, nextindex + p11ns * i*cantPuntos, current_normal_pointer+12);
-			vertexRegister.addNormal(level, i + p00ns * i*cantPuntos, current_normal_pointer+15);
-
-			current_normal_pointer = current_normal_pointer + 18;
-			current_normalx_pointer = current_normalx_pointer + 18;
+			current_normal_pointer = current_normal_pointer + 9;
+			current_normalx_pointer = current_normalx_pointer + 9;
 
 			current_texcoord_pointer[0] = float(i)/float(cantPuntos);
 			current_texcoord_pointer[1] = t;
@@ -162,13 +150,33 @@ Barrido::Barrido(
 			current_texcoord_pointer[3] = t;
 			current_texcoord_pointer[4] = float(nextindex)/float(cantPuntos);
 			current_texcoord_pointer[5] = t1;
-			current_texcoord_pointer[6] = float(i)/float(cantPuntos);
-			current_texcoord_pointer[7] = t1;
-			current_texcoord_pointer[8] = float(nextindex)/float(cantPuntos);
-			current_texcoord_pointer[9] = t1;
-			current_texcoord_pointer[10] = float(i)/float(cantPuntos);
-			current_texcoord_pointer[11] = t;
-			current_texcoord_pointer = current_texcoord_pointer + 12;
+			current_texcoord_pointer = current_texcoord_pointer + 6;
+
+
+
+
+			insert_triangle(current_position_pointer, p10, p11, p00);
+			current_position_pointer = current_position_pointer + 9;
+
+			normal = glm::normalize(glm::cross(p00-p10,p11-p10));
+			insert_triangle(current_normal_pointer, normal, normal, normal);
+			insert_triangle(current_normalx_pointer, normalx1, normalx1, normalx0);
+
+			vertexRegister.addNormal(level+1, i + p10ns * i*cantPuntos, current_normal_pointer);
+			vertexRegister.addNormal(level+1, nextindex + p11ns * i*cantPuntos, current_normal_pointer+3);
+			vertexRegister.addNormal(level, i + p00ns * i*cantPuntos, current_normal_pointer+6);
+
+			current_normal_pointer = current_normal_pointer + 9;
+			current_normalx_pointer = current_normalx_pointer + 9;
+
+			current_texcoord_pointer[0] = float(i)/float(cantPuntos);
+			current_texcoord_pointer[1] = t1;
+			current_texcoord_pointer[2] = float(nextindex)/float(cantPuntos);
+			current_texcoord_pointer[3] = t1;
+			current_texcoord_pointer[4] = float(i)/float(cantPuntos);
+			current_texcoord_pointer[5] = t;
+			current_texcoord_pointer = current_texcoord_pointer + 6;
+
 		}
 
 		level++;
