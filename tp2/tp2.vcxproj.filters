@@ -99,6 +99,9 @@
     <ClCompile Include="circunferencia.cpp">
       <Filter>primitivas\curvas</Filter>
     </ClCompile>
+    <ClCompile Include="anillo.cpp">
+      <Filter>modelobjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -213,6 +216,9 @@
     </ClInclude>
     <ClInclude Include="circunferencia.h">
       <Filter>primitivas\curvas</Filter>
+    </ClInclude>
+    <ClInclude Include="anillo.h">
+      <Filter>modelobjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

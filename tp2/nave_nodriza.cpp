@@ -41,16 +41,24 @@ class ConjuntoPuntosPuenteCentral : public FuncionConjuntoPuntos {
 		}
 };
 
-NaveNodriza::NaveNodriza() : 
+NaveNodriza::NaveNodriza(Texture* reflectionMap) : 
 	textura_nave("nave.bmp"),
 	material1(&textura_nave, NullTexture::instance(), NullTexture::instance()),
-	material2(&textura_nave, NullTexture::instance(), NullTexture::instance()),
-	material3(glm::vec3(0.25,0.25,0.25),true)
+	material2(&textura_nave, NullTexture::instance(), reflectionMap),
+	material3(glm::vec3(0.25,0.25,0.25),true),
+	anillo(&material1, &material2)
 {
 	material1.kaSetter->set(0.05);
 	material1.kdSetter->set(1.5);
 	material1.ksSetter->set(0.0);
-	material1.intensidadDifusoSetter->set(1.0);	
+	material1.intensidadDifusoSetter->set(1.0);
+
+	material2.kaSetter->set(0.05);
+	material2.ksSetter->set(0.5);
+	material2.kdSetter->set(1.5);
+	material2.intensidadDifusoSetter->set(0.0);
+	material2.intensidadGrisSetter->set(0.4);
+	material2.intensidadReflexionSetter->set(0.7);
 
 	motor = Motor::instance(&material1, &material3);
 
@@ -71,10 +79,15 @@ NaveNodriza::NaveNodriza() :
 		0.05,
 		&material1,
 		0.0,1.0);
+
+	rotacion_anillo = glm::mat4(1.0);
 }
 
 void NaveNodriza::dibujar(const glm::mat4& m) {
 	motor->dibujar(m);
 	cilindroCentral->dibujar(m);
 	puenteCentral->dibujar(m);
+
+	rotacion_anillo = glm::rotate(rotacion_anillo, 0.7f, glm::vec3(1.0,0.0,0.0));
+	anillo.dibujar(m * rotacion_anillo);
 }

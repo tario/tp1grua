@@ -73,7 +73,7 @@ Barrido::Barrido(
 	float* current_normalx_pointer = normalx_data;
 	float* current_texcoord_pointer = texcoord_data;
 
-	VertexRegister vertexRegister(1.0/h + 2, cantPuntos);
+	VertexRegister vertexRegister(1.0/h + 10, cantPuntos);
 
 	int level=0;
 	float t, t0, t1;

@@ -7,11 +7,12 @@
 #include "motor.h"
 #include "bitmap_texture.h"
 #include "barrido.h"
+#include "anillo.h"
 
 class NaveNodriza : public Dibujable { 
 	public:
 
-		NaveNodriza();
+		NaveNodriza(Texture* reflectionMap);
 		void dibujar(const glm::mat4& m);
 
 	private:
@@ -23,6 +24,9 @@ class NaveNodriza : public Dibujable {
 
 		Barrido* cilindroCentral;
 		Barrido* puenteCentral;
+		Anillo anillo;
+
+		glm::mat4 rotacion_anillo;
 };
 
 #endif

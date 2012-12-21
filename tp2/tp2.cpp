@@ -437,7 +437,15 @@ void init() {
 	basuraEspacial = new Esfera(material_color_gris_oscuro, 5);
 	objects.push_front(light_sphere);
 
-	objects.push_front(new ModelObject(new NaveNodriza(), glm::translate(glm::mat4(1.0), glm::vec3(5.0,0.0,0.0))));
+	objects.push_front(new ModelObject(new NaveNodriza(background), 
+		
+		glm::rotate(
+			glm::translate(glm::mat4(1.0), glm::vec3(5.0,0.0,0.0)),
+			90.0f,
+			glm::vec3(0.0,0.0,1.0)
+			)
+		
+		));
 	objects.push_front(new ModelObject(new Asteroide(), glm::translate(glm::mat4(1.0), glm::vec3(2.3,1.0,4.0))));
 	objects.push_front(new ModelObject(new Asteroide(), glm::translate(glm::mat4(1.0), glm::vec3(-2.3,1.0,4.0))));
 	objects.push_front(new ModelObject(new Asteroide(), glm::translate(glm::mat4(1.0), glm::vec3(-2.3,1.0,-4.0))));
