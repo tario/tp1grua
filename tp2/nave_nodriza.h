@@ -18,6 +18,7 @@ class NaveNodriza : public Dibujable {
 	private:
 		Motor* motor;
 		BitmapTexture textura_nave;
+		BitmapTexture normal_nave;
 		MaterialColorSolido material3;
 		MaterialTP3 material2;
 		MaterialTP3 material1;

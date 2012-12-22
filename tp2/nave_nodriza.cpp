@@ -42,15 +42,17 @@ class ConjuntoPuntosPuenteCentral : public FuncionConjuntoPuntos {
 };
 
 NaveNodriza::NaveNodriza(Texture* reflectionMap) : 
-	textura_nave("nave.bmp"),
-	material1(&textura_nave, NullTexture::instance(), NullTexture::instance()),
+	textura_nave("shiphull.bmp"),
+	normal_nave("shiphull_normal.bmp"),
+	material1(&textura_nave, &normal_nave, NullTexture::instance()),
 	material2(&textura_nave, NullTexture::instance(), reflectionMap),
 	material3(glm::vec3(0.25,0.25,0.25),true),
 	anillo(&material1, &material2)
 {
 	material1.kaSetter->set(0.05);
 	material1.kdSetter->set(1.5);
-	material1.ksSetter->set(0.0);
+	material1.ksSetter->set(0.7);
+	material1.intensidadRelieveSetter->set(1.0);
 	material1.intensidadDifusoSetter->set(1.0);
 
 	material2.kaSetter->set(0.05);
