@@ -14,6 +14,9 @@ bool comparador_puntos(FuncionConjuntoPuntos::Punto p0, FuncionConjuntoPuntos::P
 	return glm::angle(p0.punto, glm::vec2(1.0,0.0)) < glm::angle(p1.punto, glm::vec2(1.0,0.0));
 }
 
+#define ASTEROIDE_DEFORMIDAD 0.6
+#define ASTEROIDE_PICOS 7
+
 class ConjuntoPuntosCuerpoAsteroide : public FuncionConjuntoPuntos {
 	public:
 
@@ -38,11 +41,11 @@ class ConjuntoPuntosCuerpoAsteroide : public FuncionConjuntoPuntos {
 				float t2 = i * 6.28/ 8 ;
 				float d = sqrt(0.25-(t-0.5)*(t-0.5));
 
-				if (rand() % 4 == 1) {
+				if (rand() % ASTEROIDE_PICOS == 1) {
 					d = d * (rand() % 25 + 40) * 0.025;
 				}
 
-				Punto p( (cos(t2)+a[i])*d*0.5, (sin(t2)+b[i])*d*0.5, Punto::SMOOTH);
+				Punto p( (cos(t2)+a[i]*ASTEROIDE_DEFORMIDAD)*d*0.5, (sin(t2)+b[i]*ASTEROIDE_DEFORMIDAD)*d*0.5, Punto::SMOOTH);
 				ret.push_back(p);
 			}
 			ret.push_back(pi);
@@ -59,12 +62,12 @@ class ConjuntoPuntosCuerpoAsteroide : public FuncionConjuntoPuntos {
 Asteroide::Asteroide() {
 	if (Asteroide::materialAsteroide==0) {
 		MaterialTP3* materialtp3 = new MaterialTP3(new BitmapTexture("lunar.bmp"), new BitmapTexture("asteroid_normals.bmp"),NullTexture::instance());
-		materialtp3->kaSetter->set(0.1);
+		materialtp3->kaSetter->set(0.0);
 		materialtp3->kdSetter->set(1.5);
 		materialtp3->ksSetter->set(0.05);
 		materialtp3->intensidadDifusoSetter->set(1.0);
 		materialtp3->intensidadGrisSetter->set(0.0);
-		materialtp3->intensidadRelieveSetter->set(1.0);
+		materialtp3->intensidadRelieveSetter->set(0.5);
 		materialtp3->intensidadReflexionSetter->set(0.0);
 
 		Asteroide::materialAsteroide = materialtp3;
