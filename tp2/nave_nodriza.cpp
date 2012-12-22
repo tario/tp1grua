@@ -52,7 +52,7 @@ NaveNodriza::NaveNodriza(Texture* reflectionMap) :
 	material1.kaSetter->set(0.05);
 	material1.kdSetter->set(1.0);
 	material1.ksSetter->set(0.5);
-	material1.intensidadRelieveSetter->set(1.0);
+	material1.intensidadRelieveSetter->set(0.7);
 	material1.intensidadDifusoSetter->set(0.6);
 
 	material2.kaSetter->set(0.05);
