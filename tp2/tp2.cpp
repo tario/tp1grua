@@ -28,6 +28,8 @@
 #define VELOCIDAD_PEATON 0.05
 
 std::list<Dibujable*> objects;
+bool fullscreen = false;
+int xresolution, yresolution;
 
 class MaterialObject : public Dibujable {
 public:
@@ -344,6 +346,16 @@ void glut_process_keys(unsigned char key, int x, int y) {
 	if (key == 's') nave_seleccionada->control_giroabajo = true;
 	if (key == 'q') nave_seleccionada->control_girobarril1 = true;
 	if (key == 'e') nave_seleccionada->control_girobarril2 = true;
+	if (key == 'f') {
+		glutFullScreenToggle();
+		fullscreen = !fullscreen;
+		
+		if (fullscreen) {
+			xresolution = 1600; yresolution = 900;
+		} else {
+			xresolution = 1360; yresolution = 768;
+		}
+	}
 
 }
 
@@ -467,10 +479,11 @@ int loc;
 void glut_display() {
 
   // do display
+	glViewport(0,0,xresolution,yresolution);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glm::mat4 prMatrix;
-	prMatrix = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+	prMatrix = glm::perspective(45.0f, 16.0f / 9.0f, 0.1f, 100.0f);
 
 	glm::mat4 centerView       = glm::lookAt(
 		glm::vec3(0.0,0.0,0.0), 
@@ -662,11 +675,18 @@ int _tmain(int argc, char* argv[])
 
   glutInit(&argc, argv);
 
-  glutInitWindowSize(800, 600);
-  glutInitWindowPosition ( 100, 100 );
-  glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE);
+  glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 
-  glutCreateWindow( "OpenGL Output" );
+  fullscreen = false;
+  glutInitWindowSize(1360, 768);
+  glutInitWindowPosition ( 0, 0 );
+  glutCreateWindow("OpenGL APP TP3");
+
+  if (fullscreen) {
+	  xresolution = 1600; yresolution = 900;
+  } else {
+	  xresolution = 1360; yresolution = 768;
+  }
 
   glutDisplayFunc(glut_display);
   glutReshapeFunc(glut_reshape);
@@ -679,6 +699,10 @@ int _tmain(int argc, char* argv[])
   glutKeyboardUpFunc(keyboardUp);
   init();
 
+  //glutGameModeString("1600x900:32");
+//  glutLeaveGameMode(); 
+
+//  glutFullScreen();
   glutMainLoop();
 }
 
