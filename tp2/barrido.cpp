@@ -55,7 +55,8 @@ Barrido::Barrido(
 		Material* material,
 		float t_inicial,
 		float t_final,
-		bool tapa
+		bool tapa,
+		bool texture_scaling
 ) : material(material) {
 
 	glm::vec3 punto_central0, punto_central1;
@@ -146,13 +147,24 @@ Barrido::Barrido(
 			current_normal_pointer = current_normal_pointer + 9;
 			current_normalx_pointer = current_normalx_pointer + 9;
 
-			current_texcoord_pointer[0] = float(i)/float(cantPuntos);
-			current_texcoord_pointer[1] = t;
-			current_texcoord_pointer[2] = float(nextindex)/float(cantPuntos);
-			current_texcoord_pointer[3] = t;
-			current_texcoord_pointer[4] = float(nextindex)/float(cantPuntos);
-			current_texcoord_pointer[5] = t1;
-			current_texcoord_pointer = current_texcoord_pointer + 6;
+			if (texture_scaling) {
+				current_texcoord_pointer[0] = float(i)/float(cantPuntos);
+				current_texcoord_pointer[1] = (t-t_inicial) * 1.0 / (t_final - t_inicial);
+				current_texcoord_pointer[2] = float(nextindex)/float(cantPuntos);
+				current_texcoord_pointer[3] = (t-t_inicial) * 1.0 / (t_final - t_inicial);
+				current_texcoord_pointer[4] = float(nextindex)/float(cantPuntos);
+				current_texcoord_pointer[5] = (t1-t_inicial) * 1.0 / (t_final - t_inicial);
+				current_texcoord_pointer = current_texcoord_pointer + 6;
+			} else {
+				current_texcoord_pointer[0] = float(i)/float(cantPuntos);
+				current_texcoord_pointer[1] = t;
+				current_texcoord_pointer[2] = float(nextindex)/float(cantPuntos);
+				current_texcoord_pointer[3] = t;
+				current_texcoord_pointer[4] = float(nextindex)/float(cantPuntos);
+				current_texcoord_pointer[5] = t1;
+				current_texcoord_pointer = current_texcoord_pointer + 6;
+			}
+
 			}
 
 			normal = glm::normalize(glm::cross(p00-p10,p11-p10));
@@ -171,13 +183,23 @@ Barrido::Barrido(
 			current_normal_pointer = current_normal_pointer + 9;
 			current_normalx_pointer = current_normalx_pointer + 9;
 
-			current_texcoord_pointer[0] = float(i)/float(cantPuntos);
-			current_texcoord_pointer[1] = t1;
-			current_texcoord_pointer[2] = float(nextindex)/float(cantPuntos);
-			current_texcoord_pointer[3] = t1;
-			current_texcoord_pointer[4] = float(i)/float(cantPuntos);
-			current_texcoord_pointer[5] = t;
-			current_texcoord_pointer = current_texcoord_pointer + 6;
+			if (texture_scaling) {
+				current_texcoord_pointer[0] = float(i)/float(cantPuntos);
+				current_texcoord_pointer[1] = (t1-t_inicial) * 1.0 / (t_final - t_inicial);
+				current_texcoord_pointer[2] = float(nextindex)/float(cantPuntos);
+				current_texcoord_pointer[3] = (t1-t_inicial) * 1.0 / (t_final - t_inicial);
+				current_texcoord_pointer[4] = float(i)/float(cantPuntos);
+				current_texcoord_pointer[5] = (t-t_inicial) * 1.0 / (t_final - t_inicial);
+				current_texcoord_pointer = current_texcoord_pointer + 6;
+			} else {
+				current_texcoord_pointer[0] = float(i)/float(cantPuntos);
+				current_texcoord_pointer[1] = t1;
+				current_texcoord_pointer[2] = float(nextindex)/float(cantPuntos);
+				current_texcoord_pointer[3] = t1;
+				current_texcoord_pointer[4] = float(i)/float(cantPuntos);
+				current_texcoord_pointer[5] = t;
+				current_texcoord_pointer = current_texcoord_pointer + 6;
+			}
 			}
 		}
 

@@ -50,7 +50,7 @@ Anillo::Anillo(Material* material1, Material* material2) {
 		&Circunferencia(glm::vec3(0.0,0.0,0.0),glm::vec3(1.0,0.0,0.0),glm::vec3(0.0,1.0,0.0)),
 		0.025,
 		material1,
-		0.2,0.3,true);
+		0.2,0.3,true,true);
 
 	columnaCruzada = new Barrido(
 		&ConjuntoPuntosAnilloColumna(),
