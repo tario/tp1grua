@@ -50,10 +50,10 @@ NaveNodriza::NaveNodriza(Texture* reflectionMap) :
 	anillo(&material1, &material2)
 {
 	material1.kaSetter->set(0.00);
-	material1.kdSetter->set(1.5);
-	material1.ksSetter->set(0.05);
-	material1.intensidadRelieveSetter->set(1.0);
-	material1.intensidadDifusoSetter->set(0.6);
+	material1.kdSetter->set(1.0);
+	material1.ksSetter->set(0.35);
+	material1.intensidadRelieveSetter->set(0.45);
+	material1.intensidadDifusoSetter->set(1.0);
 
 	material2.kaSetter->set(0.05);
 	material2.ksSetter->set(0.5);
