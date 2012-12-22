@@ -94,7 +94,7 @@ int camara_mode = 2;
 int mouse_last_x = 0;
 int mouse_last_y = 0;
 
-const float velocidadGiro = 0.5;
+const float velocidadGiro = 0.2;
 class Nave {
 	public:
 		Nave() : front(1.0,0.0,0.0,1.0), up(0.0,0.0,1.0,1.0), position(0.0,0.0,0.0,1.0), giro(1.0),
@@ -105,11 +105,11 @@ class Nave {
 
 		void processFrame() {
 			if (control_avanzar)	{
-				desplazamiento = desplazamiento + glm::vec3(front[0] * 0.0025, front[1] * 0.0025, front[2] * 0.0025);
+				desplazamiento = desplazamiento + glm::vec3(front[0] * 0.001, front[1] * 0.001, front[2] * 0.001);
 			}
 
 			if (control_retroceder)	{
-				desplazamiento = desplazamiento - glm::vec3(front[0] * 0.001, front[1] * 0.001, front[2] * 0.001);
+				desplazamiento = desplazamiento - glm::vec3(front[0] * 0.0004, front[1] * 0.0004, front[2] * 0.0004);
 			}
 
 			if (control_giroderecho){ 
@@ -459,7 +459,7 @@ void init() {
 
 void glut_animate() {
 	glutPostRedisplay();
-	Sleep(25);
+	Sleep(15);
 }
 int loc;
 
@@ -513,7 +513,7 @@ void glut_display() {
 	for (int i=-1; i<1; i++) {
 	for (int j=-1; j<1; j++) {
 	for (int k=-1; k<1; k++) {
-	//basuraEspacial->dibujar(glm::translate(glm::mat4(1.0),origin + glm::vec3(i,j,k)) * matriz_scala);
+	basuraEspacial->dibujar(glm::translate(glm::mat4(1.0),origin + glm::vec3(i,j,k)) * matriz_scala);
 	}
 	}
 	}
