@@ -392,13 +392,13 @@ void init() {
 		);
 
 	Texture* textura_planeta = new BitmapTexture("planeta.bmp");
-	MaterialTP3* materialtp3 = new MaterialTP3(textura_planeta, NullTexture::instance(),NullTexture::instance());
+	MaterialTP3* materialtp3 = new MaterialTP3(textura_planeta, new BitmapTexture("planeta_normals.bmp"),NullTexture::instance());
 	materialtp3->kaSetter->set(0.0);
 	materialtp3->kdSetter->set(1.0);
 	materialtp3->ksSetter->set(0.0);
 	materialtp3->intensidadDifusoSetter->set(1.0);
 	materialtp3->intensidadGrisSetter->set(0.0);
-	materialtp3->intensidadRelieveSetter->set(0.0);
+	materialtp3->intensidadRelieveSetter->set(0.65);
 	materialtp3->intensidadReflexionSetter->set(0.0);
 
 	planeta = new ModelObject(
