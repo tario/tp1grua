@@ -23,7 +23,7 @@ class ConjuntoPuntosAnilloToroide : public FuncionConjuntoPuntos {
 		std::vector<Punto> conjunto(float t) {
 			std::vector<Punto> ret;
 			for (int i=0;i<32;i++) {
-				float angle = float(32-i)*6.28/32;
+				float angle = float(i)*6.28/32;
 				ret.push_back(Punto(cos(angle)*radio,sin(angle)*radio,Punto::SMOOTH));
 			}
 			return ret;
@@ -37,7 +37,7 @@ Anillo::Anillo(Material* material1, Material* material2) {
 	toroide =new Barrido(
 		&ConjuntoPuntosAnilloToroide(0.1), 
 		&Circunferencia(glm::vec3(2.0,0.0,0.0),glm::vec3(1.0,0.0,0.0),glm::vec3(0.0,1.5,0.0)),
-		&Circunferencia(glm::vec3(0.0,0.0,0.0),glm::vec3(1.0,0.0,0.0),glm::vec3(0.0,0.0,-1.0)),
+		&Circunferencia(glm::vec3(0.0,0.0,0.0),glm::vec3(1.0,0.0,0.0),glm::vec3(0.0,0.0,1.0)),
 		&Circunferencia(glm::vec3(0.0,0.0,0.0),glm::vec3(1.0,0.0,0.0),glm::vec3(0.0,1.0,0.0)),
 		0.025,
 		material2,
@@ -46,7 +46,7 @@ Anillo::Anillo(Material* material1, Material* material2) {
 	toroideParcial =new Barrido(
 		&ConjuntoPuntosAnilloToroide(0.2), 
 		&Circunferencia(glm::vec3(2.0,0.0,0.0),glm::vec3(1.0,0.0,0.0),glm::vec3(0.0,1.5,0.0)),
-		&Circunferencia(glm::vec3(0.0,0.0,0.0),glm::vec3(1.0,0.0,0.0),glm::vec3(0.0,0.0,-1.0)),
+		&Circunferencia(glm::vec3(0.0,0.0,0.0),glm::vec3(1.0,0.0,0.0),glm::vec3(0.0,0.0,1.0)),
 		&Circunferencia(glm::vec3(0.0,0.0,0.0),glm::vec3(1.0,0.0,0.0),glm::vec3(0.0,1.0,0.0)),
 		0.025,
 		material1,

@@ -97,7 +97,6 @@ Barrido::Barrido(
 		glm::vec3 vector_derivado0 = glm::normalize(derivada->punto(t0));
 		glm::vec3 vector_torcion0 = glm::normalize(torcion->punto(t0));
 		glm::vec3 vector_cross0 = glm::cross(vector_derivado0, vector_torcion0);
-		//vector_torcion0 = glm::cross(vector_cross0, vector_derivado0);
 
 		glm::mat3 giro0(vector_torcion0[0], vector_torcion0[1], vector_torcion0[2],
 		vector_cross0[0], vector_cross0[1], vector_cross0[2],
@@ -106,7 +105,6 @@ Barrido::Barrido(
 		glm::vec3 vector_derivado1 = glm::normalize(derivada->punto(t1));
 		glm::vec3 vector_torcion1 = glm::normalize(torcion->punto(t1));
 		glm::vec3 vector_cross1 = glm::cross(vector_derivado1, vector_torcion1);
-		//vector_torcion1 = glm::cross(vector_cross1, vector_derivado1);
 
 		glm::mat3 giro1(vector_torcion1[0], vector_torcion1[1], vector_torcion1[2],
 		vector_cross1[0], vector_cross1[1], vector_cross1[2],
