@@ -58,13 +58,13 @@ class ConjuntoPuntosCuerpoAsteroide : public FuncionConjuntoPuntos {
 
 Asteroide::Asteroide() {
 	if (Asteroide::materialAsteroide==0) {
-		MaterialTP3* materialtp3 = new MaterialTP3(new BitmapTexture("lunar.bmp"), NullTexture::instance(),NullTexture::instance());
-		materialtp3->kaSetter->set(0.05);
+		MaterialTP3* materialtp3 = new MaterialTP3(new BitmapTexture("lunar.bmp"), new BitmapTexture("asteroid_normals.bmp"),NullTexture::instance());
+		materialtp3->kaSetter->set(0.1);
 		materialtp3->kdSetter->set(1.5);
 		materialtp3->ksSetter->set(0.05);
 		materialtp3->intensidadDifusoSetter->set(1.0);
 		materialtp3->intensidadGrisSetter->set(0.0);
-		materialtp3->intensidadRelieveSetter->set(0.0);
+		materialtp3->intensidadRelieveSetter->set(1.0);
 		materialtp3->intensidadReflexionSetter->set(0.0);
 
 		Asteroide::materialAsteroide = materialtp3;

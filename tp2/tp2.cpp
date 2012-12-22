@@ -379,22 +379,8 @@ void init() {
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
 
-	Texture* donut = new BitmapTexture("donut.bmp");
-	Texture* tierra = new BitmapTexture("tierra.bmp");
-	Texture* brickmap = new BitmapTexture("ladrillos_normal.bmp");
-	Texture* brick = new BitmapTexture("brick.bmp");
-	Texture* normaldonut = new BitmapTexture("normal-donut.bmp");
-	Texture* textura_instrucciones = new BitmapTexture("instrucciones.bmp");
-
 	Texture* background = new BitmapTexture("background.bmp");
 	Material* material;
-	Material* materialTexturaSimple = new MaterialTextura(textura_instrucciones);
-
-	instrucciones = new ModelObject(
-		new CuboTexturado(materialTexturaSimple, caras2),
-		glm::scale(glm::mat4(1.0), glm::vec3(2.0, 2.0, 2.0))
-		);
-	
 
 	esfera_del_cielo = new ModelObject(
 		new Esfera(new MaterialTextura(background), 20, false),
