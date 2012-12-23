@@ -569,9 +569,9 @@ void glut_display() {
 	glm::vec3 origin = posicion_camara + Shader::cameraDirection * 1.0f;
 	origin = glm::vec3(floor(origin[0]),floor(origin[1]), floor(origin[2]));
 
-	for (int i=-1; i<1; i++) {
-	for (int j=-1; j<1; j++) {
-	for (int k=-1; k<1; k++) {
+	for (int i=-2; i<2; i++) {
+	for (int j=-2; j<2; j++) {
+	for (int k=-2; k<2; k++) {
 	basuraEspacial->dibujar(glm::translate(glm::mat4(1.0),origin + glm::vec3(i,j,k)) * matriz_scala);
 	}
 	}
@@ -601,6 +601,15 @@ void glut_display() {
 	glClear(GL_DEPTH_BUFFER_BIT);
 
 	if (objetivo_actual != -1) {
+			glm::vec3 objetivo_cercano;
+
+			float f = glm::distance(posicion_camara, glm::vec3(objetivos.at(objetivo_actual)->position));
+			glm::vec3 direction = glm::normalize(glm::vec3(objetivos.at(objetivo_actual)->position) - posicion_camara);
+			if (f>20.0) {
+				f = 20.0;
+			}
+			objetivo_cercano = Shader::cameraPosition + direction * f;
+
 			glm::vec3 left = glm::normalize(glm::cross(glm::vec3(nave_seleccionada->up), Shader::cameraDirection));
 			glm::vec3 front = glm::normalize(Shader::cameraDirection);
 			glm::vec3 up = glm::vec3(nave_seleccionada->up);
@@ -608,18 +617,8 @@ void glut_display() {
 				front[0], front[1], front[2],
 				left[0], left[1], left[2],
 				up[0], up[1], up[2]);
-
-			glm::vec3 objetivo_cercano;
-
 			glm::mat4 rotacion_hacia_camara(idd);
-			float f = glm::distance(posicion_camara, glm::vec3(objetivos.at(objetivo_actual)->position));
-			if (f>20.0) {
-				objetivo_cercano = posicion_camara + 
-					glm::normalize(glm::vec3(objetivos.at(objetivo_actual)->position) - posicion_camara) * 20.0f;
-			} else {
-				objetivo_cercano = glm::vec3(objetivos.at(objetivo_actual)->position);
-			}
-			glm::mat4 escalado = glm::scale(glm::mat4(1.0), glm::vec3(f,f,f));
+
 			glm::mat4 transform_matrix =
 				glm::translate(glm::mat4(1.0), glm::vec3(objetivo_cercano)) * rotacion_hacia_camara
 				;
