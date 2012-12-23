@@ -346,6 +346,26 @@ void glut_process_keys(unsigned char key, int x, int y) {
 		objetivo_actual++;
 		if (objetivo_actual+1 > objetivos.size()) objetivo_actual = 0;
 	}
+
+	if (key == 'y') {
+		int mejor_objetivo = -1;
+		float mejor_distancia = -1.0f;
+		for (int i=0; i<objetivos.size();i++){
+			Objetivo* objetivo = objetivos.at(i);
+			float distance = glm::dot(
+				glm::normalize(objetivo->position- glm::vec3(nave_seleccionada->position)),
+				glm::normalize(glm::vec3(nave_seleccionada->front))
+				);
+
+			if (distance > mejor_distancia) {
+				mejor_distancia = distance;
+				mejor_objetivo = i;
+			}
+		}
+
+		objetivo_actual = mejor_objetivo;
+	}
+
     if (key == 27) 
     {
         exit(0);
