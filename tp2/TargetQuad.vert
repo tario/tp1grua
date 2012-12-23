@@ -10,7 +10,7 @@ uniform mat4 ProjectionMatrix;
 out vec3 normal;
 out vec3 position;
 
-const float clipping1 = 0.9;
+const float clipping1 = 0.975;
 const float clipping2 = 0.99;
 
 void main()

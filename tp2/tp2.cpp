@@ -604,10 +604,22 @@ void glut_display() {
 			glm::vec3 objetivo_cercano;
 
 			float f = glm::distance(posicion_camara, glm::vec3(objetivos.at(objetivo_actual)->position));
-			glm::vec3 direction = glm::normalize(glm::vec3(objetivos.at(objetivo_actual)->position) - posicion_camara);
+			glm::vec3 original_direction = glm::normalize(glm::vec3(objetivos.at(objetivo_actual)->position) - posicion_camara);
 			if (f>20.0) {
 				f = 20.0;
 			}
+
+			glm::vec3 direction = original_direction;
+
+			float angle = acos(glm::dot(original_direction, Shader::cameraDirection));
+			glm::vec3 eje = glm::cross(original_direction, Shader::cameraDirection);
+			
+			if (angle > 0.1) { 
+				if (angle > 1.0) angle = 1.0;
+				if (angle < -1.0) angle = -1.0;
+				direction = glm::vec3( glm::rotate(glm::mat4(1.0), -angle*180.0f/3.1415926536f, eje) * glm::vec4(Shader::cameraDirection,1.0));
+			}
+
 			objetivo_cercano = Shader::cameraPosition + direction * f;
 
 			glm::vec3 left = glm::normalize(glm::cross(glm::vec3(nave_seleccionada->up), Shader::cameraDirection));
