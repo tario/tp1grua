@@ -96,12 +96,26 @@ int camara_mode = 2;
 int mouse_last_x = 0;
 int mouse_last_y = 0;
 
+
+class Objetivo {
+	public:
+
+	glm::vec3 position;
+	std::string name;
+};
+
+
+int objetivo_actual = -1;
+std::vector<Objetivo*> objetivos;
+
 const float velocidadGiro = 0.2;
 class Nave {
 	public:
 		Nave() : front(1.0,0.0,0.0,1.0), up(0.0,0.0,1.0,1.0), position(0.0,0.0,0.0,1.0), giro(1.0),
 			desplazamiento(0.0,0.0,0.0) {
 
+				objetivos.push_back(new Objetivo());
+				this->objetivo = objetivos.at(objetivos.size()-1);
 		}
 
 
@@ -160,6 +174,9 @@ class Nave {
 			glm::vec3 d = desplazamiento; 
 			desplazamiento = glm::vec3(d[0]*0.99,d[1]*0.99, d[2]*0.99);
 			//giro = glm::mat4(1.0)
+
+			objetivo->position = glm::vec3(position);
+			objetivo->name = "Nave de combate";
 		}
 
 		bool control_avanzar;
@@ -177,12 +194,14 @@ class Nave {
 
 		glm::vec3 desplazamiento;
 		glm::mat4 giro;
+
+		Objetivo* objetivo;
 };
 
 #define NAVES_EN_ESCUADRON 3
 Nave escuadron[NAVES_EN_ESCUADRON];
 Nave* nave_seleccionada = escuadron+0;
-Nave* nave_objetivo = 0;
+
 
 void update_view_matrix() {
 	glm::vec3 look_at, up;
@@ -319,19 +338,13 @@ void glut_special_process_keys(int key, int x, int y) {
 }
 void glut_process_keys(unsigned char key, int x, int y) {
 
-	if (key == 't') {
+	if (key == 9) {
 		nave_seleccionada++;
 		if (nave_seleccionada-escuadron > 2) nave_seleccionada = escuadron;
 	}
-	if (key == 9) {
-		if (nave_objetivo == 0) {
-			nave_objetivo = escuadron;
-		} else {
-			nave_objetivo++;
-		}
-		if (nave_objetivo-escuadron > 2) nave_objetivo = escuadron;
-		if (nave_objetivo == nave_seleccionada) nave_objetivo++;
-		if (nave_objetivo-escuadron > 2) nave_objetivo = escuadron;
+	if (key == 't') {
+		objetivo_actual++;
+		if (objetivo_actual+1 > objetivos.size()) objetivo_actual = 0;
 	}
     if (key == 27) 
     {
@@ -421,6 +434,11 @@ void init() {
 				)
 		);
 
+
+	escuadron[1].position = glm::vec4(-1.0,-1.0,0.0,1.0);
+	escuadron[2].position = glm::vec4(-1.0,1.0,0.0,1.0);
+
+
 	Material* material_color_blanco = new MaterialColorSolido(glm::vec3(1.0,1.0,1.0));
 	ModelObject* light_sphere = new ModelObject(new Esfera(material_color_blanco, 10));
 	light_sphere->set_model_matrix(
@@ -443,16 +461,26 @@ void init() {
 			)
 		
 		));
-	
+
+		Objetivo* objetivo = new Objetivo;
+		objetivo->position = glm::vec3(15.0,0.0,0.0);
+		objetivos.push_back(objetivo);
+
+	 srand ( time(NULL) );
 	for (int i=0; i<10; i++) {
 		glm::vec3 desplazamiento = glm::normalize(glm::vec3(rand()%10000/1000.0 - 5.0,rand()%10000/1000.0 - 5.0,rand()%10000/1000.0 - 5.0));
 		glm::vec3 eje = glm::normalize(glm::vec3(rand()%10000/1000.0 - 5.0,rand()%10000/1000.0 - 5.0,rand()%10000/1000.0 - 5.0));
 		float angle = rand()%10000 / 1000.0;
-
 		float distancia = rand()%100/100.0 + 2.5;
+		glm::vec3 position = glm::vec3(15.0,0.0,0.0) + distancia * desplazamiento;
+
+		Objetivo* objetivo = new Objetivo;
+		objetivo->position = position;
+		objetivos.push_back(objetivo);
+
 		objects.push_front(new ModelObject(new Asteroide(), 
 			glm::rotate(
-				glm::translate(glm::mat4(1.0), glm::vec3(15.0,0.0,0.0) + distancia * desplazamiento),
+				glm::translate(glm::mat4(1.0), position),
 				70.0f,
 				eje
 				)
@@ -461,8 +489,6 @@ void init() {
 
 	nave_combate = new ModelObject(new NaveCombate(background));
 
-	escuadron[1].position = glm::vec4(-1.0,-1.0,0.0,1.0);
-	escuadron[2].position = glm::vec4(-1.0,1.0,0.0,1.0);
 
 	targetQuad = new TargetQuad();
 
@@ -554,7 +580,7 @@ void glut_display() {
 	// esto asegura de que lo que se dibuje se haga encima de todo sin importar su distancia
 	glClear(GL_DEPTH_BUFFER_BIT);
 
-	if (nave_objetivo != 0) {
+	if (objetivo_actual != -1) {
 			glm::vec3 left = glm::normalize(glm::cross(glm::vec3(nave_seleccionada->up), Shader::cameraDirection));
 			glm::vec3 front = glm::normalize(Shader::cameraDirection);
 			glm::vec3 up = glm::vec3(nave_seleccionada->up);
@@ -566,12 +592,12 @@ void glut_display() {
 			glm::vec3 objetivo_cercano;
 
 			glm::mat4 rotacion_hacia_camara(idd);
-			float f = glm::distance(posicion_camara, glm::vec3(nave_objetivo->position));
+			float f = glm::distance(posicion_camara, glm::vec3(objetivos.at(objetivo_actual)->position));
 			if (f>20.0) {
 				objetivo_cercano = posicion_camara + 
-					glm::normalize(glm::vec3(nave_objetivo->position) - posicion_camara) * 20.0f;
+					glm::normalize(glm::vec3(objetivos.at(objetivo_actual)->position) - posicion_camara) * 20.0f;
 			} else {
-				objetivo_cercano = glm::vec3(nave_objetivo->position);
+				objetivo_cercano = glm::vec3(objetivos.at(objetivo_actual)->position);
 			}
 			glm::mat4 escalado = glm::scale(glm::mat4(1.0), glm::vec3(f,f,f));
 			glm::mat4 transform_matrix =
