@@ -173,12 +173,14 @@ NaveCombate::NaveCombate(Texture* mapa_reflexion_universo) :
 }
 
 void NaveCombate::dibujar(const glm::mat4& m) {
-	alas->dibujar(m);
-	base->dibujar(m);
-	cabina->dibujar(m);
-	techo->dibujar(m);
-	vidrio->dibujar(m);
+	glm::mat4 m2 = glm::translate(m, glm::vec3(-0.75,0.0,0.0));
 
-	misil->dibujar(glm::translate(m, glm::vec3(0.2, 0.6, -0.02)));
-	misil->dibujar(glm::translate(m, glm::vec3(0.2, -0.6, -0.02)));
+	alas->dibujar(m2);
+	base->dibujar(m2);
+	cabina->dibujar(m2);
+	techo->dibujar(m2);
+	vidrio->dibujar(m2);
+
+	misil->dibujar(glm::translate(m2, glm::vec3(0.2, 0.6, -0.02)));
+	misil->dibujar(glm::translate(m2, glm::vec3(0.2, -0.6, -0.02)));
 }

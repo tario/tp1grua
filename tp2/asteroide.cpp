@@ -75,7 +75,7 @@ Asteroide::Asteroide() {
 	CurvaConstante torcion(glm::vec3(0.0,1.0,0.0));
 	cuerpo = new Barrido(
 		&ConjuntoPuntosCuerpoAsteroide(),
-		&SegmentoRecta(glm::vec3(0.0,0.0,0.0), glm::vec3(0.0,0.0,0.5)),
+		&SegmentoRecta(glm::vec3(0.0,0.0,-0.25), glm::vec3(0.0,0.0,0.25)),
 		&CurvaConstante(glm::vec3(0.0,0.0,1.0)),
 		&torcion,
 		0.05,
