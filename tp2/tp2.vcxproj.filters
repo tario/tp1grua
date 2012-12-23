@@ -81,6 +81,9 @@
     <ClCompile Include="shader_program.cpp">
       <Filter>utils</Filter>
     </ClCompile>
+    <ClCompile Include="material_target_quad.cpp">
+      <Filter>material</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -178,6 +181,9 @@
     <ClInclude Include="shader_program.h">
       <Filter>utils</Filter>
     </ClInclude>
+    <ClInclude Include="material_target_quad.h">
+      <Filter>material</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -221,6 +227,9 @@
       <Filter>shadersglsl</Filter>
     </None>
     <None Include="ColorShader.frag">
+      <Filter>shadersglsl</Filter>
+    </None>
+    <None Include="TargetQuad.vert">
       <Filter>shadersglsl</Filter>
     </None>
   </ItemGroup>

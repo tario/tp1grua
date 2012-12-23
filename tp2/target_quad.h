@@ -2,7 +2,7 @@
 #define __TARGET_OBJECT_H
 
 #include "dibujable.h"
-#include "material_color_solido.h"
+#include "material_target_quad.h"
 #include "GL/glew.h"
 #include "GL/wglew.h"
 #include "GL/freeglut.h"
@@ -12,7 +12,7 @@ class TargetQuad : public Dibujable  {
 		TargetQuad();
 		void dibujar(const glm::mat4& m);
 	private:
-		MaterialColorSolido material;
+		MaterialTargetQuad material;
 		GLuint vaoHandle;
 };
 
