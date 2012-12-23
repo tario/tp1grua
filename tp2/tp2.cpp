@@ -102,6 +102,7 @@ class Objetivo {
 
 	glm::vec3 position;
 	std::string name;
+	float distancia_camara;
 };
 
 
@@ -116,6 +117,7 @@ class Nave {
 
 				objetivos.push_back(new Objetivo());
 				this->objetivo = objetivos.at(objetivos.size()-1);
+				this->objetivo->distancia_camara = 0.5;
 		}
 
 
@@ -484,6 +486,7 @@ void init() {
 
 		Objetivo* objetivo = new Objetivo;
 		objetivo->position = glm::vec3(15.0,0.0,0.0);
+		objetivo->distancia_camara = 4.0;
 		objetivos.push_back(objetivo);
 
 	 srand ( time(NULL) );
@@ -496,6 +499,7 @@ void init() {
 
 		Objetivo* objetivo = new Objetivo;
 		objetivo->position = position;
+		objetivo->distancia_camara = 1.0;
 		objetivos.push_back(objetivo);
 
 		objects.push_front(new ModelObject(new Asteroide(), 
@@ -522,11 +526,58 @@ void glut_animate() {
 int loc;
 
 #include "cubo_texturado.h"
+
+
+void render_scene(
+	int viewportx,
+	int viewporty,
+	int width,
+	int height,
+	bool target_quad);
+
 void glut_display() {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	render_scene(0,0,xresolution,yresolution,true);
+	if (objetivo_actual != -1) {
+		// limpiar el DEPTH buffer para asegurarse de que la escena se renderize encima de todo
+		glClear(GL_DEPTH_BUFFER_BIT);
+		render_scene(0,0,xresolution/5,yresolution/5,false);
+	}
+    glutSwapBuffers();
+}
+
+
+void render_scene(
+	int viewportx,
+	int viewporty,
+	int width,
+	int height,
+	bool target_quad) {
 
   // do display
-	glViewport(0,0,xresolution,yresolution);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glViewport(viewportx,viewporty,width,height);
+
+	if (target_quad) {
+		update_view_matrix();
+	} else {
+		Objetivo* objetivo = objetivos.at(objetivo_actual);
+
+		glm::vec3 look_at, up, direction;
+
+		direction = glm::normalize(glm::vec3(nave_seleccionada->position) - objetivo->position);
+		up = glm::vec3(nave_seleccionada->up);
+		look_at = objetivo->position;
+		posicion_camara = look_at + direction * objetivo->distancia_camara;
+
+		View       = glm::lookAt(
+			posicion_camara, 
+			look_at, 
+			up
+		);
+
+		Shader::cameraDirection = glm::normalize(look_at - posicion_camara );
+		Shader::cameraPosition = posicion_camara;
+	}
 
 	glm::mat4 prMatrix;
 	prMatrix = glm::perspective(45.0f, 16.0f / 9.0f, 0.1f, 100.0f);
@@ -546,14 +597,6 @@ void glut_display() {
 	for (int i=0; i<NAVES_EN_ESCUADRON; i++) {
 	escuadron[i].processFrame();
 	}
-	
-
-	update_view_matrix();
-
-//    glMatrixMode(GL_MODELVIEW);
-//    glLoadIdentity();
-	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
-	// Camera matrix
 
 	Shader::projectionMatrix = prMatrix * View;
 	//glm::mat4 Projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
@@ -600,52 +643,55 @@ void glut_display() {
 	// esto asegura de que lo que se dibuje se haga encima de todo sin importar su distancia
 	glClear(GL_DEPTH_BUFFER_BIT);
 
-	if (objetivo_actual != -1) {
-			glm::vec3 objetivo_cercano;
+	if (target_quad) {
+		if (objetivo_actual != -1) {
+				glm::vec3 objetivo_cercano;
 
-			float f = glm::distance(posicion_camara, glm::vec3(objetivos.at(objetivo_actual)->position));
-			glm::vec3 original_direction = glm::normalize(glm::vec3(objetivos.at(objetivo_actual)->position) - posicion_camara);
-			if (f>20.0) {
-				f = 20.0;
-			}
+				float f = glm::distance(posicion_camara, glm::vec3(objetivos.at(objetivo_actual)->position));
+				glm::vec3 original_direction = glm::normalize(glm::vec3(objetivos.at(objetivo_actual)->position) - posicion_camara);
+				if (f>20.0) {
+					f = 20.0;
+				}
 
-			glm::vec3 direction = original_direction;
+				glm::vec3 direction = original_direction;
 
-			float angle = acos(glm::dot(original_direction, Shader::cameraDirection));
-			glm::vec3 eje = glm::cross(original_direction, Shader::cameraDirection);
+				float angle = acos(glm::dot(original_direction, Shader::cameraDirection));
+				glm::vec3 eje = glm::cross(original_direction, Shader::cameraDirection);
 			
-			if (angle > 0.1) { 
-				if (angle > 1.0) angle = 1.0;
-				if (angle < -1.0) angle = -1.0;
-				direction = glm::vec3( glm::rotate(glm::mat4(1.0), -angle*180.0f/3.1415926536f, eje) * glm::vec4(Shader::cameraDirection,1.0));
-			}
+				if (angle > 0.1) { 
+					if (angle > 1.0) angle = 1.0;
+					if (angle < -1.0) angle = -1.0;
+					direction = glm::vec3( glm::rotate(glm::mat4(1.0), -angle*180.0f/3.1415926536f, eje) * glm::vec4(Shader::cameraDirection,1.0));
+				}
 
-			objetivo_cercano = Shader::cameraPosition + direction * f;
+				objetivo_cercano = Shader::cameraPosition + direction * f;
 
-			glm::vec3 left = glm::normalize(glm::cross(glm::vec3(nave_seleccionada->up), Shader::cameraDirection));
-			glm::vec3 front = glm::normalize(Shader::cameraDirection);
-			glm::vec3 up = glm::vec3(nave_seleccionada->up);
-			glm::mat3 idd(
-				front[0], front[1], front[2],
-				left[0], left[1], left[2],
-				up[0], up[1], up[2]);
-			glm::mat4 rotacion_hacia_camara(idd);
+				glm::vec3 left = glm::normalize(glm::cross(glm::vec3(nave_seleccionada->up), Shader::cameraDirection));
+				glm::vec3 front = glm::normalize(Shader::cameraDirection);
+				glm::vec3 up = glm::vec3(nave_seleccionada->up);
+				glm::mat3 idd(
+					front[0], front[1], front[2],
+					left[0], left[1], left[2],
+					up[0], up[1], up[2]);
+				glm::mat4 rotacion_hacia_camara(idd);
 
-			glm::mat4 transform_matrix =
-				glm::translate(glm::mat4(1.0), glm::vec3(objetivo_cercano)) * rotacion_hacia_camara
-				;
+				glm::mat4 transform_matrix =
+					glm::translate(glm::mat4(1.0), glm::vec3(objetivo_cercano)) * rotacion_hacia_camara
+					;
 
-			targetQuad->dibujar(
-		 		 transform_matrix
-			);
+				targetQuad->dibujar(
+		 			 transform_matrix
+				);
+		}
 	}
+		
 	//textureShader->use();
   //  glUniform1i(loc, 1);
 //	glDrawArrays( GL_TRIANGLES, 0, 36);
 
     //gluLookAt(0.0, 200.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     //glutWireTeapot(1.0);
-    glutSwapBuffers();
+
    // glFlush();
 
   //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
