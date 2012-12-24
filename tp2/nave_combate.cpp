@@ -164,7 +164,7 @@ NaveCombate::NaveCombate(Texture* mapa_reflexion_universo) :
 		&derivada_base,
 		&torcion_alas,
 		0.1,
-		&material_reflejante,
+		&material_color,
 		0.4,0.7);
 
 	misil = Misil::instance();
