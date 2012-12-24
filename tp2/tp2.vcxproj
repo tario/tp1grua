@@ -79,17 +79,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="BasicColorFShader.frag" />
-    <None Include="BasicFShader.frag" />
-    <None Include="BumpMappingFShader.frag" />
     <None Include="ColorShader.frag" />
-    <None Include="DirtnessShader.frag" />
+    <None Include="PhongColorShader.frag" />
     <None Include="ReadMe.txt" />
-    <None Include="SpecularDirtnessShader.frag" />
     <None Include="TargetQuad.vert" />
     <None Include="TextureFShader.frag" />
-    <None Include="TextureVShader.vert" />
-    <None Include="TextureWavesVShader.vert" />
     <None Include="tp2Shader.frag" />
     <None Include="tp2Shader.vert" />
     <None Include="tp3Shader.frag" />
@@ -124,7 +118,6 @@
     <ClInclude Include="segmento_recta.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="shader_program.h" />
-    <ClInclude Include="solid_color_shader.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="target_quad.h" />
@@ -156,7 +149,6 @@
     <ClCompile Include="segmento_recta.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="shader_program.cpp" />
-    <ClCompile Include="solid_color_shader.cpp" />
     <ClCompile Include="target_quad.cpp" />
     <ClCompile Include="toroide.cpp" />
     <ClCompile Include="tp2.cpp" />

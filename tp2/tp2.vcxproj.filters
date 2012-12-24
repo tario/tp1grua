@@ -26,9 +26,6 @@
     <ClCompile Include="esfera.cpp">
       <Filter>primitivas</Filter>
     </ClCompile>
-    <ClCompile Include="solid_color_shader.cpp">
-      <Filter>shaderscode</Filter>
-    </ClCompile>
     <ClCompile Include="toroide.cpp">
       <Filter>primitivas</Filter>
     </ClCompile>
@@ -121,9 +118,6 @@
     <ClInclude Include="esfera.h">
       <Filter>primitivas</Filter>
     </ClInclude>
-    <ClInclude Include="solid_color_shader.h">
-      <Filter>shaderscode</Filter>
-    </ClInclude>
     <ClInclude Include="toroide.h">
       <Filter>primitivas</Filter>
     </ClInclude>
@@ -187,28 +181,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
-    <None Include="BasicFShader.frag">
-      <Filter>shadersglsl</Filter>
-    </None>
     <None Include="TextureFShader.frag">
-      <Filter>shadersglsl</Filter>
-    </None>
-    <None Include="TextureVShader.vert">
-      <Filter>shadersglsl</Filter>
-    </None>
-    <None Include="DirtnessShader.frag">
-      <Filter>shadersglsl</Filter>
-    </None>
-    <None Include="TextureWavesVShader.vert">
-      <Filter>shadersglsl</Filter>
-    </None>
-    <None Include="SpecularDirtnessShader.frag">
-      <Filter>shadersglsl</Filter>
-    </None>
-    <None Include="BumpMappingFShader.frag">
-      <Filter>shadersglsl</Filter>
-    </None>
-    <None Include="BasicColorFShader.frag">
       <Filter>shadersglsl</Filter>
     </None>
     <None Include="tp2Shader.frag">
@@ -229,6 +202,9 @@
     <None Include="TargetQuad.vert">
       <Filter>shadersglsl</Filter>
     </None>
+    <None Include="PhongColorShader.frag">
+      <Filter>shadersglsl</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="primitivas">
@@ -236,9 +212,6 @@
     </Filter>
     <Filter Include="utils">
       <UniqueIdentifier>{6d18e2b0-469c-4f01-b0e0-58d9139bae11}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="shaderscode">
-      <UniqueIdentifier>{2aa5fc77-efb1-4e16-b9f6-5832bc4f5b09}</UniqueIdentifier>
     </Filter>
     <Filter Include="shadersglsl">
       <UniqueIdentifier>{f3bf97ab-ee85-4026-905c-8204925cb6a0}</UniqueIdentifier>
