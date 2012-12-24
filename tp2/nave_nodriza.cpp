@@ -44,7 +44,7 @@ class ConjuntoPuntosPuenteCentral : public FuncionConjuntoPuntos {
 NaveNodriza::NaveNodriza(Texture* reflectionMap) : 
 	textura_nave("shiphull.bmp"),
 	normal_nave("shiphull_normal2.bmp"),
-	material1(&textura_nave, &normal_nave, NullTexture::instance()),
+	material1(&textura_nave, &normal_nave),
 	material2(glm::vec3(0.5,0.5,0.5), reflectionMap),
 	material3(glm::vec3(0.25,0.25,0.25),true),
 	anillo(&material1, &material2)

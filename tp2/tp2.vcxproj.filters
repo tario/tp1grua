@@ -84,6 +84,9 @@
     <ClCompile Include="material_color_reflexion.cpp">
       <Filter>material</Filter>
     </ClCompile>
+    <ClCompile Include="material_difuso_relieve.cpp">
+      <Filter>material</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -182,6 +185,9 @@
       <Filter>material</Filter>
     </ClInclude>
     <ClInclude Include="material_color_reflexion.h">
+      <Filter>material</Filter>
+    </ClInclude>
+    <ClInclude Include="material_difuso_relieve.h">
       <Filter>material</Filter>
     </ClInclude>
   </ItemGroup>

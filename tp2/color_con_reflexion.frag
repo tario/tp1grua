@@ -64,5 +64,4 @@ void main()
 		(ka + kd * id) * Color[1] + ks * is + ColorReflexion[1] * intensidad_reflexion,
 		(ka + kd * id) * Color[2] + ks * is + ColorReflexion[2] * intensidad_reflexion,
 		1.0);
-
 }
