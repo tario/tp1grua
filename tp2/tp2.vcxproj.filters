@@ -196,9 +196,6 @@
     <None Include="TextureFShader.frag">
       <Filter>shadersglsl</Filter>
     </None>
-    <None Include="tp2Shader.frag">
-      <Filter>shadersglsl</Filter>
-    </None>
     <None Include="tp2Shader.vert">
       <Filter>shadersglsl</Filter>
     </None>

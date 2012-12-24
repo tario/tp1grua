@@ -87,7 +87,6 @@
     <None Include="ReadMe.txt" />
     <None Include="TargetQuad.vert" />
     <None Include="TextureFShader.frag" />
-    <None Include="tp2Shader.frag" />
     <None Include="tp2Shader.vert" />
     <None Include="tp3Shader.vert" />
   </ItemGroup>
