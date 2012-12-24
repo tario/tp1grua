@@ -16,7 +16,7 @@ class NaveCombate : public Dibujable {
 		void dibujar(const glm::mat4&);
 
 	private:
-		MaterialTP3 material_cubo;
+		MaterialTP3 material_reflejante;
 		MaterialColorSolido material_color;
 
 		BitmapTexture mapa_difuso_nave;

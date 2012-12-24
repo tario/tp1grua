@@ -5,14 +5,12 @@ static ShaderProgram* shaderProgram = 0;
 
 MaterialTP3::MaterialTP3(
 	Texture* diffuse_map, 
-	Texture* bump_map,
 	Texture* reflection_map) :
 	diffuse_map(diffuse_map),
-	bump_map(bump_map),
 	reflection_map(reflection_map) { 
 
 	if (shaderProgram == 0) {
-		shaderProgram = new ShaderProgram("tp3Shader.frag", "tp3Shader.vert");
+		shaderProgram = new ShaderProgram("difuso_con_reflexion.frag", "tp3Shader.vert");
 		shaderProgram->bindAttribLocation(0, "VertexPosition" );
 		shaderProgram->bindAttribLocation(1, "VertexNormal" );
 		shaderProgram->bindAttribLocation(2, "VertexTexCoord" );
@@ -23,15 +21,12 @@ MaterialTP3::MaterialTP3(
 	this->shader = new Shader(shaderProgram);
 
 	this->shader->setter<int>("diffuse_map")->set(0);
-	this->shader->setter<int>("normal_map")->set(1);
 	this->shader->setter<int>("reflection_map")->set(2);
 	kaSetter = shader->setter<float>("ka")->set(0.6);
 	kdSetter = shader->setter<float>("kd")->set(0.3);
 	ksSetter = shader->setter<float>("ks")->set(0.4);
 	glossinessSetter = shader->setter<float>("glossiness")->set(4.0);
-	intensidadGrisSetter = shader->setter<float>("intensidad_gris")->set(0.4);
 	intensidadDifusoSetter = shader->setter<float>("intensidad_difuso")->set(0.0);
-	intensidadRelieveSetter = shader->setter<float>("intensidad_relieve")->set(0.0);
 	intensidadReflexionSetter = shader->setter<float>("intensidad_reflexion")->set(0.0);
 
 	transformMatrixSetter = shader->setter<glm::mat4>("TransformMatrix");
@@ -49,6 +44,5 @@ void MaterialTP3::use(const glm::mat4& m) {
 	this->shader->use();
 
 	diffuse_map->load(0);
-	bump_map->load(1);
 	reflection_map->load(2);
 }

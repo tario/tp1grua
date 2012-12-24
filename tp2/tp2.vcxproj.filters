@@ -202,9 +202,6 @@
     <None Include="tp2Shader.vert">
       <Filter>shadersglsl</Filter>
     </None>
-    <None Include="tp3Shader.frag">
-      <Filter>shadersglsl</Filter>
-    </None>
     <None Include="tp3Shader.vert">
       <Filter>shadersglsl</Filter>
     </None>
@@ -221,6 +218,9 @@
       <Filter>shadersglsl</Filter>
     </None>
     <None Include="color_con_reflexion.frag">
+      <Filter>shadersglsl</Filter>
+    </None>
+    <None Include="difuso_con_reflexion.frag">
       <Filter>shadersglsl</Filter>
     </None>
   </ItemGroup>

@@ -81,6 +81,7 @@
   <ItemGroup>
     <None Include="ColorShader.frag" />
     <None Include="color_con_reflexion.frag" />
+    <None Include="difuso_con_reflexion.frag" />
     <None Include="difuso_con_relieve.frag" />
     <None Include="PhongColorShader.frag" />
     <None Include="ReadMe.txt" />
@@ -88,7 +89,6 @@
     <None Include="TextureFShader.frag" />
     <None Include="tp2Shader.frag" />
     <None Include="tp2Shader.vert" />
-    <None Include="tp3Shader.frag" />
     <None Include="tp3Shader.vert" />
   </ItemGroup>
   <ItemGroup>

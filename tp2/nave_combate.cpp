@@ -117,30 +117,28 @@ class ConjuntoPuntosVidrio : public FuncionConjuntoPuntos {
 
 NaveCombate::NaveCombate(Texture* mapa_reflexion_universo) : 
 	mapa_difuso_nave("nave.bmp"),
-	material_cubo(&mapa_difuso_nave, NullTexture::instance(), mapa_reflexion_universo),
+	material_reflejante(&mapa_difuso_nave, mapa_reflexion_universo),
 	material_color(glm::vec3(0.0,0.0,0.0)) {
 
-		material_cubo.ksSetter->set(0.2);
-		material_cubo.kdSetter->set(1.5);
-		material_cubo.intensidadDifusoSetter->set(0.6);
-		material_cubo.intensidadReflexionSetter->set(0.2);
-		material_cubo.intensidadGrisSetter->set(0.0);
-		material_cubo.intensidadRelieveSetter->set(0.0);
-		material_cubo.kaSetter->set(0.1);
-		material_cubo.glossinessSetter->set(9.0);
+		material_reflejante.ksSetter->set(0.2);
+		material_reflejante.kdSetter->set(1.5);
+		material_reflejante.intensidadDifusoSetter->set(0.6);
+		material_reflejante.intensidadReflexionSetter->set(0.2);
+		material_reflejante.kaSetter->set(0.1);
+		material_reflejante.glossinessSetter->set(9.0);
 
 
 	SegmentoRecta curva_alas(glm::vec3(0.525,0.0,0.0), glm::vec3(0.025,0.0,0.0));
 	CurvaConstante derivada_alas(glm::vec3(-1.0,0.0,0.0));
 	CurvaConstante torcion_alas(glm::vec3(0.0,1.0,0.0));
 	ConjuntoPuntosAlas funcionConjuntoAlas;
-	alas = new Barrido(&funcionConjuntoAlas, &curva_alas, &derivada_alas, &torcion_alas, 0.1, &material_cubo);
+	alas = new Barrido(&funcionConjuntoAlas, &curva_alas, &derivada_alas, &torcion_alas, 0.1, &material_reflejante);
 
 	SegmentoRecta curva_base(glm::vec3(0.0,0.0,0.0), glm::vec3(1.5,0.0,0.0));
 	CurvaConstante derivada_base(glm::vec3(1.0,0.0,0.0));
 	ConjuntoPuntosBase funcionConjuntoBase;
 
-	base = new Barrido(&funcionConjuntoBase, &curva_base, &derivada_base, &torcion_alas, 0.1, &material_cubo);
+	base = new Barrido(&funcionConjuntoBase, &curva_base, &derivada_base, &torcion_alas, 0.1, &material_reflejante);
 
 	cabina = new Barrido(
 		&ConjuntoPuntosCabina(), 
@@ -148,7 +146,7 @@ NaveCombate::NaveCombate(Texture* mapa_reflexion_universo) :
 		&derivada_base,
 		&torcion_alas,
 		1.0,
-		&material_cubo,
+		&material_reflejante,
 		0.0,0.4);
 
 	techo = new Barrido(
@@ -157,7 +155,7 @@ NaveCombate::NaveCombate(Texture* mapa_reflexion_universo) :
 		&derivada_base,
 		&torcion_alas,
 		0.1,
-		&material_cubo,
+		&material_reflejante,
 		0.0,0.6);
 
 	vidrio = new Barrido(
@@ -166,7 +164,7 @@ NaveCombate::NaveCombate(Texture* mapa_reflexion_universo) :
 		&derivada_base,
 		&torcion_alas,
 		0.1,
-		&material_color,
+		&material_reflejante,
 		0.4,0.7);
 
 	misil = Misil::instance();
