@@ -4,7 +4,7 @@
 #include "bitmap_texture.h"
 #include "segmento_recta.h"
 #include "curva_constante.h"
-#include "material_tp3.h" 
+#include "material_difuso_relieve.h" 
 #include "null_texture.h"
 #include <algorithm>
 
@@ -61,16 +61,18 @@ class ConjuntoPuntosCuerpoAsteroide : public FuncionConjuntoPuntos {
 
 Asteroide::Asteroide() {
 	if (Asteroide::materialAsteroide==0) {
-		MaterialTP3* materialtp3 = new MaterialTP3(new BitmapTexture("lunar.bmp"), new BitmapTexture("asteroid_normals.bmp"),NullTexture::instance());
-		materialtp3->kaSetter->set(0.0);
-		materialtp3->kdSetter->set(1.5);
-		materialtp3->ksSetter->set(0.05);
-		materialtp3->intensidadDifusoSetter->set(1.0);
-		materialtp3->intensidadGrisSetter->set(0.0);
-		materialtp3->intensidadRelieveSetter->set(0.5);
-		materialtp3->intensidadReflexionSetter->set(0.0);
+		MaterialDifusoRelieve* material_asteroide = 
+			new MaterialDifusoRelieve(
+				new BitmapTexture("lunar.bmp"), 
+				new BitmapTexture("asteroid_normals.bmp")
+				);
+		material_asteroide->kaSetter->set(0.0);
+		material_asteroide->kdSetter->set(1.5);
+		material_asteroide->ksSetter->set(0.05);
+		material_asteroide->intensidadDifusoSetter->set(1.0);
+		material_asteroide->intensidadRelieveSetter->set(0.5);
 
-		Asteroide::materialAsteroide = materialtp3;
+		Asteroide::materialAsteroide = material_asteroide;
 	}
 	CurvaConstante torcion(glm::vec3(0.0,1.0,0.0));
 	cuerpo = new Barrido(

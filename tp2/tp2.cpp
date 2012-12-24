@@ -421,6 +421,8 @@ static CuboTexturado::Cara caras2[] = {
 	CuboTexturado::Cara(cara2)
 };
 
+#include "material_difuso_relieve.h"
+
 void init() {
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glShadeModel(GL_SMOOTH);
@@ -439,17 +441,16 @@ void init() {
 		);
 
 	Texture* textura_planeta = new BitmapTexture("planeta.bmp");
-	MaterialTP3* materialtp3 = new MaterialTP3(textura_planeta, new BitmapTexture("planeta_normals.bmp"),NullTexture::instance());
-	materialtp3->kaSetter->set(0.0);
-	materialtp3->kdSetter->set(1.0);
-	materialtp3->ksSetter->set(0.0);
-	materialtp3->intensidadDifusoSetter->set(1.0);
-	materialtp3->intensidadGrisSetter->set(0.0);
-	materialtp3->intensidadRelieveSetter->set(0.65);
-	materialtp3->intensidadReflexionSetter->set(0.0);
+	Texture* normal_planeta = new BitmapTexture("planeta_normals.bmp");
+	MaterialDifusoRelieve* material_planeta = new MaterialDifusoRelieve(textura_planeta, normal_planeta);
+	material_planeta->kaSetter->set(0.0);
+	material_planeta->kdSetter->set(1.0);
+	material_planeta->ksSetter->set(0.0);
+	material_planeta->intensidadDifusoSetter->set(1.0);
+	material_planeta->intensidadRelieveSetter->set(0.45);
 
 	planeta = new ModelObject(
-		new Esfera(materialtp3, 20, false),
+		new Esfera(material_planeta, 20, false),
 			glm::scale(
 				glm::translate(glm::mat4(1.0), glm::vec3(40.0, 40.0, 0.0)),
 				glm::vec3(55,55,55)
