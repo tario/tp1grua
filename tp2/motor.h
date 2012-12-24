@@ -2,7 +2,6 @@
 #define __MOTOR_H
 
 #include "dibujable.h"
-#include "material_tp3.h"
 #include "barrido.h"
 #include "material.h"
 #include "propulsor.h"

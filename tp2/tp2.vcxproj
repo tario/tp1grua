@@ -107,10 +107,10 @@
     <ClInclude Include="material.h" />
     <ClInclude Include="material_color_reflexion.h" />
     <ClInclude Include="material_color_solido.h" />
+    <ClInclude Include="material_difuso_reflexion.h" />
     <ClInclude Include="material_difuso_relieve.h" />
     <ClInclude Include="material_target_quad.h" />
     <ClInclude Include="material_textura.h" />
-    <ClInclude Include="material_tp3.h" />
     <ClInclude Include="misil.h" />
     <ClInclude Include="model_object.h" />
     <ClInclude Include="motor.h" />
@@ -141,10 +141,10 @@
     <ClCompile Include="funcion_conjunto_puntos.cpp" />
     <ClCompile Include="material_color_reflexion.cpp" />
     <ClCompile Include="material_color_solido.cpp" />
+    <ClCompile Include="material_difuso_reflexion.cpp" />
     <ClCompile Include="material_difuso_relieve.cpp" />
     <ClCompile Include="material_target_quad.cpp" />
     <ClCompile Include="material_textura.cpp" />
-    <ClCompile Include="material_tp3.cpp" />
     <ClCompile Include="misil.cpp" />
     <ClCompile Include="model_object.cpp" />
     <ClCompile Include="motor.cpp" />

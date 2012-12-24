@@ -2,7 +2,6 @@
 #define __NAVE_NODRIZA_H
 
 #include "dibujable.h"
-#include "material_tp3.h"
 #include "material_color_solido.h"
 #include "material_color_reflexion.h"
 #include "material_difuso_relieve.h"

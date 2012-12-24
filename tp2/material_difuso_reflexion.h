@@ -1,13 +1,13 @@
-#ifndef __MATERIAL_TP3_H
-#define __MATERIAL_TP3_H
+#ifndef __MATERIAL_DIFUSO_REFLEXION_H
+#define __MATERIAL_DIFUSO_REFLEXION_H
 
 #include "material.h"
 #include "texture.h"
 #include "shader.h"
 
-class MaterialTP3 : public Material {
+class MaterialDifusoReflexion : public Material {
 	public:
-		MaterialTP3(
+		MaterialDifusoReflexion(
 			Texture* diffuse_map, 
 			Texture* reflection_map);
 		void use(const glm::mat4& m);

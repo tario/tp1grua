@@ -1,9 +1,9 @@
 #include "stdafx.h"
-#include "material_tp3.h"
+#include "material_difuso_reflexion.h"
 
 static ShaderProgram* shaderProgram = 0;
 
-MaterialTP3::MaterialTP3(
+MaterialDifusoReflexion::MaterialDifusoReflexion(
 	Texture* diffuse_map, 
 	Texture* reflection_map) :
 	diffuse_map(diffuse_map),
@@ -35,7 +35,7 @@ MaterialTP3::MaterialTP3(
 	cameraSetter = shader->setter<glm::vec3>("camera_position");
 }
 
-void MaterialTP3::use(const glm::mat4& m) {
+void MaterialDifusoReflexion::use(const glm::mat4& m) {
 	transformMatrixSetter->set(m);
 	normalMatrixSetter->set(shader->compute_normal_matrix(m));
 	projectionMatrixSetter->set(Shader::projectionMatrix);

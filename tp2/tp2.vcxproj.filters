@@ -36,9 +36,6 @@
     <ClCompile Include="nave_combate.cpp">
       <Filter>modelobjects</Filter>
     </ClCompile>
-    <ClCompile Include="material_tp3.cpp">
-      <Filter>material</Filter>
-    </ClCompile>
     <ClCompile Include="segmento_recta.cpp">
       <Filter>primitivas\curvas</Filter>
     </ClCompile>
@@ -87,6 +84,9 @@
     <ClCompile Include="material_difuso_relieve.cpp">
       <Filter>material</Filter>
     </ClCompile>
+    <ClCompile Include="material_difuso_reflexion.cpp">
+      <Filter>material</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -132,9 +132,6 @@
     </ClInclude>
     <ClInclude Include="nave_combate.h">
       <Filter>modelobjects</Filter>
-    </ClInclude>
-    <ClInclude Include="material_tp3.h">
-      <Filter>material</Filter>
     </ClInclude>
     <ClInclude Include="null_texture.h">
       <Filter>utils</Filter>
@@ -188,6 +185,9 @@
       <Filter>material</Filter>
     </ClInclude>
     <ClInclude Include="material_difuso_relieve.h">
+      <Filter>material</Filter>
+    </ClInclude>
+    <ClInclude Include="material_difuso_reflexion.h">
       <Filter>material</Filter>
     </ClInclude>
   </ItemGroup>
