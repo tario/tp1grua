@@ -9,7 +9,7 @@ MaterialTextura::MaterialTextura(Texture* texture) :
 	texture(texture) {
 
 	if (textureShaderProgram == 0) {
-		textureShaderProgram = new ShaderProgram("TextureFShader.frag", "TextureVShader.vert");
+		textureShaderProgram = new ShaderProgram("TextureFShader.frag", "tp3shader.vert");
 
 		textureShaderProgram->bindAttribLocation(0, "VertexPosition" );
 		textureShaderProgram->bindAttribLocation(1, "VertexNormal" );

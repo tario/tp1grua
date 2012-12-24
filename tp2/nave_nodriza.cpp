@@ -45,7 +45,7 @@ NaveNodriza::NaveNodriza(Texture* reflectionMap) :
 	textura_nave("shiphull.bmp"),
 	normal_nave("shiphull_normal2.bmp"),
 	material1(&textura_nave, &normal_nave, NullTexture::instance()),
-	material2(&textura_nave, NullTexture::instance(), reflectionMap),
+	material2(glm::vec3(0.5,0.5,0.5), reflectionMap),
 	material3(glm::vec3(0.25,0.25,0.25),true),
 	anillo(&material1, &material2)
 {
@@ -58,8 +58,6 @@ NaveNodriza::NaveNodriza(Texture* reflectionMap) :
 	material2.kaSetter->set(0.05);
 	material2.ksSetter->set(0.5);
 	material2.kdSetter->set(1.5);
-	material2.intensidadDifusoSetter->set(0.0);
-	material2.intensidadGrisSetter->set(0.7);
 	material2.intensidadReflexionSetter->set(0.7);
 
 	motor = Motor::instance(&material1, &material3);

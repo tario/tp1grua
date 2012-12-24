@@ -8,7 +8,7 @@ static ShaderProgram* phongShaderProgram = 0;
 MaterialColorSolido::MaterialColorSolido(const glm::vec3& color, bool phong) : color(color) {
 	if (phong) {
 		if (shaderProgram == 0) {
-		shaderProgram = new ShaderProgram("BasicColorFShader.frag", "tp3shader.vert"); 
+		shaderProgram = new ShaderProgram("PhongColorShader.frag", "tp3shader.vert"); 
 		shaderProgram->bindAttribLocation(0, "VertexPosition" );
 		shaderProgram->bindAttribLocation(1, "VertexNormal" );
 		shaderProgram->link();

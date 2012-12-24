@@ -80,6 +80,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="ColorShader.frag" />
+    <None Include="color_con_reflexion.frag" />
+    <None Include="difuso_con_relieve.frag" />
     <None Include="PhongColorShader.frag" />
     <None Include="ReadMe.txt" />
     <None Include="TargetQuad.vert" />
@@ -103,6 +105,7 @@
     <ClInclude Include="esfera.h" />
     <ClInclude Include="funcion_conjunto_puntos.h" />
     <ClInclude Include="material.h" />
+    <ClInclude Include="material_color_reflexion.h" />
     <ClInclude Include="material_color_solido.h" />
     <ClInclude Include="material_target_quad.h" />
     <ClInclude Include="material_textura.h" />
@@ -135,6 +138,7 @@
     <ClCompile Include="curva_constante.cpp" />
     <ClCompile Include="esfera.cpp" />
     <ClCompile Include="funcion_conjunto_puntos.cpp" />
+    <ClCompile Include="material_color_reflexion.cpp" />
     <ClCompile Include="material_color_solido.cpp" />
     <ClCompile Include="material_target_quad.cpp" />
     <ClCompile Include="material_textura.cpp" />

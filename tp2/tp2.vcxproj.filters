@@ -81,6 +81,9 @@
     <ClCompile Include="material_target_quad.cpp">
       <Filter>material</Filter>
     </ClCompile>
+    <ClCompile Include="material_color_reflexion.cpp">
+      <Filter>material</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -178,6 +181,9 @@
     <ClInclude Include="material_target_quad.h">
       <Filter>material</Filter>
     </ClInclude>
+    <ClInclude Include="material_color_reflexion.h">
+      <Filter>material</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -203,6 +209,12 @@
       <Filter>shadersglsl</Filter>
     </None>
     <None Include="PhongColorShader.frag">
+      <Filter>shadersglsl</Filter>
+    </None>
+    <None Include="difuso_con_relieve.frag">
+      <Filter>shadersglsl</Filter>
+    </None>
+    <None Include="color_con_reflexion.frag">
       <Filter>shadersglsl</Filter>
     </None>
   </ItemGroup>
