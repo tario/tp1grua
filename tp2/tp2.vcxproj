@@ -80,7 +80,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="BasicColorFShader.frag" />
-    <None Include="BasicColorVShader.vert" />
     <None Include="BasicFShader.frag" />
     <None Include="BumpMappingFShader.frag" />
     <None Include="ColorShader.frag" />

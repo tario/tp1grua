@@ -211,9 +211,6 @@
     <None Include="BasicColorFShader.frag">
       <Filter>shadersglsl</Filter>
     </None>
-    <None Include="BasicColorVShader.vert">
-      <Filter>shadersglsl</Filter>
-    </None>
     <None Include="tp2Shader.frag">
       <Filter>shadersglsl</Filter>
     </None>
