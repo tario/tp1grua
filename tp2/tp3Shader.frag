@@ -8,7 +8,7 @@ uniform vec3 camera_position;
 
 // texturas para mapas difuso, de relieve y de reflexion
 uniform sampler2D diffuse_map;
-uniform sampler2D bump_map;
+uniform sampler2D normal_map;
 uniform sampler2D reflection_map;
 
 // intensidades de la luz de ambiente, difusa y especular
@@ -35,7 +35,7 @@ void main()
 	vec3 light_direction = normalize(vec3(0.37, 0.91, 0.13));
 	// calculo de la normal, usando el mapa de normales
 	vec3 normalz = normalize(normal);
-	vec4 textureNormal = texture(bump_map, TexCoord) * 2 - vec4(1.0,1.0,1.0,1.0);
+	vec4 textureNormal = texture(normal_map, TexCoord) * 2 - vec4(1.0,1.0,1.0,1.0);
 
 	vec3 normalx = normalize(normalx);
 	vec3 normaly = -normalize(cross(normalz,normalx));

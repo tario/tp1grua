@@ -23,7 +23,7 @@ MaterialTP3::MaterialTP3(
 	this->shader = new Shader(shaderProgram);
 
 	this->shader->setter<int>("diffuse_map")->set(0);
-	this->shader->setter<int>("bump_map")->set(1);
+	this->shader->setter<int>("normal_map")->set(1);
 	this->shader->setter<int>("reflection_map")->set(2);
 	kaSetter = shader->setter<float>("ka")->set(0.6);
 	kdSetter = shader->setter<float>("kd")->set(0.3);
