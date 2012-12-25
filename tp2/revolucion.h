@@ -10,7 +10,7 @@ class Revolucion : public Dibujable {
 				float radio,
 				float h,
 				Material* material,
-				float t_inicial=0.0, float t_final=1.0
+				float t_inicial=0.0, float t_final=1.0, bool texture_scaling = false
 			);
 
 		void dibujar(const glm::mat4& m);

@@ -48,7 +48,7 @@ Anillo::Anillo(Material* material1, Material* material2) {
 		1.5,
 		0.025,
 		material1,
-		0.2,0.3);
+		0.2,0.3,true);
 
 	columnaCruzada = new Barrido(
 		&ConjuntoPuntosAnilloColumna(),

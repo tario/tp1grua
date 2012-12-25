@@ -7,7 +7,7 @@ Revolucion::Revolucion(
 				float radio,
 				float h,
 				Material* material,
-				float t_inicial, float t_final
+				float t_inicial, float t_final, bool texture_scaling
 			) :
 
 	barrido(
@@ -19,7 +19,8 @@ Revolucion::Revolucion(
 			material,
 			t_inicial,
 			t_final,
-			(t_inicial > 0.0 || t_final < 1.0) ? true : false
+			(t_inicial > 0.0 || t_final < 1.0) ? true : false,
+			texture_scaling
 		)
 	{
 
