@@ -36,25 +36,6 @@ private:
 };
 
 Anillo::Anillo(Material* material1, Material* material2) {
-	/*toroide =new Barrido(
-		&ConjuntoPuntosAnilloToroide(0.1), 
-		&Circunferencia(glm::vec3(2.0,0.0,0.0),glm::vec3(1.0,0.0,0.0),glm::vec3(0.0,1.5,0.0)),
-		&Circunferencia(glm::vec3(0.0,0.0,0.0),glm::vec3(1.0,0.0,0.0),glm::vec3(0.0,0.0,1.0)),
-		&Circunferencia(glm::vec3(0.0,0.0,0.0),glm::vec3(1.0,0.0,0.0),glm::vec3(0.0,1.0,0.0)),
-		0.025,
-		material2,
-		0.0,1.0,false);
-
-	toroideParcial =new Barrido(
-		&ConjuntoPuntosAnilloToroide(0.2), 
-		&Circunferencia(glm::vec3(2.0,0.0,0.0),glm::vec3(1.0,0.0,0.0),glm::vec3(0.0,1.5,0.0)),
-		&Circunferencia(glm::vec3(0.0,0.0,0.0),glm::vec3(1.0,0.0,0.0),glm::vec3(0.0,0.0,1.0)),
-		&Circunferencia(glm::vec3(0.0,0.0,0.0),glm::vec3(1.0,0.0,0.0),glm::vec3(0.0,1.0,0.0)),
-		0.025,
-		material1,
-		0.2,0.3,true,true);
-		*/
-
 	toroide = new Revolucion(
 		&ConjuntoPuntosAnilloToroide(0.1), 
 		1.5,
