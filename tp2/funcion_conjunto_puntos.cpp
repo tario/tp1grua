@@ -1,6 +1,15 @@
 #include "stdafx.h" 
 #include "funcion_conjunto_puntos.h" 
 
+
+static glm::mat4 cubic_bspline_matrix(
+				-1,3 ,-3,1,
+				3 ,-6,3 ,0,
+				-3, 0,3 ,0,
+				1 , 4, 1,0
+	);
+
+
 static glm::vec2 local_bspline(
 	glm::vec2 p0, 
 	glm::vec2 p1,
@@ -8,10 +17,7 @@ static glm::vec2 local_bspline(
 	glm::vec2 p3,
 	float t) {
 
-	return 	(p0 * (-t*t*t + 3*t*t - 3*t + 1.0f) + 
-			p1 * (3.0f*t*t*t - 6.0f*t*t + 4.0f) + 
-			p2 * (-3.0f*t*t*t + 3.0f*t*t + 3.0f*t + 1) +
-			p3 * (t*t*t) ) / 6.0f;
+   return glm::mat4x2(p0,p1,p2,p3) * cubic_bspline_matrix * glm::vec4(t*t*t,t*t,t,1.0) / 6.0f;
 }
 
 
