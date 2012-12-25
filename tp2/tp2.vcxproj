@@ -118,6 +118,7 @@
     <ClInclude Include="null_texture.h" />
     <ClInclude Include="prisma.h" />
     <ClInclude Include="propulsor.h" />
+    <ClInclude Include="revolucion.h" />
     <ClInclude Include="segmento_recta.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="shader_program.h" />
@@ -151,6 +152,7 @@
     <ClCompile Include="nave_nodriza.cpp" />
     <ClCompile Include="prisma.cpp" />
     <ClCompile Include="propulsor.cpp" />
+    <ClCompile Include="revolucion.cpp" />
     <ClCompile Include="segmento_recta.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="shader_program.cpp" />

@@ -87,6 +87,9 @@
     <ClCompile Include="material_difuso_reflexion.cpp">
       <Filter>material</Filter>
     </ClCompile>
+    <ClCompile Include="revolucion.cpp">
+      <Filter>primitivas\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -189,6 +192,9 @@
     </ClInclude>
     <ClInclude Include="material_difuso_reflexion.h">
       <Filter>material</Filter>
+    </ClInclude>
+    <ClInclude Include="revolucion.h">
+      <Filter>primitivas\utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

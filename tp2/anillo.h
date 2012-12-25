@@ -2,7 +2,7 @@
 #define __ANILLO_H
 
 #include "dibujable.h"
-#include "barrido.h"
+#include "material.h"
 
 class Anillo : public Dibujable {
 	public:
@@ -10,9 +10,11 @@ class Anillo : public Dibujable {
 		void dibujar(const glm::mat4& m);
 
 	private:
-		Barrido* toroide;
-		Barrido* toroideParcial;
-		Barrido* columnaCruzada;
+		Dibujable* toroide;
+		Dibujable* toroideParcial;
+		Dibujable* columnaCruzada;
+
+		glm::mat4 matriz_toroide;
 };
 
 #endif
