@@ -540,6 +540,8 @@ void glut_display() {
 		glClear(GL_DEPTH_BUFFER_BIT);
 		render_scene(0,0,xresolution/5,yresolution/5,false);
 	}
+	
+	glFlush();
     glutSwapBuffers();
 }
 
