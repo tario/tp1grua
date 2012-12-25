@@ -23,6 +23,8 @@ class FuncionConjuntoPuntos {
 		};
 
 		std::vector<Punto> bezier(const std::vector<Punto>& v, int n);
+		std::vector<Punto> cubic_bspline(const std::vector<Punto>& v, int n);
+		std::vector<Punto> closed_cubic_bspline(const std::vector<Punto>& v, int n);
 
 		virtual std::vector<Punto> conjunto(float t)=0;
 		virtual ~FuncionConjuntoPuntos() {

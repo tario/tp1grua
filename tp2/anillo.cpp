@@ -24,11 +24,11 @@ class ConjuntoPuntosAnilloToroide : public FuncionConjuntoPuntos {
 		ConjuntoPuntosAnilloToroide(float radio) : radio(radio) {};
 		std::vector<Punto> conjunto(float t) {
 			std::vector<Punto> ret;
-			for (int i=0;i<32;i++) {
-				float angle = float(i)*6.28/32;
-				ret.push_back(Punto(cos(angle)*radio,sin(angle)*radio,Punto::SMOOTH));
-			}
-			return ret;
+			ret.push_back(Punto(radio,radio,Punto::SMOOTH));
+			ret.push_back(Punto(-radio,radio,Punto::SMOOTH));
+			ret.push_back(Punto(-radio,-radio,Punto::SMOOTH));
+			ret.push_back(Punto(radio,-radio,Punto::SMOOTH));
+			return closed_cubic_bspline(ret,32);
 		}
 
 private:
