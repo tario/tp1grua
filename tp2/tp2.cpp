@@ -433,11 +433,7 @@ void init() {
 
 	esfera_del_cielo = new ModelObject(
 		new Esfera(new MaterialTextura(background), 20, false),
-		glm::rotate(
-				glm::scale(glm::mat4(1.0),glm::vec3(100.0,100.0,100.0)),
-				90.0f, 
-				glm::vec3(0.0,0.0,1.0)
-				)
+				glm::scale(glm::mat4(1.0),glm::vec3(100.0,100.0,100.0))
 		);
 
 	Texture* textura_planeta = new BitmapTexture("planeta.bmp");
