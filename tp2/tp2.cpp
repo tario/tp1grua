@@ -443,12 +443,12 @@ void init() {
 	material_planeta->kdSetter->set(1.0);
 	material_planeta->ksSetter->set(0.0);
 	material_planeta->intensidadDifusoSetter->set(1.0);
-	material_planeta->intensidadRelieveSetter->set(0.45);
+	material_planeta->intensidadRelieveSetter->set(0.0);
 
 	planeta = new ModelObject(
 		new Esfera(material_planeta, 20, false),
 			glm::scale(
-				glm::translate(glm::mat4(1.0), glm::vec3(40.0, 40.0, 0.0)),
+				glm::translate(glm::mat4(1.0), glm::vec3(50.0, 10.0, 16.0)),
 				glm::vec3(55,55,55)
 				)
 		);
@@ -681,19 +681,6 @@ void render_scene(
 				);
 		}
 	}
-		
-	//textureShader->use();
-  //  glUniform1i(loc, 1);
-//	glDrawArrays( GL_TRIANGLES, 0, 36);
-
-    //gluLookAt(0.0, 200.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-    //glutWireTeapot(1.0);
-
-   // glFlush();
-
-  //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  //glFlush();
-
 }
 
 HWND wnd = NULL;
