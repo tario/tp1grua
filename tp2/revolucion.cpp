@@ -13,7 +13,7 @@ Revolucion::Revolucion(
 	barrido(
 			funcionConjuntoPuntos,
 			&Circunferencia(glm::vec3(0.0,0.0,0.0),glm::vec3(0.0,0.0,1.0),glm::vec3(radio,0.0,0.0)),
-			&Circunferencia(glm::vec3(0.0,0.0,0.0),glm::vec3(0.0,0.0,1.0),glm::vec3(0.0,radio,0.0)),
+			&Circunferencia(glm::vec3(0.0,0.0,0.0),glm::vec3(0.0,0.0,1.0),glm::vec3(0.0,1.0,0.0)),
 			&Circunferencia(glm::vec3(0.0,0.0,0.0),glm::vec3(0.0,0.0,1.0),glm::vec3(1.0,0.0,0.0)),
 			h,
 			material,
