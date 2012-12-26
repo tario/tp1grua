@@ -3,19 +3,28 @@
 #include "shader_program.h"
 
 static ShaderProgram* targetQuadShaderProgram = 0;
+static ShaderProgram* bezierCurveShaderProgram = 0;
 
 MaterialTargetQuad::MaterialTargetQuad(const glm::vec3& color, bool border_truncate) : color(color) {
-	if (targetQuadShaderProgram  == 0) {
-		if (border_truncate) {
+	if (border_truncate) {
+		if (targetQuadShaderProgram  == 0) {
 			targetQuadShaderProgram  = new ShaderProgram("ColorShader.frag", "TargetQuad.vert");
-		} else {
-			targetQuadShaderProgram  = new ShaderProgram("ColorShader.frag", "BezierCurve.vert");
+			targetQuadShaderProgram ->bindAttribLocation(0, "VertexPosition" );
+			targetQuadShaderProgram ->bindAttribLocation(1, "VertexNormal" );
+			targetQuadShaderProgram ->link();
 		}
-		targetQuadShaderProgram ->bindAttribLocation(0, "VertexPosition" );
-		targetQuadShaderProgram ->bindAttribLocation(1, "VertexNormal" );
-		targetQuadShaderProgram ->link();
+
+		shader = new Shader(targetQuadShaderProgram );
+	} else {
+		if (bezierCurveShaderProgram  == 0) {
+			bezierCurveShaderProgram  = new ShaderProgram("ColorShader.frag", "BezierCurve.vert");
+			bezierCurveShaderProgram ->bindAttribLocation(0, "VertexPosition" );
+			bezierCurveShaderProgram ->bindAttribLocation(1, "VertexNormal" );
+			bezierCurveShaderProgram ->link();
+		}
+
+		shader = new Shader(bezierCurveShaderProgram );
 	}
-	shader = new Shader(targetQuadShaderProgram );
 
 	nMatrixSetter = shader->setter<glm::mat4>("NormalMatrix");
 	prMatrixSetter = shader->setter<glm::mat4>("ProjectionMatrix");
