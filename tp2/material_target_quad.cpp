@@ -4,15 +4,18 @@
 
 static ShaderProgram* targetQuadShaderProgram = 0;
 
-MaterialTargetQuad::MaterialTargetQuad(const glm::vec3& color) : color(color) {
+MaterialTargetQuad::MaterialTargetQuad(const glm::vec3& color, bool border_truncate) : color(color) {
 	if (targetQuadShaderProgram  == 0) {
-		targetQuadShaderProgram  = new ShaderProgram("ColorShader.frag", "TargetQuad.vert");
+		if (border_truncate) {
+			targetQuadShaderProgram  = new ShaderProgram("ColorShader.frag", "TargetQuad.vert");
+		} else {
+			targetQuadShaderProgram  = new ShaderProgram("ColorShader.frag", "BezierCurve.vert");
+		}
 		targetQuadShaderProgram ->bindAttribLocation(0, "VertexPosition" );
 		targetQuadShaderProgram ->bindAttribLocation(1, "VertexNormal" );
 		targetQuadShaderProgram ->link();
-
-		shader = new Shader(targetQuadShaderProgram );
-	} 
+	}
+	shader = new Shader(targetQuadShaderProgram );
 
 	nMatrixSetter = shader->setter<glm::mat4>("NormalMatrix");
 	prMatrixSetter = shader->setter<glm::mat4>("ProjectionMatrix");

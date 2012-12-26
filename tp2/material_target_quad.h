@@ -6,7 +6,7 @@
 
 class MaterialTargetQuad : public Material {
 	public:
-		MaterialTargetQuad(const glm::vec3& color);
+		MaterialTargetQuad(const glm::vec3& color, bool border_truncate = true);
 		void use(const glm::mat4& m);
 
 	private:

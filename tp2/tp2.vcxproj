@@ -79,6 +79,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="BezierCurve.vert" />
     <None Include="ColorShader.frag" />
     <None Include="color_con_reflexion.frag" />
     <None Include="difuso_con_reflexion.frag" />
@@ -99,6 +100,7 @@
     <ClInclude Include="cubo.h" />
     <ClInclude Include="cubo_texturado.h" />
     <ClInclude Include="curva.h" />
+    <ClInclude Include="curva_bezier.h" />
     <ClInclude Include="curva_constante.h" />
     <ClInclude Include="dibujable.h" />
     <ClInclude Include="esfera.h" />
@@ -136,6 +138,7 @@
     <ClCompile Include="circunferencia.cpp" />
     <ClCompile Include="cubo.cpp" />
     <ClCompile Include="cubo_texturado.cpp" />
+    <ClCompile Include="curva_bezier.cpp" />
     <ClCompile Include="curva_constante.cpp" />
     <ClCompile Include="esfera.cpp" />
     <ClCompile Include="funcion_conjunto_puntos.cpp" />

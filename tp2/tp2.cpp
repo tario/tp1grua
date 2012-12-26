@@ -20,6 +20,7 @@
 #include "nave_combate.h"
 #include "nave_nodriza.h"
 #include "target_quad.h"
+#include "curva_bezier.h"
 
 // elementos necesarios para la escena
 #include "model_object.h"
@@ -71,6 +72,7 @@ Dibujable* planeta;
 Dibujable* basuraEspacial;
 ModelObject* nave_combate;
 TargetQuad* targetQuad;
+CurvaBezier* curva_bezier;
 
 glm::mat4 main_object_matrix = glm::mat4(1.0);
 bool mouserotation = false;
@@ -509,7 +511,16 @@ void init() {
 	}
 
 	nave_combate = new ModelObject(new NaveCombate(background));
+	curva_bezier = new CurvaBezier();
 
+	std::vector<glm::vec3> v;
+
+	v.push_back(glm::vec3(0.0,0.0,0.0));
+	v.push_back(glm::vec3(2.0,0.0,0.0));
+	v.push_back(glm::vec3(4.0,2.0,0.0));
+	v.push_back(glm::vec3(7.0,2.0,0.0));
+
+	curva_bezier->actualizar_puntos_de_control(v);
 
 	targetQuad = new TargetQuad();
 
@@ -643,7 +654,26 @@ void render_scene(
 	glClear(GL_DEPTH_BUFFER_BIT);
 
 	if (target_quad) {
+
 		if (objetivo_actual != -1) {
+
+				// calcular los puntos de control para la curva de bezier del misil
+				glm::vec3 p0 = glm::vec3(nave_seleccionada->position);
+				glm::vec3 p1 = glm::vec3(nave_seleccionada->position) + glm::vec3(nave_seleccionada->front)*3.0f;
+				glm::vec3 p2 = glm::vec3(objetivos.at(objetivo_actual)->position) - glm::vec3(nave_seleccionada->front)*3.0f;
+				glm::vec3 p3 = glm::vec3(objetivos.at(objetivo_actual)->position);
+
+
+				std::vector<glm::vec3> v;
+				v.push_back(p0);
+				v.push_back(p1);
+				v.push_back(p2);
+				v.push_back(p3);
+
+				curva_bezier->actualizar_puntos_de_control(v);
+
+				curva_bezier->dibujar(glm::mat4(1.0));
+	
 				glm::vec3 objetivo_cercano;
 
 				float f = glm::distance(posicion_camara, glm::vec3(objetivos.at(objetivo_actual)->position));
