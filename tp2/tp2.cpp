@@ -73,6 +73,9 @@ Dibujable* basuraEspacial;
 ModelObject* nave_combate;
 TargetQuad* targetQuad;
 CurvaBezier* curva_bezier;
+Dibujable* light_sphere;
+float distancia_p1 = 1.0;
+float distancia_p2 = 1.0;
 
 glm::mat4 main_object_matrix = glm::mat4(1.0);
 bool mouserotation = false;
@@ -351,6 +354,19 @@ void glut_process_keys(unsigned char key, int x, int y) {
 		if (objetivo_actual+1 > objetivos.size()) objetivo_actual = 0;
 	}
 
+	if (key == 'g') {
+		distancia_p1 = distancia_p1 + 0.05;
+	}
+	if (key == 'b') {
+		distancia_p1 = distancia_p1 - 0.05;
+	}
+	if (key == 'h') {
+		distancia_p2 = distancia_p2 - 0.05;
+	}
+	if (key == 'n') {
+		distancia_p2 = distancia_p2 + 0.05;
+	}
+
 	if (key == 'y') {
 		int mejor_objetivo = -1;
 		float mejor_distancia = -1.0f;
@@ -460,18 +476,12 @@ void init() {
 	escuadron[2].position = glm::vec4(-1.0,1.0,0.0,1.0);
 
 
-	Material* material_color_blanco = new MaterialColorSolido(glm::vec3(1.0,1.0,1.0));
-	ModelObject* light_sphere = new ModelObject(new Esfera(material_color_blanco, 10));
-	light_sphere->set_model_matrix(
-			glm::scale(
-				glm::translate(glm::mat4(1.0), glm::vec3(-10.0, 10.0, 0.0)),
-				glm::vec3(0.2,0.2,0.2)
-				)
-		);
+	Material* material_color_blanco = new MaterialColorSolido(glm::vec3(1.0,1.0,1.0),false);
+	light_sphere = new Esfera(material_color_blanco, 10);
+
 
 	Material* material_color_gris_oscuro = new MaterialColorSolido(glm::vec3(0.2,0.2,0.2));
 	basuraEspacial = new Esfera(material_color_gris_oscuro, 5);
-	objects.push_front(light_sphere);
 
 	objects.push_front(new ModelObject(new NaveNodriza(background), 
 		
@@ -659,8 +669,8 @@ void render_scene(
 
 				// calcular los puntos de control para la curva de bezier del misil
 				glm::vec3 p0 = glm::vec3(nave_seleccionada->position);
-				glm::vec3 p1 = glm::vec3(nave_seleccionada->position) + glm::vec3(nave_seleccionada->front)*2.0f;
-				glm::vec3 p2 = glm::vec3(objetivos.at(objetivo_actual)->position) - glm::vec3(nave_seleccionada->front)*2.0f;
+				glm::vec3 p1 = glm::vec3(nave_seleccionada->position) + glm::vec3(nave_seleccionada->front)*distancia_p1;
+				glm::vec3 p2 = glm::vec3(objetivos.at(objetivo_actual)->position) - glm::vec3(nave_seleccionada->front)*distancia_p2;
 				glm::vec3 p3 = glm::vec3(objetivos.at(objetivo_actual)->position);
 
 
@@ -673,6 +683,10 @@ void render_scene(
 				curva_bezier->actualizar_puntos_de_control(v);
 
 				curva_bezier->dibujar(glm::mat4(1.0));
+				glm::mat4 matriz_escala = glm::scale(glm::mat4(1.0), glm::vec3(0.05,0.05,0.05));
+
+				light_sphere->dibujar(glm::translate(glm::mat4(1.0), p1) * matriz_escala);
+				light_sphere->dibujar(glm::translate(glm::mat4(1.0), p2) * matriz_escala);
 	
 				glm::vec3 objetivo_cercano;
 
