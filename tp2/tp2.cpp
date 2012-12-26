@@ -659,8 +659,8 @@ void render_scene(
 
 				// calcular los puntos de control para la curva de bezier del misil
 				glm::vec3 p0 = glm::vec3(nave_seleccionada->position);
-				glm::vec3 p1 = glm::vec3(nave_seleccionada->position) + glm::vec3(nave_seleccionada->front)*3.0f;
-				glm::vec3 p2 = glm::vec3(objetivos.at(objetivo_actual)->position) - glm::vec3(nave_seleccionada->front)*3.0f;
+				glm::vec3 p1 = glm::vec3(nave_seleccionada->position) + glm::vec3(nave_seleccionada->front)*2.0f;
+				glm::vec3 p2 = glm::vec3(objetivos.at(objetivo_actual)->position) - glm::vec3(nave_seleccionada->front)*2.0f;
 				glm::vec3 p3 = glm::vec3(objetivos.at(objetivo_actual)->position);
 
 
