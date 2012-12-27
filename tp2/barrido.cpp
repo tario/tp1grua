@@ -133,8 +133,8 @@ Barrido::Barrido(
 			insert_triangle(current_position_pointer, p00, p01, p11);
 			current_position_pointer = current_position_pointer + 9;
 
-			normalx0 = -glm::normalize(glm::cross(normal, vector_derivado0));
-			normalx1 = -glm::normalize(glm::cross(normal, vector_derivado1));
+			normalx0 = glm::normalize(glm::cross(normal, vector_derivado0));
+			normalx1 = glm::normalize(glm::cross(normal, vector_derivado1));
 			insert_triangle(current_normal_pointer, normal, normal, normal);
 			insert_triangle(current_normalx_pointer, normalx0, normalx0, normalx1);
 
@@ -171,8 +171,8 @@ Barrido::Barrido(
 			insert_triangle(current_position_pointer, p10, p11, p00);
 			current_position_pointer = current_position_pointer + 9;
 
-			normalx0 = -glm::normalize(glm::cross(normal, vector_derivado0));
-			normalx1 = -glm::normalize(glm::cross(normal, vector_derivado1));
+			normalx0 = glm::normalize(glm::cross(normal, vector_derivado0));
+			normalx1 = glm::normalize(glm::cross(normal, vector_derivado1));
 			insert_triangle(current_normal_pointer, normal, normal, normal);
 			insert_triangle(current_normalx_pointer, normalx1, normalx1, normalx0);
 
