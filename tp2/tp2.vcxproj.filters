@@ -93,6 +93,9 @@
     <ClCompile Include="curva_bezier.cpp">
       <Filter>modelobjects</Filter>
     </ClCompile>
+    <ClCompile Include="bezier.cpp">
+      <Filter>primitivas\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -201,6 +204,9 @@
     </ClInclude>
     <ClInclude Include="curva_bezier.h">
       <Filter>modelobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="bezier.h">
+      <Filter>primitivas\utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

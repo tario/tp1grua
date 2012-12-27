@@ -74,6 +74,8 @@ ModelObject* nave_combate;
 TargetQuad* targetQuad;
 CurvaBezier* curva_bezier;
 Dibujable* light_sphere;
+Dibujable* misil;
+
 float distancia_p1 = 1.0;
 float distancia_p2 = 1.0;
 bool bezier_misil_configuracion = false;
@@ -119,7 +121,7 @@ const float velocidadGiro = 0.2;
 class Nave {
 	public:
 		Nave() : front(1.0,0.0,0.0,1.0), up(0.0,0.0,1.0,1.0), position(0.0,0.0,0.0,1.0), giro(1.0),
-			desplazamiento(0.0,0.0,0.0) {
+			desplazamiento(0.0,0.0,0.0), misil_lado_derecho(false) {
 
 				objetivos.push_back(new Objetivo());
 				this->objetivo = objetivos.at(objetivos.size()-1);
@@ -189,7 +191,12 @@ class Nave {
 
 		glm::vec3 origen_misil() {
 			glm::vec3 left = glm::cross(glm::vec3(up), glm::vec3(front));
-			return glm::vec3(position) + left*0.12f;
+
+			if (misil_lado_derecho) {
+				return glm::vec3(position) - left*0.12f;
+			} else {
+				return glm::vec3(position) + left*0.12f;
+			}
 		}
 
 		bool control_avanzar;
@@ -200,6 +207,7 @@ class Nave {
 		bool control_giroabajo;
 		bool control_girobarril1;
 		bool control_girobarril2;
+		bool misil_lado_derecho;
 
 		glm::vec4 position;
 		glm::vec4 up;
@@ -211,10 +219,31 @@ class Nave {
 		Objetivo* objetivo;
 };
 
+#include "bezier.h"
+class ModeloMisil {
+	public:
+	ModeloMisil(glm::vec3 position, std::vector<glm::vec3> v) : position(position), v(v), t(0.0) {
+		velocidad = 0.001 * glm::distance(v.at(0), v.at(v.size()-1));
+	}
+
+	void processFrame() {
+		glm::vec3 last_position = position;
+		position = bezier_eval(v,t);
+		direction = glm::normalize(position - last_position);
+		if (t<1.0) t = t + velocidad;
+	}
+
+	glm::vec3 direction;
+	glm::vec3 position;
+	std::vector<glm::vec3> v;
+	float t;
+	float velocidad;
+};
+
 #define NAVES_EN_ESCUADRON 3
 Nave escuadron[NAVES_EN_ESCUADRON];
 Nave* nave_seleccionada = escuadron+0;
-
+std::list<ModeloMisil*> misiles;
 
 void update_view_matrix() {
 	glm::vec3 look_at, up;
@@ -375,6 +404,24 @@ void glut_process_keys(unsigned char key, int x, int y) {
 	if (key == 'm') {
 		bezier_misil_configuracion = !bezier_misil_configuracion; 
 	}
+
+	if (key == 0x20) /*space bar*/ {
+		// calcular los puntos de control para la curva de bezier del misil
+		glm::vec3 p0 = nave_seleccionada->origen_misil();
+		glm::vec3 p1 = p0 + glm::vec3(nave_seleccionada->front)*distancia_p1;
+		glm::vec3 p2 = glm::vec3(objetivos.at(objetivo_actual)->position) - glm::vec3(nave_seleccionada->front)*distancia_p2;
+		glm::vec3 p3 = glm::vec3(objetivos.at(objetivo_actual)->position);
+
+		std::vector<glm::vec3> v;
+		v.push_back(p0);
+		v.push_back(p1);
+		v.push_back(p2);
+		v.push_back(p3);
+
+		misiles.push_back(new ModeloMisil(nave_seleccionada->origen_misil(),v));
+		nave_seleccionada->misil_lado_derecho = !nave_seleccionada->misil_lado_derecho;
+	}
+
 	if (key == 'y') {
 		int mejor_objetivo = -1;
 		float mejor_distancia = -1.0f;
@@ -541,6 +588,7 @@ void init() {
 	curva_bezier->actualizar_puntos_de_control(v);
 
 	targetQuad = new TargetQuad();
+	misil = new Misil();
 
 	update_view_matrix();
 }
@@ -626,6 +674,28 @@ void render_scene(
 	escuadron[i].processFrame();
 	}
 
+	std::list<ModeloMisil*> remove_list;
+	for (std::list<ModeloMisil*>::iterator it = misiles.begin();
+		it != misiles.end();
+		it++) {
+
+		ModeloMisil* modelo_misil = (*it);
+		modelo_misil->processFrame();
+		if (modelo_misil->t>0.99) {
+			remove_list.push_back(modelo_misil);
+		}
+	}
+
+	for (std::list<ModeloMisil*>::iterator it = remove_list.begin();
+		it != remove_list.end();
+		it++) {
+
+		ModeloMisil* modelo_misil = (*it);
+
+		misiles.remove(modelo_misil);
+		delete modelo_misil;
+	}
+
 	Shader::projectionMatrix = prMatrix * View;
 	//glm::mat4 Projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
 
@@ -647,6 +717,32 @@ void render_scene(
 	}
 	}
 	}
+
+	for (std::list<ModeloMisil*>::iterator it = misiles.begin();
+		it != misiles.end();
+		it++) {
+		ModeloMisil* modelo_misil = (*it);
+		glm::vec3 front = modelo_misil->direction;
+		glm::vec3 up = glm::normalize(glm::cross(front,glm::vec3(0.0,1.0,0.0)));
+
+		if (glm::distance(up,glm::vec3(0.0,0.0,0.0))<0.2) {
+			up = glm::normalize(glm::cross(front,glm::vec3(1.0,0.0,0.0)));
+		}
+
+		glm::vec3 left = glm::normalize(glm::cross(up,front));
+
+		glm::mat3 rotation_matrix(
+			front,
+			left,
+			up);
+
+		misil->dibujar(
+			glm::translate(glm::mat4(1.0),modelo_misil->position) *
+			glm::scale(glm::mat4(1.0), glm::vec3(0.2,0.2,0.2)) *
+			glm::mat4(rotation_matrix)
+			);
+	}
+
 
 	for (int i=0; i<NAVES_EN_ESCUADRON; i++) {
 		glm::vec3 left = glm::cross(glm::vec3(escuadron[i].up), glm::vec3(escuadron[i].front));
