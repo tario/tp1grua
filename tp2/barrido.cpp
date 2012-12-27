@@ -115,7 +115,7 @@ Barrido::Barrido(
 			if (nextindex > puntos0.size()-1) nextindex = 0;
 
 			glm::vec3 p00, p01, p10, p11;
-			glm::vec3 normal, normalx0, normalx1;
+			glm::vec3 normal, normalx0, normalx1, normaly0, normaly1;
 			int p00ns, p01ns, p11ns, p10ns;
 
 			p00 = giro0 * glm::vec3(puntos0.at(i).punto,0.0)  + punto_central0;
@@ -133,8 +133,11 @@ Barrido::Barrido(
 			insert_triangle(current_position_pointer, p00, p01, p11);
 			current_position_pointer = current_position_pointer + 9;
 
-			normalx0 = glm::normalize(glm::cross(normal, vector_derivado0));
-			normalx1 = glm::normalize(glm::cross(normal, vector_derivado1));
+			normaly0 = glm::normalize(glm::cross(normal, vector_derivado0));
+			normaly1 = glm::normalize(glm::cross(normal, vector_derivado1));
+			normalx0 = glm::normalize(glm::cross(normal, normaly0));
+			normalx1 = glm::normalize(glm::cross(normal, normaly1));
+
 			insert_triangle(current_normal_pointer, normal, normal, normal);
 			insert_triangle(current_normalx_pointer, normalx0, normalx0, normalx1);
 
@@ -171,8 +174,11 @@ Barrido::Barrido(
 			insert_triangle(current_position_pointer, p10, p11, p00);
 			current_position_pointer = current_position_pointer + 9;
 
-			normalx0 = glm::normalize(glm::cross(normal, vector_derivado0));
-			normalx1 = glm::normalize(glm::cross(normal, vector_derivado1));
+			normaly0 = glm::normalize(glm::cross(normal, vector_derivado0));
+			normaly1 = glm::normalize(glm::cross(normal, vector_derivado1));
+			normalx0 = glm::normalize(glm::cross(normal, normaly0));
+			normalx1 = glm::normalize(glm::cross(normal, normaly1));
+
 			insert_triangle(current_normal_pointer, normal, normal, normal);
 			insert_triangle(current_normalx_pointer, normalx1, normalx1, normalx0);
 
