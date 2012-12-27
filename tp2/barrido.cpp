@@ -113,6 +113,7 @@ Barrido::Barrido(
 		for (int i=0; i<puntos0.size(); i++){
 			int nextindex = i + 1;
 			if (nextindex > puntos0.size()-1) nextindex = 0;
+			int next_texture_index = i+1;
 
 			glm::vec3 p00, p01, p10, p11;
 			glm::vec3 normal, normalx0, normalx1, normaly0, normaly1;
@@ -152,17 +153,17 @@ Barrido::Barrido(
 				current_texcoord_pointer[0] = (t-t_inicial) * 1.0 / (t_final - t_inicial);
 				current_texcoord_pointer[1] = float(i)/float(cantPuntos);
 				current_texcoord_pointer[2] = (t-t_inicial) * 1.0 / (t_final - t_inicial);
-				current_texcoord_pointer[3] = float(nextindex)/float(cantPuntos);
+				current_texcoord_pointer[3] = float(next_texture_index)/float(cantPuntos);
 				current_texcoord_pointer[4] = (t1-t_inicial) * 1.0 / (t_final - t_inicial);
-				current_texcoord_pointer[5] = float(nextindex)/float(cantPuntos);
+				current_texcoord_pointer[5] = float(next_texture_index)/float(cantPuntos);
 				current_texcoord_pointer = current_texcoord_pointer + 6;
 			} else {
 				current_texcoord_pointer[0] = t;
 				current_texcoord_pointer[1] = float(i)/float(cantPuntos);
 				current_texcoord_pointer[2] = t;
-				current_texcoord_pointer[3] = float(nextindex)/float(cantPuntos);
+				current_texcoord_pointer[3] = float(next_texture_index)/float(cantPuntos);
 				current_texcoord_pointer[4] = t1;
-				current_texcoord_pointer[5] = float(nextindex)/float(cantPuntos);
+				current_texcoord_pointer[5] = float(next_texture_index)/float(cantPuntos);
 				current_texcoord_pointer = current_texcoord_pointer + 6;
 			}
 
@@ -193,7 +194,7 @@ Barrido::Barrido(
 				current_texcoord_pointer[0] = (t1-t_inicial) * 1.0 / (t_final - t_inicial);
 				current_texcoord_pointer[1] = float(i)/float(cantPuntos);
 				current_texcoord_pointer[2] = (t1-t_inicial) * 1.0 / (t_final - t_inicial);
-				current_texcoord_pointer[3] = float(nextindex)/float(cantPuntos);
+				current_texcoord_pointer[3] = float(next_texture_index)/float(cantPuntos);
 				current_texcoord_pointer[4] = (t-t_inicial) * 1.0 / (t_final - t_inicial);
 				current_texcoord_pointer[5] = float(i)/float(cantPuntos);
 				current_texcoord_pointer = current_texcoord_pointer + 6;
@@ -201,7 +202,7 @@ Barrido::Barrido(
 				current_texcoord_pointer[0] = t1;
 				current_texcoord_pointer[1] = float(i)/float(cantPuntos);
 				current_texcoord_pointer[2] = t1;
-				current_texcoord_pointer[3] = float(nextindex)/float(cantPuntos);
+				current_texcoord_pointer[3] = float(next_texture_index)/float(cantPuntos);
 				current_texcoord_pointer[4] = t;
 				current_texcoord_pointer[5] = float(i)/float(cantPuntos);
 				current_texcoord_pointer = current_texcoord_pointer + 6;
