@@ -277,15 +277,17 @@ Barrido::Barrido(
 			current_position_pointer = current_position_pointer + 9;
 			insert_triangle(current_normal_pointer, normal, normal, normal);
 			current_normal_pointer = current_normal_pointer + 9;
-			normalx = glm::cross(normal, vector_derivado);
-			insert_triangle(current_normal_pointer, normalx, normalx, normalx);
+			
+			normalx = -glm::normalize(vector_torcion);
+			
+			insert_triangle(current_normalx_pointer, normalx, normalx, normalx);
 			current_normalx_pointer = current_normalx_pointer + 9;
 
-			current_texcoord_pointer[0] = puntos0.at(i).punto[0];
+			current_texcoord_pointer[0] = 1.0-puntos0.at(i).punto[0];
 			current_texcoord_pointer[1] = puntos0.at(i).punto[1];
-			current_texcoord_pointer[2] = puntos0.at(nextindex).punto[0];
+			current_texcoord_pointer[2] = 1.0-puntos0.at(nextindex).punto[0];
 			current_texcoord_pointer[3] = puntos0.at(nextindex).punto[1];
-			current_texcoord_pointer[4] = centro[0];
+			current_texcoord_pointer[4] = 1.0-centro[0];
 			current_texcoord_pointer[5] = centro[1];
 			current_texcoord_pointer = current_texcoord_pointer + 6;
 		}
@@ -320,8 +322,9 @@ Barrido::Barrido(
 			insert_triangle(current_normal_pointer, normal, normal, normal);
 			current_normal_pointer = current_normal_pointer + 9;
 
-			normalx = glm::cross(normal, vector_derivado);
-			insert_triangle(current_normal_pointer, normalx, normalx, normalx);
+			normalx = glm::normalize(vector_torcion);
+
+			insert_triangle(current_normalx_pointer, normalx, normalx, normalx);
 			current_normalx_pointer = current_normalx_pointer + 9;
 
 			current_texcoord_pointer[0] = puntos0.at(i).punto[0];
