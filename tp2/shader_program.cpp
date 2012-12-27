@@ -10,7 +10,7 @@ ShaderProgram::ShaderProgram(std::string fragmentShader, std::string vertexShade
 	// Do your GLEW experiments here:
     if (GLEW_ARB_shading_language_100) 
     { 
-        std::cout << "GLEW_ARB_shading_language_100" << std::endl;
+
         int major, minor, revision;
         const GLubyte* sVersion = glGetString(GL_SHADING_LANGUAGE_VERSION_ARB);
         if (glGetError() == GL_INVALID_ENUM)
@@ -19,10 +19,15 @@ ShaderProgram::ShaderProgram(std::string fragmentShader, std::string vertexShade
         }
         else
         {
+			static bool showVersion = false;
+			if (!showVersion) {
             std::string version((char*)sVersion);
             std::cout << version.c_str() << std::endl;
+			showVersion = true;
+			}
         }
 
+		std::cout << "Cargando shader " << vertexShader << " y " << fragmentShader << std::endl;
         // Load vertex Shader
         GLuint vertShader = glCreateShader (GL_VERTEX_SHADER);
         if ( 0 == vertShader )

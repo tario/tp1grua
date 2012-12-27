@@ -941,6 +941,7 @@ int _tmain(int argc, char* argv[])
 //  glutLeaveGameMode(); 
 
 //  glutFullScreen();
+  std::cout << "carga completa" << std::endl;
   glutMainLoop();
 }
 
