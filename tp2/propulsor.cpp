@@ -30,15 +30,19 @@ class ConjuntoPuntosPropulsorCoberturaPrisma : public FuncionConjuntoPuntos {
 	}
 };
 
-Propulsor::Propulsor(Material* material) : material(material), materialColorSolido(glm::vec3(0.0,1.0,1.0),false) {
-	propulsorPrisma2 = new Barrido(
-		&ConjuntoPuntosPropulsorPrisma1(), 
-		&SegmentoRecta(glm::vec3(0.0,0.0,0.0),glm::vec3(-0.2,0.0,0.0)),
-		&CurvaConstante(glm::vec3(-1.0,0.0,0.0)),
-		&CurvaConstante(glm::vec3(0.0,1.0,0.0)),
-		1.0,
-		&materialColorSolido,
-		0.0,0.4,true);
+Propulsor::Propulsor(Material* material, bool encendido) : material(material), materialColorSolido(glm::vec3(0.0,1.0,1.0),false),
+encendido(encendido) {
+
+	if (encendido) {
+		propulsorPrisma2 = new Barrido(
+			&ConjuntoPuntosPropulsorPrisma1(), 
+			&SegmentoRecta(glm::vec3(0.0,0.0,0.0),glm::vec3(-0.2,0.0,0.0)),
+			&CurvaConstante(glm::vec3(-1.0,0.0,0.0)),
+			&CurvaConstante(glm::vec3(0.0,1.0,0.0)),
+			1.0,
+			&materialColorSolido,
+			0.0,0.4,true);
+	}
 
 	propulsorPrisma1 =new Barrido(
 		&ConjuntoPuntosPropulsorCoberturaPrisma(), 
@@ -53,8 +57,8 @@ Propulsor::Propulsor(Material* material) : material(material), materialColorSoli
 void Propulsor::dibujar(const glm::mat4& m) {
 	material->use(m);
 
-	//propulsorPrisma1->dibujar(m);
-	//propulsorPrisma2->dibujar(m);
-	propulsorPrisma2->dibujar(m);
+	if (encendido) {
+		propulsorPrisma2->dibujar(m);
+	}
 	propulsorPrisma1->dibujar(m);
 }

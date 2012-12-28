@@ -32,7 +32,7 @@ class ConjuntoPuntosAlasMisil : public FuncionConjuntoPuntos {
 	};
 };
 
-Misil::Misil() : material(glm::vec3(0.6,0.6,0.6), true) {
+Misil::Misil(bool encendido) : material(glm::vec3(0.6,0.6,0.6), true) {
 	CurvaConstante torcion(glm::vec3(0.0,1.0,0.0));
 
 	cuerpo = new Barrido(
@@ -54,11 +54,15 @@ Misil::Misil() : material(glm::vec3(0.6,0.6,0.6), true) {
 		&material,
 		0.025,0.3	
 		);
+
+	propulsor = new Propulsor(&material, encendido);
 }
 
 void Misil::dibujar(const glm::mat4& m) {
 	cuerpo->dibujar(m);
 	alas->dibujar(m);
+
+	propulsor->dibujar(glm::scale(m,glm::vec3(0.25,0.25,0.25)));
 }
 
 Misil* Misil::instance() {

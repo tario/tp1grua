@@ -8,13 +8,15 @@
 
 class Propulsor : public Dibujable {
 	public:
-		Propulsor(Material* material);
+		Propulsor(Material* material, bool encendido=false);
 		void dibujar(const glm::mat4& m);
 	private:
 		Barrido* propulsorPrisma1;
 		Barrido* propulsorPrisma2;
 		Material* material;
 		MaterialColorSolido materialColorSolido;
+
+		bool encendido;
 };
 
 #endif

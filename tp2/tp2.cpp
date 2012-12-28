@@ -593,7 +593,7 @@ void init() {
 	curva_bezier->actualizar_puntos_de_control(v);
 
 	targetQuad = new TargetQuad();
-	misil = new Misil();
+	misil = new Misil(true);
 
 	update_view_matrix();
 }

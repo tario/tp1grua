@@ -37,7 +37,7 @@ Motor::Motor(Material* material1, Material* material3) {
 		material1,
 		0.0,1.0);
 
-	propulsor = new Propulsor(material3);
+	propulsor = new Propulsor(material3, true);
 }
 void Motor::dibujar(const glm::mat4& m) {
 	superficie->dibujar(m);
