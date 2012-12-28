@@ -223,12 +223,17 @@ class Nave {
 class ModeloMisil {
 	public:
 	ModeloMisil(glm::vec3 position, std::vector<glm::vec3> v) : position(position), v(v), t(0.0) {
-		velocidad = 0.001 * glm::distance(v.at(0), v.at(v.size()-1));
+		velocidad = 0.0001;
 	}
 
 	void processFrame() {
 		glm::vec3 last_position = position;
 		position = bezier_eval(v,t);
+
+		float distance = glm::distance(last_position, position);
+		if (distance > 0.0) {
+			velocidad =  velocidad * 0.025 / distance;
+		}
 		direction = glm::normalize(position - last_position);
 		if (t<1.0) t = t + velocidad;
 	}
