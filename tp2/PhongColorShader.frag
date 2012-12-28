@@ -21,8 +21,8 @@ void main()
 	k2 = pow(k2,8);
 
 	FragColor = vec4(
-		(0.2 + k1) * Color[0] + k2 * 0.6,
-		(0.2 + k1) * Color[1] + k2 * 0.6,
-		(0.2 + k1) * Color[2] + k2 * 0.6,
+		(0.05 + k1) * Color[0] + k2 * 1.2,
+		(0.05 + k1) * Color[1] + k2 * 1.2,
+		(0.05 + k1) * Color[2] + k2 * 1.2,
 		1.0);
 }
