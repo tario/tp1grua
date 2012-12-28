@@ -87,8 +87,8 @@ class ConjuntoPuntosTecho : public FuncionConjuntoPuntos {
 		ret.push_back(Punto(-0.25,0.2+t*0.1));
 		} else {
 		ret.push_back(Punto(0.25,0.24-(t-0.4)*0.1));
-		ret.push_back(Punto(0.22,0.265-(t-0.4)*0.225));
-		ret.push_back(Punto(-0.22,0.265-(t-0.4)*0.225));
+		ret.push_back(Punto(0.22,0.265-(t-0.4)*0.2));
+		ret.push_back(Punto(-0.22,0.265-(t-0.4)*0.2));
 		ret.push_back(Punto(-0.25,0.24-(t-0.4)*0.1));
 		}
 		return ret;
@@ -165,7 +165,7 @@ NaveCombate::NaveCombate(Texture* mapa_reflexion_universo) :
 		&torcion_alas,
 		0.1,
 		&material_color,
-		0.4,0.7);
+		0.4,0.712);
 
 	misil = Misil::instance();
 }
