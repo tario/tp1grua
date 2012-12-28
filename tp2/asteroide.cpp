@@ -48,9 +48,8 @@ class ConjuntoPuntosCuerpoAsteroide : public FuncionConjuntoPuntos {
 				Punto p( (cos(t2)+a[i]*ASTEROIDE_DEFORMIDAD)*d*0.5, (sin(t2)+b[i]*ASTEROIDE_DEFORMIDAD)*d*0.5, Punto::SMOOTH);
 				ret.push_back(p);
 			}
-			ret.push_back(pi);
 
-			return bezier(ret,32);
+			return closed_cubic_bspline(ret,32);
 		};
 
 	private:
