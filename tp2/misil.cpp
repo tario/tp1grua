@@ -32,7 +32,7 @@ class ConjuntoPuntosAlasMisil : public FuncionConjuntoPuntos {
 	};
 };
 
-Misil::Misil(bool encendido) : material(glm::vec3(0.6,0.6,0.6), true) {
+Misil::Misil(bool encendido) : material(glm::vec3(0.3,0.3,0.3), true) {
 	CurvaConstante torcion(glm::vec3(0.0,1.0,0.0));
 
 	cuerpo = new Barrido(
