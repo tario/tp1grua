@@ -250,6 +250,76 @@ Nave escuadron[NAVES_EN_ESCUADRON];
 Nave* nave_seleccionada = escuadron+0;
 std::list<ModeloMisil*> misiles;
 
+class Camara {
+	public:
+		void actualizar_parametros(
+			const glm::vec3& new_direction, 
+			const glm::vec3& new_position,
+			const glm::vec3& new_up) {
+
+			if (position[0] != position[0]) {
+				position = new_position;
+			}
+			if (direction[0] != direction[0]) {
+				direction = new_direction;
+			}
+			if (up[0] != up[0]) {
+				up= new_up;
+			}
+
+			if (glm::distance(position, new_position) < 0.05) {
+				position = new_position;
+			} else {
+				position = position + (new_position - position) * 0.2f;
+			}
+
+			glm::vec3 eje;
+			if (glm::dot(direction, new_direction) > 0.9) {
+				direction = new_direction;
+			} else {
+				if (glm::distance(direction, glm::vec3(0.0,0.0,0.0))<0.5) {
+					direction = new_direction;
+				} else {
+					eje = glm::cross(direction, new_direction);
+					float angle = abs(acos(glm::dot(direction,new_direction)));
+					direction = glm::vec3(
+						glm::rotate(glm::mat4(1.0), angle*10.0f, eje) * glm::vec4(direction,1.0));
+				}
+			}
+			if (glm::dot(up,new_up) > 0.9) {
+				up = new_up;
+			} else {
+				if (glm::distance(up, glm::vec3(0.0,0.0,0.0))<0.5) {
+					up = new_up;
+				} else {
+					eje = glm::cross(up, new_up);
+					float angle = abs(acos(glm::dot(up,new_up)));
+					up = glm::vec3(
+						glm::rotate(glm::mat4(1.0), angle*10.0f, eje) * glm::vec4(up,1.0));
+				}
+			}
+		}
+
+		glm::mat4 view() {
+			Shader::cameraDirection = direction;
+			Shader::cameraPosition = position;
+			Shader::cameraUp = up;
+
+			return glm::lookAt(
+				Shader::cameraPosition, 
+				Shader::cameraPosition + Shader::cameraDirection, 
+				Shader::cameraUp
+			);
+		}
+
+	private:
+
+		glm::vec3 up, direction, position;
+};
+
+Camara camara_principal;
+Camara camara_objetivo;
+
 void update_view_matrix() {
 	glm::vec3 look_at, up;
 
@@ -279,14 +349,10 @@ void update_view_matrix() {
 		look_at = glm::vec3(nave_seleccionada->position);
 	}
 
-	View       = glm::lookAt(
-		posicion_camara, 
-		look_at, 
-		up
-	);
+	camara_principal.actualizar_parametros( glm::normalize(look_at - posicion_camara ), posicion_camara, up);
+	View = camara_principal.view();
 
-	Shader::cameraDirection = glm::normalize(look_at - posicion_camara );
-	Shader::cameraPosition = posicion_camara;
+
 }
 
 void glut_process_mouse(int button, int state, int x, int y) {
@@ -650,14 +716,8 @@ void render_scene(
 		look_at = objetivo->position;
 		posicion_camara = look_at + direction * objetivo->distancia_camara;
 
-		View       = glm::lookAt(
-			posicion_camara, 
-			look_at, 
-			up
-		);
-
-		Shader::cameraDirection = glm::normalize(look_at - posicion_camara );
-		Shader::cameraPosition = posicion_camara;
+		camara_objetivo.actualizar_parametros( glm::normalize(look_at - posicion_camara ), posicion_camara, up);
+		View = camara_objetivo.view();
 	}
 
 	glm::mat4 prMatrix;
@@ -666,7 +726,7 @@ void render_scene(
 	glm::mat4 centerView       = glm::lookAt(
 		glm::vec3(0.0,0.0,0.0), 
 		glm::vec3(0.0,0.0,0.0) + Shader::cameraDirection, 
-		glm::vec3(nave_seleccionada->up)
+		glm::vec3(Shader::cameraUp)
 	);
 
 	Shader::projectionMatrix = prMatrix * centerView;

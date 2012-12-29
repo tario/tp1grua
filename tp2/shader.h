@@ -34,6 +34,7 @@ public:
 	static glm::mat4 projectionMatrix;
 	static glm::vec3 cameraDirection;
 	static glm::vec3 cameraPosition;
+	static glm::vec3 cameraUp;
 
 	// carga un programa dadas las rutas del shader de fragmento y shader de vertices
 	Shader(ShaderProgram* shaderProgram);
