@@ -241,6 +241,9 @@
     <None Include="BezierCurve.vert">
       <Filter>shadersglsl</Filter>
     </None>
+    <None Include="TrashColorShader.frag">
+      <Filter>shadersglsl</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="primitivas">

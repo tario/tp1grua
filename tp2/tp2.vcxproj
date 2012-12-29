@@ -90,6 +90,7 @@
     <None Include="TextureFShader.frag" />
     <None Include="tp2Shader.vert" />
     <None Include="tp3Shader.vert" />
+    <None Include="TrashColorShader.frag" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="anillo.h" />

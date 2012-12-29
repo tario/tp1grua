@@ -626,7 +626,10 @@ void init() {
 	light_sphere = new Esfera(material_color_blanco, 10);
 
 
-	Material* material_color_gris_oscuro = new MaterialColorSolido(glm::vec3(0.2,0.2,0.2));
+	Material* material_color_gris_oscuro = new MaterialColorSolido(
+		glm::vec3(0.2,0.2,0.2),
+		std::string("TrashColorShader.frag")
+		);
 	basuraEspacial = new Esfera(material_color_gris_oscuro, 5);
 
 	nave_nodriza = new ModelObject(new NaveNodriza(background), 
@@ -702,6 +705,10 @@ void render_scene(
 
 void glut_display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glEnable (GL_BLEND);
+	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	render_scene(0,0,xresolution,yresolution,true);
 	if (objetivo_actual != -1) {
 		// limpiar el DEPTH buffer para asegurarse de que la escena se renderize encima de todo
@@ -803,18 +810,6 @@ void render_scene(
 	for (int k=-2; k<2; k++) {
 	
 		glm::vec3 posicion = origin + glm::vec3(i,j,k);
-		float distance = glm::distance(posicion,Shader::cameraPosition);
-		float dot_ = glm::dot(Shader::cameraDirection, glm::normalize(posicion - Shader::cameraPosition));
-		if (distance < 1.0 && dot_ > 0.9) {
-			continue;
-		}
-		if (distance < 0.5) {
-			continue;
-		}
-		if (dot_ > 0.95) {
-			continue;
-		}
-
 		basuraEspacial->dibujar(glm::translate(glm::mat4(1.0),posicion) * matriz_scala);
 	}
 	}
