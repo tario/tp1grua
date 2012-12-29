@@ -801,7 +801,21 @@ void render_scene(
 	for (int i=-2; i<2; i++) {
 	for (int j=-2; j<2; j++) {
 	for (int k=-2; k<2; k++) {
-	basuraEspacial->dibujar(glm::translate(glm::mat4(1.0),origin + glm::vec3(i,j,k)) * matriz_scala);
+	
+		glm::vec3 posicion = origin + glm::vec3(i,j,k);
+		float distance = glm::distance(posicion,Shader::cameraPosition);
+		float dot_ = glm::dot(Shader::cameraDirection, glm::normalize(posicion - Shader::cameraPosition));
+		if (distance < 1.0 && dot_ > 0.9) {
+			continue;
+		}
+		if (distance < 0.5) {
+			continue;
+		}
+		if (dot_ > 0.95) {
+			continue;
+		}
+
+		basuraEspacial->dibujar(glm::translate(glm::mat4(1.0),posicion) * matriz_scala);
 	}
 	}
 	}
