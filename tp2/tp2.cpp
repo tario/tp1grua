@@ -270,7 +270,7 @@ class Camara {
 			if (glm::distance(position, new_position) < 0.05) {
 				position = new_position;
 			} else {
-				position = position + (new_position - position) * 0.2f;
+				position = position + (new_position - position) * 0.4f;
 			}
 
 			glm::vec3 eje;
