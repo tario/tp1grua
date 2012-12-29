@@ -261,7 +261,7 @@ void update_view_matrix() {
 			posicion_camara = glm::vec3(nave_seleccionada->position);
 		} else {
 			float f = camara_dist * 0.9;
-			look_at = glm::vec3(nave_seleccionada->position) + glm::vec3(nave_seleccionada->front[0]*f,nave_seleccionada->front[1]*f,nave_seleccionada->front[2]*f);
+			look_at = glm::vec3(nave_seleccionada->position); /* + glm::vec3(nave_seleccionada->front[0]*f,nave_seleccionada->front[1]*f,nave_seleccionada->front[2]*f) */;
 			posicion_camara = -glm::vec3(
 					camara_dist*cos(angle_camera)*cos(angle_camera2),
 					camara_dist*sin(angle_camera)*cos(angle_camera2),
