@@ -24,10 +24,10 @@ class ConjuntoPuntosAlasMisil : public FuncionConjuntoPuntos {
 	public:
 	std::vector<Punto> conjunto(float t) {
 		std::vector<Punto> ret;
-		ret.push_back(Punto(0.0,-0.01));
-		ret.push_back(Punto(0.8*(t*0.2/0.3-0.2), 0.0));
-		ret.push_back(Punto(0.0, 0.01));
 		ret.push_back(Punto(-0.8*(t*0.2/0.3-0.2), 0.0));
+		ret.push_back(Punto(0.0, 0.01));
+		ret.push_back(Punto(0.8*(t*0.2/0.3-0.2), 0.0));
+		ret.push_back(Punto(0.0,-0.01));
 		return ret;
 	};
 };
