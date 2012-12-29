@@ -75,6 +75,7 @@ TargetQuad* targetQuad;
 CurvaBezier* curva_bezier;
 Dibujable* light_sphere;
 Dibujable* misil;
+ModelObject* nave_nodriza;
 
 float distancia_p1 = 1.0;
 float distancia_p2 = 1.0;
@@ -232,7 +233,7 @@ class ModeloMisil {
 
 		float distance = glm::distance(last_position, position);
 		if (distance > 0.0) {
-			velocidad =  velocidad * 0.025 / distance;
+			velocidad =  velocidad * 0.04 / distance;
 		}
 		direction = glm::normalize(position - last_position);
 		if (t<1.0) t = t + velocidad;
@@ -322,8 +323,16 @@ Camara camara_objetivo;
 
 void update_view_matrix() {
 	glm::vec3 look_at, up;
+	if (camara_mode == 1) {
+		float f = camara_dist < 1.0 ? 1.0 : camara_dist;
+		posicion_camara = glm::vec3(15.0,0.0,0.0);
+		look_at = posicion_camara + glm::vec3(
+					f*cos(angle_camera)*cos(angle_camera2),
+					f*sin(angle_camera)*cos(angle_camera2),
+					f*sin(angle_camera2));
+		up = glm::vec3(0.0,0.0,1.0);
 
-	if (camara_mode == 2) {
+	} else if (camara_mode == 2) {
 		up = glm::vec3(nave_seleccionada->up);
 
 		if (camara_dist<=0.0) {
@@ -346,7 +355,12 @@ void update_view_matrix() {
 		}
 
 	} else {
-		look_at = glm::vec3(nave_seleccionada->position);
+		look_at = glm::vec3(0.0,0.0,0.0);
+		posicion_camara = -glm::vec3(
+					camara_dist*cos(angle_camera)*cos(angle_camera2),
+					camara_dist*sin(angle_camera)*cos(angle_camera2),
+					camara_dist*sin(angle_camera2));
+		up = glm::vec3(0.0,0.0,1.0);
 	}
 
 	camara_principal.actualizar_parametros( glm::normalize(look_at - posicion_camara ), posicion_camara, up);
@@ -356,7 +370,6 @@ void update_view_matrix() {
 }
 
 void glut_process_mouse(int button, int state, int x, int y) {
-	if (camara_mode == 2) {
 		if (button == 3 || button == 4) {
 			if (state == GLUT_UP) {
 				if (button == 3) {
@@ -370,7 +383,6 @@ void glut_process_mouse(int button, int state, int x, int y) {
 
 			update_view_matrix();
 		}
-	}
 }
 
 Shader::ConcreteSetter<float> *nullSetter = new Shader::ConcreteSetter<float>(0.0);
@@ -395,7 +407,6 @@ void glut_process_passive_mouse_motion(int x, int y) {
 }
 
 void glut_process_mouse_motion(int x, int y) {
-	if (camara_mode == 2) {
 		if (abs(mouse_last_x - x) > 100 || abs(mouse_last_y - y) > 100) {
 			mouse_last_x = x;
 			mouse_last_y = y;
@@ -413,7 +424,6 @@ void glut_process_mouse_motion(int x, int y) {
 
 		if (angle_camera < 0.0) angle_camera += M_PI*2;
 		if (angle_camera > M_PI*2) angle_camera -= M_PI*2;
-	}	
 }
 
 
@@ -450,6 +460,16 @@ void glut_special_process_keys(int key, int x, int y) {
 	}
 }
 void glut_process_keys(unsigned char key, int x, int y) {
+
+	if (key == '1') {
+		camara_mode = 1;
+	} 
+	if (key == '2') {
+		camara_mode = 2;
+	} 
+	if (key == '3') {
+		camara_mode = 3;
+	} 
 
 	if (key == 9) {
 		nave_seleccionada++;
@@ -609,7 +629,7 @@ void init() {
 	Material* material_color_gris_oscuro = new MaterialColorSolido(glm::vec3(0.2,0.2,0.2));
 	basuraEspacial = new Esfera(material_color_gris_oscuro, 5);
 
-	objects.push_front(new ModelObject(new NaveNodriza(background), 
+	nave_nodriza = new ModelObject(new NaveNodriza(background), 
 		
 		glm::rotate(
 			glm::translate(glm::mat4(1.0), glm::vec3(15.0,0.0,0.0)),
@@ -617,7 +637,7 @@ void init() {
 			glm::vec3(0.0,0.0,1.0)
 			)
 		
-		));
+		);
 
 		Objetivo* objetivo = new Objetivo;
 		objetivo->position = glm::vec3(15.0,0.0,0.0);
@@ -687,8 +707,7 @@ void glut_display() {
 		// limpiar el DEPTH buffer para asegurarse de que la escena se renderize encima de todo
 		glClear(GL_DEPTH_BUFFER_BIT);
 		render_scene(0,0,xresolution/5,yresolution/5,false);
-	}
-	
+	}	
 	glFlush();
     glutSwapBuffers();
 }
@@ -768,6 +787,10 @@ void render_scene(
 	for (std::list<Dibujable*>::iterator it = objects.begin(); it!=objects.end();it++) {
 		dibujable = (*it);
 		dibujable->dibujar(glm::mat4(1.0));
+	}
+
+	if (camara_mode != 1) {
+		nave_nodriza->dibujar(glm::mat4(1.0));
 	}
 
 	glm::mat4 matriz_scala = glm::scale(glm::mat4(1.0), glm::vec3(0.02,0.02,0.02));
@@ -879,9 +902,10 @@ void render_scene(
 
 				objetivo_cercano = Shader::cameraPosition + direction * f;
 
-				glm::vec3 left = glm::normalize(glm::cross(glm::vec3(nave_seleccionada->up), Shader::cameraDirection));
+				glm::vec3 left = glm::normalize(glm::cross(glm::vec3(Shader::cameraUp), Shader::cameraDirection));
 				glm::vec3 front = glm::normalize(Shader::cameraDirection);
-				glm::vec3 up = glm::vec3(nave_seleccionada->up);
+				glm::vec3 up = glm::normalize(glm::cross(left,front));
+
 				glm::mat3 idd(
 					front[0], front[1], front[2],
 					left[0], left[1], left[2],
