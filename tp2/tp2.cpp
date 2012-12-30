@@ -323,7 +323,7 @@ Camara camara_objetivo;
 
 void update_view_matrix() {
 	glm::vec3 look_at, up;
-	if (camara_mode == 1) {
+	if (camara_mode == 3) {
 		float f = camara_dist < 1.0 ? 1.0 : camara_dist;
 		posicion_camara = glm::vec3(15.0,0.0,0.0);
 		look_at = posicion_camara + glm::vec3(
@@ -793,7 +793,7 @@ void render_scene(
 		dibujable->dibujar(glm::mat4(1.0));
 	}
 
-	if (camara_mode != 1) {
+	if (camara_mode != 3) {
 		nave_nodriza->dibujar(glm::mat4(1.0));
 	}
 
