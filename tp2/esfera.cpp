@@ -13,7 +13,7 @@ class ConjuntoPuntosSeccionEsfera : public FuncionConjuntoPuntos {
 			std::vector<Punto> ret;
 			for (int i=0;i<vertices+1;i++) {
 				float angle = float(i)*3.1415926536/vertices;
-				ret.push_back(Punto(sin(angle)*0.5,-cos(angle)*0.5,Punto::SMOOTH));
+				ret.push_back(Punto(sin(angle)*0.5,-cos(angle)*0.5,i == vertices ? Punto::NOSMOOTH : Punto::SMOOTH));
 			}
 
 			return ret;
