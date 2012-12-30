@@ -326,10 +326,7 @@ void update_view_matrix() {
 	if (camara_mode == 3) {
 		float f = camara_dist < 1.0 ? 1.0 : camara_dist;
 		posicion_camara = glm::vec3(15.0,0.0,0.0);
-		look_at = posicion_camara + glm::vec3(
-					f*cos(angle_camera)*cos(angle_camera2),
-					f*sin(angle_camera)*cos(angle_camera2),
-					f*sin(angle_camera2));
+		look_at = glm::vec3(nave_seleccionada->position);
 		up = glm::vec3(0.0,0.0,1.0);
 
 	} else if (camara_mode == 2) {
