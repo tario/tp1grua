@@ -222,8 +222,30 @@ Barrido::Barrido(
 
 		std::list<float*> normals = *it;
 			if (normals.size() > 1 ) {
-				glm::vec3 suma_normal;
+				bool suavizar = true;
+				for (std::list<float*>::iterator it1 = normals.begin();
+					it1 != normals.end();
+					it1++){
 
+					for (std::list<float*>::iterator it2 = normals.begin();
+						it2 != normals.end();
+						it2++){
+
+						glm::vec3 normal1, normal2;
+						normal1 = glm::vec3((*it1)[0],(*it1)[1],(*it1)[2]);
+						normal2 = glm::vec3((*it2)[0],(*it2)[1],(*it2)[2]);
+
+						if (glm::dot(normal1,normal2) < 0.7) {
+							suavizar = false;
+							break;
+						}
+					}
+					if (!suavizar) break;
+				}
+
+				if (!suavizar) continue;
+
+				glm::vec3 suma_normal;
 				for (std::list<float*>::iterator it = normals.begin();
 					it != normals.end();
 					it++){
