@@ -807,20 +807,6 @@ void render_scene(
 	glm::vec3 origin = posicion_camara + Shader::cameraDirection * 1.0f;
 	origin = glm::vec3(floor(origin[0]),floor(origin[1]), floor(origin[2]));
 
-	glEnable (GL_BLEND);
-	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	for (int i=-2; i<2; i++) {
-	for (int j=-2; j<2; j++) {
-	for (int k=-2; k<2; k++) {
-	
-		glm::vec3 posicion = origin + glm::vec3(i,j,k);
-		basuraEspacial->dibujar(glm::translate(glm::mat4(1.0),posicion) * matriz_scala);
-	}
-	}
-	}
-
-	glDisable(GL_BLEND);
 
 	for (std::list<ModeloMisil*>::iterator it = misiles.begin();
 		it != misiles.end();
@@ -867,6 +853,21 @@ void render_scene(
 			);
 		}
 	}
+
+	glEnable (GL_BLEND);
+	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	for (int i=-2; i<2; i++) {
+	for (int j=-2; j<2; j++) {
+	for (int k=-2; k<2; k++) {
+	
+		glm::vec3 posicion = origin + glm::vec3(i,j,k);
+		basuraEspacial->dibujar(glm::translate(glm::mat4(1.0),posicion) * matriz_scala);
+	}
+	}
+	}
+
+	glDisable(GL_BLEND);
 
 	// esto asegura de que lo que se dibuje se haga encima de todo sin importar su distancia
 	glClear(GL_DEPTH_BUFFER_BIT);
