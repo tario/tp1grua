@@ -46,6 +46,8 @@ class VertexRegister {
 		std::vector<std::map<int,std::list<float*>>> v;
 };
 
+#define TRIANGLE_POINT_MIN_DISTANCE 0.001
+
 Barrido::Barrido(
 		FuncionConjuntoPuntos* funcionConjuntoPuntos,
 		Curva* trayectoria,
@@ -129,7 +131,7 @@ Barrido::Barrido(
 			p11ns = puntos1.at(nextindex).normalMode == FuncionConjuntoPuntos::Punto::NOSMOOTH;
 
 			normal = glm::normalize(glm::cross(p01-p00,p11-p00));
-			if (normal[0] == normal[0]) {
+			if (normal[0] == normal[0] && glm::distance(p01,p11) > TRIANGLE_POINT_MIN_DISTANCE) {
 
 			insert_triangle(current_position_pointer, p00, p01, p11);
 			current_position_pointer = current_position_pointer + 9;
@@ -170,7 +172,7 @@ Barrido::Barrido(
 			}
 
 			normal = glm::normalize(glm::cross(p00-p10,p11-p10));
-			if (normal[0] == normal[0]) {
+			if (normal[0] == normal[0] && glm::distance(p00,p11) > TRIANGLE_POINT_MIN_DISTANCE) {
 
 			insert_triangle(current_position_pointer, p10, p11, p00);
 			current_position_pointer = current_position_pointer + 9;
