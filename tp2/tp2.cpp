@@ -467,6 +467,9 @@ void glut_process_keys(unsigned char key, int x, int y) {
 	if (key == '3') {
 		camara_mode = 3;
 	} 
+	if (key == '4') {
+		camara_mode = 4;
+	} 
 
 	if (key == 9) {
 		nave_seleccionada++;
@@ -703,12 +706,17 @@ void render_scene(
 void glut_display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	render_scene(0,0,xresolution,yresolution,true);
-	if (objetivo_actual != -1) {
-		// limpiar el DEPTH buffer para asegurarse de que la escena se renderize encima de todo
-		glClear(GL_DEPTH_BUFFER_BIT);
-		render_scene(0,0,xresolution/5,yresolution/5,false);
-	}	
+	if (camara_mode == 4 && objetivo_actual != -1) {
+		render_scene(0,0,xresolution,yresolution,false);
+	} else {
+		render_scene(0,0,xresolution,yresolution,true);
+		if (objetivo_actual != -1) {
+			// limpiar el DEPTH buffer para asegurarse de que la escena se renderize encima de todo
+			glClear(GL_DEPTH_BUFFER_BIT);
+			render_scene(0,0,xresolution/5,yresolution/5,false);
+		}	
+	}
+		
 	glFlush();
     glutSwapBuffers();
 }
