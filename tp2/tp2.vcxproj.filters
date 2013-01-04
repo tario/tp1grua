@@ -32,7 +32,6 @@
     <ClCompile Include="bitmap_texture.cpp">
       <Filter>utils</Filter>
     </ClCompile>
-    <ClCompile Include="tp2.cpp" />
     <ClCompile Include="nave_combate.cpp">
       <Filter>modelobjects</Filter>
     </ClCompile>
@@ -96,6 +95,7 @@
     <ClCompile Include="bezier.cpp">
       <Filter>primitivas\utils</Filter>
     </ClCompile>
+    <ClCompile Include="tp3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
